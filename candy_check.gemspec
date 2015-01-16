@@ -17,6 +17,8 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(/^(test|spec|features)\//)
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'nested_config', '~> 0.5'
+
   spec.add_development_dependency 'rubocop', '~> 0.28'
   spec.add_development_dependency 'inch',    '~> 0.5'
   spec.add_development_dependency 'bundler', '~> 1.7'
