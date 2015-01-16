@@ -3,6 +3,7 @@ Coveralls.wear!
 
 require 'candy_check'
 
+require 'webmock/minitest'
 require 'minitest/autorun'
 
 module MiniTest
