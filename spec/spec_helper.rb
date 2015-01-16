@@ -3,10 +3,17 @@ Coveralls.wear!
 
 require 'candy_check'
 
-require 'webmock/minitest'
 require 'minitest/autorun'
+require 'minitest/around/spec'
+
+require 'webmock/minitest'
+require 'nested_config/with_config'
 
 module MiniTest
+  class Spec
+    include NestedConfig::WithConfig
+  end
+
   module Assertions
     # The first parameter must be ```true```, not coercible to true.
     def assert_true(obj, msg = nil)

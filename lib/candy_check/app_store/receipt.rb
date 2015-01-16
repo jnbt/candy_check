@@ -2,6 +2,7 @@ module CandyCheck
   module AppStore
     # Describes a successful response from the AppStore verification server
     class Receipt
+      # @return [String] the raw attributes return form the server
       attr_reader :attributes
 
       # Initializes a new instance which bases on a JSON result
