@@ -1,0 +1,94 @@
+module CandyCheck
+  module AppStore
+    # Describes a successful response from the AppStore verification server
+    class Receipt
+      attr_reader :attributes
+
+      # Initializes a new instance which bases on a JSON result
+      # from Apple's verification server
+      # @param attributes [Hash]
+      def initialize(attributes)
+        @attributes = attributes
+      end
+
+      # In most cases a receipt is a valid transaction except when the
+      # transaction was canceled.
+      # @return [Boolean]
+      def valid?
+        !has?('cancellation_date')
+      end
+
+      # The receipt's transaction id
+      # @return [String]
+      def transaction_id
+        read('transaction_id')
+      end
+
+      # The receipt's original transaction id which might differ from
+      # the transaction id for restored products
+      # @return [String]
+      def original_transaction_id
+        read('original_transaction_id')
+      end
+
+      # The version number for the app
+      # @return [String]
+      def app_version
+        read('bvrs')
+      end
+
+      # The app's bundle identifier
+      # @return [String]
+      def bundle_identifier
+        read('bid')
+      end
+
+      # The app's item id of the product
+      # @return [String]
+      def item_id
+        read('item_id')
+      end
+
+      # The quantity of the product
+      # @return [Fixnum]
+      def quantity
+        read('quantity').to_i
+      end
+
+      # The purchase date
+      # @return [DateTime]
+      def purchase_date
+        read_date('purchase_date')
+      end
+
+      # The original purchase date which might differ from the
+      # actual purchase date for restored products
+      # @return [DateTime]
+      def original_purchase_date
+        read_date('original_purchase_date')
+      end
+
+      # The date of when Apple has canceled this transaction.
+      # From Apple's documentation: "Treat a canceled receipt
+      # the same as if no purchase had ever been made."
+      # @return [DateTime]
+      def cancellation_date
+        read_date('cancellation_date')
+      end
+
+      private
+
+      def read(field)
+        attributes[field]
+      end
+
+      def has?(field)
+        attributes.key?(field)
+      end
+
+      def read_date(field)
+        (val = read(field)) && DateTime.parse(val)
+      end
+    end
+  end
+end

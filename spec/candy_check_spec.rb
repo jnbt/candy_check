@@ -10,9 +10,10 @@ describe CandyCheck do
     subject.config.must_be_instance_of CandyCheck::Config
   end
   it 'allows configuration' do
-    subject.configure do |config|
+    c = subject.configure do |config|
       config.test_value = 1
     end
     subject.config.test_value.must_equal 1
+    c.must_be_same_as(subject.config)
   end
 end

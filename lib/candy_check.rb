@@ -1,5 +1,6 @@
 require 'candy_check/version'
 require 'candy_check/config'
+require 'candy_check/app_store'
 
 # Module to check and verify in-app receipts
 module CandyCheck
@@ -10,7 +11,11 @@ module CandyCheck
   end
 
   # Configure this module
+  # @yield [config] Allows changing the config
+  # @yieldparam config [Config]
+  # @return [Config]
   def self.configure
     yield config
+    config
   end
 end
