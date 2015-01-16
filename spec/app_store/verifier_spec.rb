@@ -32,6 +32,15 @@ describe CandyCheck::AppStore::Verifier do
     end
   end
 
+  it 'returns a receipt when status is 0 and receipt exists' do
+    response = { 'status' => 0, 'receipt' => { 'item_id' => 'some_id' } }
+    with_mocked_response(response) do
+      result = subject.call!
+      result.must_be_instance_of CandyCheck::AppStore::Receipt
+      result.item_id.must_equal('some_id')
+    end
+  end
+
   private
 
   class DummyClient < Struct.new(:response)
