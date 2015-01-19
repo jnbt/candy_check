@@ -1,2 +1,5 @@
+AllCops:
+  Exclude:
+    - 'spec/support/*'
 Style/Documentation:
   Enabled: false
