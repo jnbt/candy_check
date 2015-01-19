@@ -14,5 +14,9 @@ Server: GSE
 Alternate-Protocol: 443:quic,p=0.02
 
 {
-  "test": 1
+ "kind": "androidpublisher#productPurchase",
+ "purchaseTimeMillis": "1421676237413",
+ "purchaseState": 0,
+ "consumptionState": 0,
+ "developerPayload": "payload that gets stored and returned"
 }

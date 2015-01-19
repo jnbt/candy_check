@@ -58,6 +58,12 @@ describe CandyCheck::PlayStore::Client do
     result = subject.verify('the_package', 'the_id', 'the_token')
     result.must_be_instance_of \
       Google::APIClient::Schema::Androidpublisher::V2::ProductPurchase
+
+
+    result.error['code'].must_equal 401
+    result.error['message'].must_equal 'The current user has insufficient' \
+      ' permissions to perform the requested operation.'
+    result.error['errors'].size.must_equal 1
   end
 
   it 'returns the products call result\'s data for a successful call' do
@@ -66,6 +72,11 @@ describe CandyCheck::PlayStore::Client do
     result = subject.verify('the_package', 'the_id', 'the_token')
     result.must_be_instance_of \
       Google::APIClient::Schema::Androidpublisher::V2::ProductPurchase
+    result.purchaseState.must_equal 0
+    result.consumptionState.must_equal 0
+    result.developerPayload.must_equal 'payload that gets stored and returned'
+    result.purchaseTimeMillis.must_equal 1_421_676_237_413
+    result.kind.must_equal 'androidpublisher#productPurchase'
   end
 
   private
