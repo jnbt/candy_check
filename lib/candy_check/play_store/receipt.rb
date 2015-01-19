@@ -3,7 +3,8 @@ module CandyCheck
     # Describes a successful response from the Google verification server
     class Receipt
       include Utils::AttributeReader
-      # @return [String] the raw attributes returned from the server
+
+      # @return [Hash] the raw attributes returned from the server
       attr_reader :attributes
 
       # Purchased product (0 is purchased, don't ask me why)

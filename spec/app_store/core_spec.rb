@@ -35,14 +35,14 @@ describe "#{CandyCheck::AppStore} core" do
     recorded = []
     stub     = proc do |*args|
       recorded << args
-      DummyVerifier.new(*args)
+      DummyAppStoreVerifier.new(*args)
     end
     CandyCheck::AppStore::Verifier.stub :new, stub do
       yield recorded
     end
   end
 
-  class DummyVerifier < Struct.new(:endpoint, :data, :secret)
+  class DummyAppStoreVerifier < Struct.new(:endpoint, :data, :secret)
     def call!
       :stubbed
     end

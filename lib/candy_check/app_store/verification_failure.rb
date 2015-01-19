@@ -1,6 +1,6 @@
 module CandyCheck
   module AppStore
-    # Represents a failing call against the verification server which states
+    # Represents a failing call against the verification server
     class VerificationFailure < Struct.new(:code, :message)
       # @!attribute code
       #   @return [Fixnum] the code of the failure
