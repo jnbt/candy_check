@@ -56,26 +56,25 @@ describe CandyCheck::PlayStore::Client do
 
     mock_request!('products_failure.txt')
     result = subject.verify('the_package', 'the_id', 'the_token')
-    result.must_be_instance_of \
-      Google::APIClient::Schema::Androidpublisher::V2::ProductPurchase
+    result.must_be_instance_of Hash
 
-    result.error['code'].must_equal 401
-    result.error['message'].must_equal 'The current user has insufficient' \
+    result['error']['code'].must_equal 401
+    result['error']['message'].must_equal 'The current user has insufficient' \
       ' permissions to perform the requested operation.'
-    result.error['errors'].size.must_equal 1
+    result['error']['errors'].size.must_equal 1
   end
 
   it 'returns the products call result\'s data for a successful call' do
     bootup!
     mock_request!('products_success.txt')
     result = subject.verify('the_package', 'the_id', 'the_token')
-    result.must_be_instance_of \
-      Google::APIClient::Schema::Androidpublisher::V2::ProductPurchase
-    result.purchaseState.must_equal 0
-    result.consumptionState.must_equal 0
-    result.developerPayload.must_equal 'payload that gets stored and returned'
-    result.purchaseTimeMillis.must_equal 1_421_676_237_413
-    result.kind.must_equal 'androidpublisher#productPurchase'
+    result.must_be_instance_of Hash
+    result['purchaseState'].must_equal 0
+    result['consumptionState'].must_equal 0
+    result['developerPayload'].must_equal \
+     'payload that gets stored and returned'
+    result['purchaseTimeMillis'].must_equal '1421676237413'
+    result['kind'].must_equal 'androidpublisher#productPurchase'
   end
 
   private

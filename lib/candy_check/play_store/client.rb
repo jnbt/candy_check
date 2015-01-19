@@ -46,7 +46,7 @@ module CandyCheck
       # @param package [String] the app's package name
       # @param product_id [String] the app's item id
       # @param token [String] the purchase token
-      # @return [Object] result of the API call
+      # @return [Hash] result of the API call
       def verify(package, product_id, token)
         api_client.execute(
           api_method: rpc.purchases.products.get,
@@ -55,7 +55,7 @@ module CandyCheck
             'productId'   => product_id,
             'token'       => token
           }
-        ).data
+        ).data.to_hash
       end
 
       private

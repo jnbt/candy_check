@@ -2,7 +2,8 @@ module CandyCheck
   module AppStore
     # Describes a successful response from the AppStore verification server
     class Receipt
-      # @return [String] the raw attributes return form the server
+      include Utils::AttributeReader
+      # @return [String] the raw attributes returned from the server
       attr_reader :attributes
 
       # Initializes a new instance which bases on a JSON result
@@ -53,20 +54,20 @@ module CandyCheck
       # The quantity of the product
       # @return [Fixnum]
       def quantity
-        read('quantity').to_i
+        read_integer('quantity')
       end
 
       # The purchase date
       # @return [DateTime]
       def purchase_date
-        read_date('purchase_date')
+        read_datetime_from_string('purchase_date')
       end
 
       # The original purchase date which might differ from the
       # actual purchase date for restored products
       # @return [DateTime]
       def original_purchase_date
-        read_date('original_purchase_date')
+        read_datetime_from_string('original_purchase_date')
       end
 
       # The date of when Apple has canceled this transaction.
@@ -74,21 +75,7 @@ module CandyCheck
       # the same as if no purchase had ever been made."
       # @return [DateTime]
       def cancellation_date
-        read_date('cancellation_date')
-      end
-
-      private
-
-      def read(field)
-        attributes[field]
-      end
-
-      def has?(field)
-        attributes.key?(field)
-      end
-
-      def read_date(field)
-        (val = read(field)) && DateTime.parse(val)
+        read_datetime_from_string('cancellation_date')
       end
     end
   end

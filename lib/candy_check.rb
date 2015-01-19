@@ -1,5 +1,6 @@
 require 'candy_check/version'
 require 'candy_check/config'
+require 'candy_check/utils'
 require 'candy_check/app_store'
 require 'candy_check/play_store'
 
