@@ -59,7 +59,6 @@ describe CandyCheck::PlayStore::Client do
     result.must_be_instance_of \
       Google::APIClient::Schema::Androidpublisher::V2::ProductPurchase
 
-
     result.error['code'].must_equal 401
     result.error['message'].must_equal 'The current user has insufficient' \
       ' permissions to perform the requested operation.'
