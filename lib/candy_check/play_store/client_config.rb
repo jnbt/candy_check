@@ -1,7 +1,7 @@
 module CandyCheck
   module PlayStore
     # Configure the usage of the official Google API SDK client
-    class ClientConfig
+    class ClientConfig < Utils::Config
       # @return [String] your application name
       attr_reader :application_name
       # @return [String] your application's version
@@ -27,10 +27,7 @@ module CandyCheck
       #     key_secret: 'notasecret'
       #   )
       def initialize(attributes)
-        attributes.each do |k, v|
-          instance_variable_set "@#{k}", v
-        end if attributes.is_a? Hash
-        validate!
+        super
       end
 
       # @return [String] the decrypted API key from Google
@@ -48,11 +45,6 @@ module CandyCheck
         validates_presence(:issuer)
         validates_presence(:key_file)
         validates_presence(:key_secret)
-      end
-
-      def validates_presence(name)
-        return if send(name)
-        fail ArgumentError, "Configuration field #{name} is missing"
       end
     end
   end
