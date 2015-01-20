@@ -26,6 +26,15 @@ module CandyCheck
         return if send(name)
         fail ArgumentError, "Configuration field #{name} is missing"
       end
+
+      # Checks for the inclusion of an attribute
+      # @param name [String]
+      # @param values [Array] of possible values
+      def validates_inclusion(name, *values)
+        return if values.include?(send(name))
+        fail ArgumentError, "Configuration field #{name} should be "\
+                            "one of: #{values.join(', ')}"
+      end
     end
   end
 end
