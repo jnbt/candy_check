@@ -10,10 +10,10 @@ describe CandyCheck::AppStore::Verifier do
   let(:secret)   { 'some_secret' }
   let(:receipt)  { CandyCheck::AppStore::Receipt.new({}) }
   let(:production_endpoint) do
-    CandyCheck::AppStore::Verifier::PRODUCTION_ENDPOINT
+    'https://buy.itunes.apple.com/verifyReceipt'
   end
   let(:sandbox_endpoint) do
-    CandyCheck::AppStore::Verifier::SANDBOX_ENDPOINT
+    'https://sandbox.itunes.apple.com/verifyReceipt'
   end
 
   it 'holds the config' do
