@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe CandyCheck::PlayStore::ClientConfig do
-  subject { CandyCheck::PlayStore::ClientConfig.new(attributes) }
+describe CandyCheck::PlayStore::Config do
+  subject { CandyCheck::PlayStore::Config.new(attributes) }
 
   let(:attributes) do
     {

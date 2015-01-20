@@ -9,7 +9,7 @@ describe CandyCheck::PlayStore::Client do
   subject { CandyCheck::PlayStore::Client.new(config) }
 
   let(:config) do
-    CandyCheck::PlayStore::ClientConfig.new(
+    CandyCheck::PlayStore::Config.new(
       application_name: 'demo_app',
       application_version: '1.0',
       issuer: 'test_issuer',

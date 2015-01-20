@@ -1,6 +1,6 @@
 module CandyCheck
   module AppStore
-    # Verifies a receipt block against a verification server.
+    # Verifies receipts against the verification servers.
     # The call return either an {Receipt} or a {VerificationFailure}
     class Verifier
       # HTTPS endpoint for production receipts

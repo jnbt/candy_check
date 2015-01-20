@@ -1,7 +1,7 @@
 module CandyCheck
   module PlayStore
     # Configure the usage of the official Google API SDK client
-    class ClientConfig < Utils::Config
+    class Config < Utils::Config
       # @return [String] your application name
       attr_reader :application_name
       # @return [String] your application's version
@@ -15,7 +15,7 @@ module CandyCheck
       # @return [String] the secret to load your certificate file
       attr_reader :key_secret
 
-      # Initializes a new configuration from a [Hash]
+      # Initializes a new configuration from a hash
       # @param attributes [Hash]
       # @example Initialize with a discovery cache file
       #   ClientConfig.new(
