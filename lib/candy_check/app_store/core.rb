@@ -5,7 +5,8 @@ module CandyCheck
     # @param secret [String] the password for auto-renewable subscriptions
     # @return [Receipt] or [VerificationFailure]
     def self.verify(receipt_data, secret = nil)
-      verification = Verifier.new(config.verification_url, receipt_data, secret)
+      verification = Verification.new(config.verification_url, receipt_data,
+                                      secret)
       verification.call!
     end
 

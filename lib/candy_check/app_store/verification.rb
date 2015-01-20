@@ -1,8 +1,8 @@
 module CandyCheck
   module AppStore
-    # Verifies an receipt block against a verification server.
+    # Verifies a receipt block against a verification server.
     # The call return either an [Receipt] or a [VerificationFailure]
-    class Verifier
+    class Verification
       # @return [String] the verification URL to use
       attr_reader :endpoint_url
       # @return [String] the raw data to be verified

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe CandyCheck::AppStore::Verifier do
-  subject { CandyCheck::AppStore::Verifier.new(endpoint, data, secret) }
+describe CandyCheck::AppStore::Verification do
+  subject { CandyCheck::AppStore::Verification.new(endpoint, data, secret) }
   let(:endpoint) { 'https://some.endpoint' }
   let(:data)     { 'some_data'   }
   let(:secret)   { 'some_secret' }
