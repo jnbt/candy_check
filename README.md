@@ -100,6 +100,40 @@ verifier.verify(package, product_id, token) # => Receipt or VerificationFailure
 
 Please see the class documenations [`CandyCheck::PlayStore::Receipt`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/Receipt) and [`CandyCheck::PlayStore::VerificationFailure`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/VerificationFailure) for further details about the responses.
 
+## CLI
+
+This gem ships with two executables to verify in-app purchases directly from your terminal:
+
+### AppStore
+
+You only need to specify the base64 encoded receipt:
+
+```bash
+$ cc_appstore --receipt YOUR_RECEIPT_STRING
+```
+
+See all options:
+
+```bash
+$ cc_appstore --help
+```
+
+### PlayStore
+
+For the PlayStore you need to specify at least the issuer, the key file, your package name, the product and the actual
+purchase token:
+
+```bash
+$ cc_playstore --issuer ISSUER_EMAIL --key-file KEY_FILE \ 
+               --package PACKAGE_NAME --product-id PRODUCT_ID --token PURCHASE_TOKEN
+```
+
+See all options:
+
+```bash
+$ cc_playstore --help
+```
+
 
 ## Todos
 
