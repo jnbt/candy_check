@@ -1,0 +1,90 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'optparse'
+require 'ostruct'
+require 'pp'
+require 'candy_check'
+
+class InputParser
+  attr_reader :config, :secret, :receipt
+
+  def initialize
+    @config = {
+      environment: :production
+    }
+    configure!
+  end
+
+  def parse!(args)
+    @parser.parse!(args)
+    help! unless @receipt
+  end
+
+  private
+
+  def configure!
+    @parser = OptionParser.new do |opts|
+      @opts = opts
+      opts.banner = 'Usage cc_appstore [options]'
+      opts.separator ''
+      opts.separator 'Required options:'
+
+      opts.on('-r', '--receipt RECEIPT', 'a base64 encoded receipt data string') do |v|
+        @receipt = v
+      end
+      opts.separator ''
+      opts.separator 'Optional options:'
+      opts.on('-e', '--environment ENVIRONMENT', 'production (default) or sandbox') do |v|
+        config[:environment] = v.to_sym
+      end
+      opts.on('-s', '--secret SECRET', 'shared secret for auto-renewable subscriptions') do |v|
+        @secret = v
+      end
+      opts.separator ''
+      opts.separator 'Further functions:'
+      opts.on_tail('-v', '--version', 'Show version') do
+        puts CandyCheck::VERSION
+        exit
+      end
+      opts.on_tail('-h', '--help', 'Show help') do
+        help!
+      end
+    end
+  end
+
+  def help!
+    puts @opts
+    exit
+  end
+end
+
+class App
+  attr_reader :input
+
+  def initialize
+    @input = InputParser.new
+    load_config
+    perform
+  end
+
+  private
+
+  def load_config
+    input.parse!(ARGV)
+  end
+
+  def perform
+    config   = CandyCheck::AppStore::Config.new(input.config)
+    puts 'Configuration'
+    pp config
+    puts
+    verifier = CandyCheck::AppStore::Verifier.new(config)
+    result   = verifier.verify(input.receipt, input.secret)
+    puts
+    puts "#{result.class}:"
+    pp result
+  end
+end
+
+App.new
