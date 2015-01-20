@@ -17,7 +17,7 @@ module CandyCheck
     # @return [Receipt] or [VerificationFailure]
     def self.verify(package, product_id, token)
       check_boot!
-      verification = Verifier.new(@client, package, product_id, token)
+      verification = Verification.new(@client, package, product_id, token)
       verification.call!
     end
 

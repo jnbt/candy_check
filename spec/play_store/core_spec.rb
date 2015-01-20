@@ -56,9 +56,9 @@ describe "#{CandyCheck::PlayStore} core" do
     recorded = []
     stub     = proc do |*args|
       recorded << args
-      DummyPlayStoreVerifier.new(*args)
+      DummyPlayStoreVerification.new(*args)
     end
-    CandyCheck::PlayStore::Verifier.stub :new, stub do
+    CandyCheck::PlayStore::Verification.stub :new, stub do
       yield recorded
     end
   end
@@ -72,8 +72,8 @@ describe "#{CandyCheck::PlayStore} core" do
     end
   end
 
-  class DummyPlayStoreVerifier < Struct.new(:client, :package,
-                                            :product_id, :token)
+  class DummyPlayStoreVerification < Struct.new(:client, :package,
+                                                :product_id, :token)
     def call!
       :stubbed
     end

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe CandyCheck::PlayStore::Verifier do
+describe CandyCheck::PlayStore::Verification do
   subject do
-    CandyCheck::PlayStore::Verifier.new(client, package, product_id, token)
+    CandyCheck::PlayStore::Verification.new(client, package, product_id, token)
   end
   let(:client)     { DummyGoogleClient.new(response) }
   let(:package)    { 'the_package' }
