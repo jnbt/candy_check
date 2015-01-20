@@ -2,7 +2,7 @@ module CandyCheck
   module Utils
     # Very basic base implementation to store and validate a configuration
     class Config
-      # Initializes a new configuration from a [Hash]
+      # Initializes a new configuration from a hash
       # @param attributes [Hash]
       def initialize(attributes)
         attributes.each do |k, v|
@@ -13,10 +13,15 @@ module CandyCheck
 
       protected
 
+      # Hook to check for validation error in the sub classes
+      # should raise an error if not passed
       def validate!
         # pass
       end
 
+      # Check for the presence of an attribute
+      # @param name [String]
+      # @raise [ArgumentError] if attribute is missing
       def validates_presence(name)
         return if send(name)
         fail ArgumentError, "Configuration field #{name} is missing"
