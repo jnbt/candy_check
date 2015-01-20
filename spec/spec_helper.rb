@@ -7,7 +7,6 @@ require 'minitest/autorun'
 require 'minitest/around/spec'
 
 require 'webmock/minitest'
-require 'nested_config/with_config'
 
 require_relative 'support/with_fixtures'
 require_relative 'support/with_temp_file'
@@ -15,10 +14,6 @@ require_relative 'support/with_temp_file'
 ENV['DEBUG'] && Google::APIClient.logger.level = Logger::DEBUG
 
 module MiniTest
-  class Spec
-    include NestedConfig::WithConfig
-  end
-
   module Assertions
     # The first parameter must be ```true```, not coercible to true.
     def assert_true(obj, msg = nil)
