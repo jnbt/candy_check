@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'multi_json',        '~> 1.10'
   spec.add_dependency 'google-api-client', '~> 0.8'
+  spec.add_dependency 'thor',              '~> 0.19'
 
   spec.add_development_dependency 'rubocop',         '~> 0.28'
   spec.add_development_dependency 'inch',            '~> 0.5'
