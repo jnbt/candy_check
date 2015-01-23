@@ -23,7 +23,7 @@ Google's PlayStore.
 
 ### AppStore
 
-If you have set up an iOS app and it's in-app items correctly and the in-app store is working your app should receive a
+If you have set up an iOS app and its in-app items correctly and the in-app store is working your app should receive a
 `SKPaymentTransaction`. Currently this gem assumes that you use the old [`transactionReceipt`](https://developer.apple.com/library/ios/documentation/StoreKit/Reference/SKPaymentTransaction_Class/index.html#//apple_ref/occ/instp/SKPaymentTransaction/transactionReceipt)
 which is returned per transaction. The `transactionReceipt` is a base64 encoded binary blob which you should send to your
 server for the validation process.
