@@ -46,6 +46,12 @@ module CandyCheck
         read('bid')
       end
 
+      # The app's identifier of the product (SKU)
+      # @return [String]
+      def product_id
+        read('product_id')
+      end
+
       # The app's item id of the product
       # @return [String]
       def item_id

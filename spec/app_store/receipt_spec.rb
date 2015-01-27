@@ -36,6 +36,10 @@ describe CandyCheck::AppStore::Receipt do
       subject.item_id.must_equal 'some_item_id'
     end
 
+    it 'returns the item\'s product_id' do
+      subject.product_id.must_equal 'some_product'
+    end
+
     it 'returns the quantity' do
       subject.quantity.must_equal 1
     end
