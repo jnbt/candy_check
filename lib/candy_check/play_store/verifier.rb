@@ -28,8 +28,7 @@ module CandyCheck
       # @param package [String] to query
       # @param product_id [String] to query
       # @param token [String] to use for authentication
-      # @return [Receipt] if successful
-      # @return [VerificationFailure] otherwise
+      # @return [Receipt, VerificationFailure] the result
       def verify(package, product_id, token)
         check_boot!
         verification = Verification.new(@client, package, product_id, token)

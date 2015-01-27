@@ -135,6 +135,40 @@ See all options:
 $ candy_check help play_store
 ```
 
+## Test support
+
+This gems ships with a rudimentary support for test stubs. In your test setup file require
+the test_helper file:
+
+```ruby
+require 'candy_check/test_helper'
+```
+
+Now you can create fake instances of the verifier classes which have the same interface
+as the normal ones:
+
+* [`CandyCheck::TestSupport::AppStore::FakeVerifier`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/TestHelper/AppStore/FakeVerifier)
+* [`CandyCheck::TestSupport::PlayStore::FakeVerifier`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/TestHelper/PlayStoreFakeVerifier)
+
+You basically setup a list of results on the fake verifier instances. Use your preferred way
+of injecting the fake verifier instance into your application during test time. E.g. with MiniTest:
+
+```ruby
+fake_verifier = CandyCheck::TestHelper::AppStore::FakeVerifier.new
+fake_verifier.stub_receipt! # first +verify+ call returns a receipt
+fake_verifier.stub_failure! # second +verify+ call returns a failure
+
+CandyCheck::AppStore::Verifier.stub :new, fake_verifier do
+  # your actual test code goes here
+end
+
+# Now you can validate the received calls
+fake_verifier.assert_calls!(
+  ['some-receipt'], ['another-receipt', 'with-secret']
+)
+```
+
+For more details have a look into the class documentation of the fake verifiers.
 
 ## Todos
 
@@ -149,7 +183,7 @@ Please submit them here https://github.com/jnbt/candy_check/issues
 
 Simple run
 
-```Bash
+```ruby
 rake
 ```
 

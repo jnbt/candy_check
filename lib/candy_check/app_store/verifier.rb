@@ -27,8 +27,7 @@ module CandyCheck
       # Calls a verification for the given input
       # @param receipt_data [String] the raw data to be verified
       # @param secret [String] the optional shared secret
-      # @return [Receipt] if successful
-      # @return [VerificationFailure] otherwise
+      # @return [Receipt, VerificationFailure] the result
       def verify(receipt_data, secret = nil)
         default_endpoint, opposite_endpoint = endpoints
         result = call_for(default_endpoint, receipt_data, secret)
