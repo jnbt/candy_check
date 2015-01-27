@@ -9,7 +9,20 @@ describe CandyCheck::AppStore::Client do
     'some_secret_password'
   end
   let(:response) do
-    '{"status": 0}'
+    '{
+    "receipt": {
+        "item_id": "521129812"
+    },
+    "status": 0
+}'
+  end
+  let(:expected) do
+    {
+      'status' => 0,
+      'receipt' => {
+        'item_id' => '521129812'
+      }
+    }
   end
 
   subject { CandyCheck::AppStore::Client.new(endpoint_url) }
@@ -26,7 +39,6 @@ describe CandyCheck::AppStore::Client do
           body: response
         )
       result   = subject.verify(receipt_data)
-      expected = { 'status' => 0 }
       result.must_equal expected
     end
 
@@ -42,7 +54,6 @@ describe CandyCheck::AppStore::Client do
           body: response
         )
       result   = subject.verify(receipt_data, password)
-      expected = { 'status' => 0 }
       result.must_equal expected
     end
   end
