@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'multi_json',        '~> 1.10'
-  spec.add_dependency 'google-api-client', '~> 0.8'
+  spec.add_dependency 'google-api-client', '~> 0.8.6'
   spec.add_dependency 'thor',              '~> 0.19'
 
   spec.add_development_dependency 'rubocop',         '~> 0.28'
