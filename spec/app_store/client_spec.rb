@@ -38,7 +38,7 @@ describe CandyCheck::AppStore::Client do
         .to_return(
           body: response
         )
-      result   = subject.verify(receipt_data)
+      result = subject.verify(receipt_data)
       result.must_equal expected
     end
 
@@ -53,7 +53,7 @@ describe CandyCheck::AppStore::Client do
         .to_return(
           body: response
         )
-      result   = subject.verify(receipt_data, password)
+      result = subject.verify(receipt_data, password)
       result.must_equal expected
     end
   end

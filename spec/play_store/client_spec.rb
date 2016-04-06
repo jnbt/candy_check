@@ -72,7 +72,7 @@ describe CandyCheck::PlayStore::Client do
     result['purchaseState'].must_equal 0
     result['consumptionState'].must_equal 0
     result['developerPayload'].must_equal \
-     'payload that gets stored and returned'
+      'payload that gets stored and returned'
     result['purchaseTimeMillis'].must_equal '1421676237413'
     result['kind'].must_equal 'androidpublisher#productPurchase'
   end

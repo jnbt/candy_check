@@ -14,7 +14,9 @@ module CandyCheck
         # @option options [String] :application_name for the API call
         # @option options [String] :application_version for the API call
         def initialize(package, product_id, token, options)
-          @package, @product_id, @token = package, product_id, token
+          @package = package
+          @product_id = product_id
+          @token = token
           super(options)
         end
 

@@ -1,11 +1,21 @@
 module CandyCheck
   module AppStore
     # Represents a failing call against the verification server
-    class VerificationFailure < Struct.new(:code, :message)
-      # @!attribute code
-      #   @return [Fixnum] the code of the failure
-      # @!attribute message
-      #   @return [String] the message of the failure
+    class VerificationFailure
+      # @return [Fixnum] the code of the failure
+      attr_reader :code
+
+      # @return [String] the message of the failure
+      attr_reader :message
+
+      # Initializes a new instance which bases on a JSON result
+      # from Apple servers
+      # @param code [Fixnum]
+      # @param message [String]
+      def initialize(code, message)
+        @code = code
+        @message = message
+      end
 
       class << self
         # Gets a known failure or build an unknown failure

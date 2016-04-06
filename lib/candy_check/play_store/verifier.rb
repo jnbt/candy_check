@@ -45,7 +45,7 @@ module CandyCheck
       end
 
       def boot_error(message)
-        fail BootRequiredError, message
+        raise BootRequiredError, message
       end
     end
   end

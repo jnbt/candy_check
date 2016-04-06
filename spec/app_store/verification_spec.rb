@@ -43,11 +43,12 @@ describe CandyCheck::AppStore::Verification do
 
   private
 
-  class DummyClient < Struct.new(:response)
+  DummyClient = Struct.new(:response) do
     attr_reader :receipt_data, :secret
 
     def verify(receipt_data, secret)
-      @receipt_data, @secret = receipt_data, secret
+      @receipt_data = receipt_data
+      @secret = secret
       response
     end
   end
@@ -56,7 +57,7 @@ describe CandyCheck::AppStore::Verification do
     recorded = []
     dummy    = DummyClient.new(response)
     stub     = proc do |*args|
-      recorded <<  args
+      recorded << args
       dummy
     end
     CandyCheck::AppStore::Client.stub :new, stub do

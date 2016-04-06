@@ -15,13 +15,13 @@ module CandyCheck
       class DiscoveryError < RuntimeError; end
 
       # API endpoint
-      API_URL      = 'https://accounts.google.com/o/oauth2/token'
+      API_URL      = 'https://accounts.google.com/o/oauth2/token'.freeze
       # API scope for Android services
-      API_SCOPE    = 'https://www.googleapis.com/auth/androidpublisher'
+      API_SCOPE    = 'https://www.googleapis.com/auth/androidpublisher'.freeze
       # API discovery namespace
-      API_DISCOVER = 'androidpublisher'
+      API_DISCOVER = 'androidpublisher'.freeze
       # API version
-      API_VERSION  = 'v2'
+      API_VERSION  = 'v2'.freeze
 
       # Initializes a client using a configuration.
       # @param config [ClientConfig]
@@ -85,7 +85,7 @@ module CandyCheck
 
       def validate_rpc!
         return if rpc.purchases.products.get
-        fail DiscoveryError, 'Unable to get the API discovery'
+        raise DiscoveryError, 'Unable to get the API discovery'
       rescue NoMethodError
         raise DiscoveryError, 'Unable to get the API discovery'
       end

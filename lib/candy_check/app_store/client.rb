@@ -6,7 +6,7 @@ module CandyCheck
     # servers (either sandbox or production).
     class Client
       # Mimetype for JSON objects
-      JSON_MIME_TYPE = 'application/json'
+      JSON_MIME_TYPE = 'application/json'.freeze
 
       # Initialize a new client bound to an endpoint
       # @param endpoint_url [String]
@@ -32,7 +32,7 @@ module CandyCheck
 
       def build_http_connector
         Net::HTTP.new(@uri.host, @uri.port).tap do |net|
-          net.use_ssl      = true
+          net.use_ssl = true
           net.verify_mode = OpenSSL::SSL::VERIFY_PEER
         end
       end

@@ -17,7 +17,9 @@ module CandyCheck
       # @param token [String]
       def initialize(client, package, product_id, token)
         @client = client
-        @package, @product_id, @token = package, product_id, token
+        @package = package
+        @product_id = product_id
+        @token = token
       end
 
       # Performs the verification against the remote server

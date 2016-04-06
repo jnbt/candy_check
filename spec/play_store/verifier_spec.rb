@@ -78,15 +78,15 @@ describe CandyCheck::PlayStore::Verifier do
     @recorded.must_equal calls
   end
 
-  class DummyPlayStoreVerification < Struct.new(:client, :package,
-                                                :product_id, :token)
+  DummyPlayStoreVerification = Struct.new(:client, :package,
+                                          :product_id, :token) do
     attr_accessor :results
     def call!
       results.shift
     end
   end
 
-  class DummyPlayStoreClient < Struct.new(:config)
+  DummyPlayStoreClient = Struct.new(:config) do
     attr_reader :booted
     def boot!
       @booted = true

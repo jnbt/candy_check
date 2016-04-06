@@ -66,14 +66,16 @@ describe CandyCheck::PlayStore::Verification do
 
   private
 
-  class DummyGoogleClient < Struct.new(:response)
+  DummyGoogleClient = Struct.new(:response) do
     attr_reader :package, :product_id, :token
 
     def boot!
     end
 
     def verify(package, product_id, token)
-      @package, @product_id, @token = package, product_id, token
+      @package = package
+      @product_id = product_id
+      @token = token
       response
     end
   end

@@ -101,7 +101,7 @@ describe CandyCheck::AppStore::Verifier do
     CandyCheck::AppStore::VerificationFailure.fetch(code)
   end
 
-  class DummyAppStoreVerification < Struct.new(:endpoint, :data, :secret)
+  DummyAppStoreVerification = Struct.new(:endpoint, :data, :secret) do
     attr_accessor :results
     def call!
       results.shift

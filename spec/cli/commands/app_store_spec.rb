@@ -45,7 +45,7 @@ describe CandyCheck::CLI::Commands::AppStore do
 
   private
 
-  class DummyAppStoreVerifier < Struct.new(:config)
+  DummyAppStoreVerifier = Struct.new(:config) do
     attr_reader :arguments
 
     def verify(*arguments)

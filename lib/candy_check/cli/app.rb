@@ -4,7 +4,7 @@ module CandyCheck
   module CLI
     # Main class for the executable 'candy_check'
     # @example
-    #   $ candy_check help
+    #   $> candy_check help
     class App < Thor
       package_name 'CandyCheck'
 

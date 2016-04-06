@@ -36,7 +36,7 @@ describe CandyCheck::CLI::Commands::PlayStore do
 
   private
 
-  class DummyPlayStoreVerifier < Struct.new(:config)
+  DummyPlayStoreVerifier = Struct.new(:config) do
     attr_reader :arguments, :booted
 
     def boot!
