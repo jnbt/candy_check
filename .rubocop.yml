@@ -2,5 +2,6 @@ AllCops:
   Exclude:
     - 'spec/support/*'
     - 'bin/*'
+    - 'vendor/*'
 Style/Documentation:
   Enabled: false
