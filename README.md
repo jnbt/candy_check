@@ -155,4 +155,4 @@ rake
 
 ## Copyright
 
-Copyright &copy; 2015 Jonas Thiel. See LICENSE.txt for details.
+Copyright &copy; 2016 Jonas Thiel. See LICENSE.txt for details.
