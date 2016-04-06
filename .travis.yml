@@ -1,13 +1,13 @@
 language: ruby
 sudo: false
+cache: bundler
 rvm:
   - '2.2'
   - '2.1'
   - '2.0'
-  - '1.9.3'
   - ruby-head
   - rbx-2
-  - jruby-19mode
+  - jruby
   - jruby-head
 matrix:
   allow_failures:
