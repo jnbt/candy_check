@@ -1,4 +1,5 @@
 require 'multi_json'
+require 'net/http'
 
 module CandyCheck
   module AppStore
