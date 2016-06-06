@@ -26,14 +26,14 @@ module CandyCheck
       # Initializes a client using a configuration.
       # @param config [ClientConfig]
       def initialize(config)
-        self.config = config
+        @config = config
       end
 
       # Boots a client by discovering the API's services and then authorizes
       # by fetching an access token.
       # If the config has a cache_file the client tries to load discovery
       def boot!
-        self.api_client = Google::APIClient.new(
+        @api_client = Google::APIClient.new(
           application_name:    config.application_name,
           application_version: config.application_version
         )
@@ -60,10 +60,10 @@ module CandyCheck
 
       private
 
-      attr_accessor :config, :api_client, :rpc
+      attr_reader :config, :api_client, :rpc
 
       def discover!
-        self.rpc = load_discover_dump || request_discover
+        @rpc = load_discover_dump || request_discover
         validate_rpc!
         write_discover_dump
       end
