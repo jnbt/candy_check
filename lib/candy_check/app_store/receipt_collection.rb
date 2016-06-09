@@ -11,6 +11,24 @@ module CandyCheck
       def initialize(attributes)
         @receipts = attributes.map { |r| Receipt.new(r) }
       end
+
+      # Check if the latest expiration date is passed
+      # @return [bool]
+      def expired?
+        last_expires_date.to_date <= Date.today
+      end
+
+      # Check if in trial
+      # @return [bool]
+      def trial?
+        @receipts.last.is_trial_period
+      end
+
+      # Get latest expiration date
+      # @return [DateTime]
+      def last_expires_date
+        @receipts.last.expires_date
+      end
     end
   end
 end

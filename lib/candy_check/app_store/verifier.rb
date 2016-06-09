@@ -34,7 +34,7 @@ module CandyCheck
         fetch_receipt_information(receipt_data, secret)
       end
 
-      def get_latest_receipt(receipt_data, secret = nil)
+      def verify_subscription(receipt_data, secret = nil)
         @klass = SubscriptionVerification
         fetch_receipt_information(receipt_data, secret)
       end

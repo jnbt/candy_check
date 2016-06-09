@@ -84,6 +84,18 @@ module CandyCheck
       def cancellation_date
         read_datetime_from_string('cancellation_date')
       end
+
+      # The date of a subscription's expiration
+      # @return [DateTime]
+      def expires_date
+        read_datetime_from_string('expires_date')
+      end
+
+      # rubocop:disable PredicateName
+      def is_trial_period
+        # rubocop:enable PredicateName
+        read_bool('is_trial_period')
+      end
     end
   end
 end
