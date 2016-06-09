@@ -30,6 +30,18 @@ module CandyCheck
       # @return [Receipt] if successful
       # @return [VerificationFailure] otherwise
       def verify(receipt_data, secret = nil)
+        @klass = Verification
+        fetch_receipt_information(receipt_data, secret)
+      end
+
+      def get_latest_receipt(receipt_data, secret = nil)
+        @klass = SubscriptionVerification
+        fetch_receipt_information(receipt_data, secret)
+      end
+
+      private
+
+      def fetch_receipt_information(receipt_data, secret = nil)
         default_endpoint, opposite_endpoint = endpoints
         result = call_for(default_endpoint, receipt_data, secret)
         if should_retry?(result)
@@ -38,10 +50,8 @@ module CandyCheck
         result
       end
 
-      private
-
       def call_for(endpoint_url, receipt_data, secret)
-        Verification.new(endpoint_url, receipt_data, secret).call!
+        @klass.new(endpoint_url, receipt_data, secret).call!
       end
 
       def should_retry?(result)
