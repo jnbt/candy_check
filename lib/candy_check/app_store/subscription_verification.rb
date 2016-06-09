@@ -14,6 +14,13 @@ module CandyCheck
           VerificationFailure.fetch(@response['status'])
         end
       end
+
+      private
+
+      def valid?
+        status_is_ok = @response['status'] == STATUS_OK
+        @response && status_is_ok && @response['latest_receipt_info']
+      end
     end
   end
 end
