@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe CandyCheck::AppStore::ReceiptCollection do
+  subject { CandyCheck::AppStore::ReceiptCollection.new(attributes) }
+
   describe 'overdue subscription' do
-    subject { CandyCheck::AppStore::ReceiptCollection.new(attributes) }
     let(:attributes) do
       [{
         'expires_date' => '2014-04-15 12:52:40 Etc/GMT',
@@ -38,7 +39,6 @@ describe CandyCheck::AppStore::ReceiptCollection do
   describe 'unexpired trial subscription' do
     two_days_from_now = DateTime.now + 2
 
-    subject { CandyCheck::AppStore::ReceiptCollection.new(attributes) }
     let(:attributes) do
       [{
         'expires_date' => '2016-04-15 12:52:40 Etc/GMT',
