@@ -23,12 +23,12 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'google-api-client', '~> 0.8.6'
   spec.add_dependency 'thor',              '~> 0.19'
 
-  spec.add_development_dependency 'rubocop',         '~> 0.28'
+  spec.add_development_dependency 'rubocop',         '~> 0.39'
   spec.add_development_dependency 'inch',            '~> 0.5'
   spec.add_development_dependency 'bundler',         '~> 1.7'
-  spec.add_development_dependency 'rake',            '~> 10.0'
-  spec.add_development_dependency 'coveralls',       '~> 0.7'
-  spec.add_development_dependency 'minitest',        '~> 5.5'
+  spec.add_development_dependency 'rake',            '~> 11.1'
+  spec.add_development_dependency 'coveralls',       '~> 0.8'
+  spec.add_development_dependency 'minitest',        '~> 5.9'
   spec.add_development_dependency 'minitest-around', '~> 0.3'
-  spec.add_development_dependency 'webmock',         '~> 1.20'
+  spec.add_development_dependency 'webmock',         '~> 2.1'
 end

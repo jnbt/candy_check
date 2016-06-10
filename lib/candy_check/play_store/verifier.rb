@@ -19,7 +19,7 @@ module CandyCheck
 
       # Boot the module
       def boot!
-        boot_error('You\'re only allowed to boot the verifier once') if @client
+        boot_error('You\'re only allowed to boot the verifier once') if booted?
         @client = Client.new(config)
         @client.boot!
       end
@@ -38,8 +38,12 @@ module CandyCheck
 
       private
 
+      def booted?
+        instance_variable_defined?(:@client)
+      end
+
       def check_boot!
-        return if @client
+        return if booted?
         boot_error 'You need to boot the verifier service first: '\
                    'CandyCheck::PlayStore::Verifier#boot!'
       end
