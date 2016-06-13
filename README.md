@@ -18,8 +18,7 @@ gem install candy_check
 
 ## Introduction
 
-This gem tries to simplify the process of server-side in-app purchase validation for Apple's AppStore and
-Google's PlayStore.
+This gem tries to simplify the process of server-side in-app purchase and subscription validation for Apple's AppStore and Google's PlayStore.
 
 ### AppStore
 
@@ -75,6 +74,15 @@ verifier.verify(your_receipt_data, your_secret)
 
 Please see the class documenations [`CandyCheck::AppStore::Receipt`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/AppStore/Receipt) and [`CandyCheck::AppStore::VerificationFailure`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/AppStore/VerificationFailure) for further details about the responses.
 
+For **subscription verification**, Apple also returns a list of the user's purchases. Essentially, this is a collection of receipts. To verify a subscription, do the following:
+
+```ruby
+# ... create your verifier as above
+verifier.verify_subscription(your_receipt_data, your_secret) # => ReceiptCollection or VerificationFailure
+```
+
+Please see the class documentation for [`CandyCheck::AppStore::ReceiptCollection`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/AppStore/ReceiptCollection) for further details.
+
 ### PlayStore
 
 First initialize and **boot** a verifier instance for your application. This loads the API discovery and
@@ -101,6 +109,14 @@ verifier.verify(package, product_id, token) # => Receipt or VerificationFailure
 ```
 
 Please see the class documenations [`CandyCheck::PlayStore::Receipt`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/Receipt) and [`CandyCheck::PlayStore::VerificationFailure`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/VerificationFailure) for further details about the responses.
+
+In order to **verify a subscription** from the Play Store, do the following:
+
+```ruby
+verifier.verify_subscription(package, subscription_id, token) # => Subscription or VerificationFailure
+```
+
+Please see documenation for [`CandyCheck::PlayStore::Subscription`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/Subscription) for further details.
 
 ## CLI
 
