@@ -48,19 +48,43 @@ module CandyCheck
       # @param token [String] the purchase token
       # @return [Hash] result of the API call
       def verify(package, product_id, token)
-        api_client.execute(
-          api_method: rpc.purchases.products.get,
-          parameters: {
-            'packageName' => package,
-            'productId'   => product_id,
-            'token'       => token
-          }
-        ).data.to_hash
+        parameters = {
+          'packageName' => package,
+          'productId'   => product_id,
+          'token'       => token
+        }
+        execute(parameters, rpc.purchases.products.get)
+      end
+
+      # Calls the remote API to load the product information for a specific
+      # combination of parameter which should be loaded from the client.
+      # @param package [String] the app's package name
+      # @param product_id [String] the app's item id
+      # @param token [String] the purchase token
+      # @return [Hash] result of the API call
+      def verify_subscription(package, subscription_id, token)
+        parameters = {
+          'packageName'    => package,
+          'subscriptionId' => subscription_id,
+          'token'          => token
+        }
+        execute(parameters, rpc.purchases.subscriptions.get)
       end
 
       private
 
       attr_reader :config, :api_client, :rpc
+
+      # Execute api call through the API Client's HTTP command class
+      # @param parameters [hash] the parameters to send to the command
+      # @param api_method [Method] which api method to call
+      # @return [hash] the data response, as a hash
+      def execute(parameters, api_method)
+        api_client.execute(
+          api_method: api_method,
+          parameters: parameters
+        ).data.to_hash
+      end
 
       def discover!
         @rpc = load_discover_dump || request_discover
