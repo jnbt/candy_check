@@ -22,7 +22,7 @@ module CandyCheck
       # @return [nil] if value is not 'true'/'false'
       def read_bool(field)
         val = read(field)
-        nil unless %w('false true').include?(val)
+        nil unless %w(false true).include?(val)
         val == 'true'
       end
 
