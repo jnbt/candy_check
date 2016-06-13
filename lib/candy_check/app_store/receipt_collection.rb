@@ -26,14 +26,14 @@ module CandyCheck
 
       # Get latest expiration date
       # @return [DateTime]
-      def last_expires_date
+      def expires_at
         @receipts.last.expires_date
       end
 
       # Get number of overdue days. If this is negative, it is not overdue.
       # @return [Integer]
       def overdue_days
-        (Date.today - last_expires_date.to_date).to_i
+        (Date.today - expires_at.to_date).to_i
       end
     end
   end

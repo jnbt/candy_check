@@ -32,7 +32,7 @@ describe CandyCheck::AppStore::ReceiptCollection do
 
     it 'has a last expires date' do
       expected = DateTime.new(2015, 4, 15, 12, 52, 40)
-      subject.last_expires_date.must_equal expected
+      subject.expires_at.must_equal expected
     end
   end
 
