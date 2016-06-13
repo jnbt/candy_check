@@ -9,6 +9,7 @@ describe CandyCheck::AppStore::Verifier do
   let(:data)     { 'some_data'   }
   let(:secret)   { 'some_secret' }
   let(:receipt)  { CandyCheck::AppStore::Receipt.new({}) }
+  let(:receipt_collection) { CandyCheck::AppStore::ReceiptCollection.new({}) }
   let(:production_endpoint) do
     'https://buy.itunes.apple.com/verifyReceipt'
   end
@@ -76,6 +77,27 @@ describe CandyCheck::AppStore::Verifier do
           [production_endpoint, data, secret],
           [sandbox_endpoint, data, secret]
         )
+      end
+    end
+  end
+
+  describe 'subscription' do
+    let(:environment) { :production }
+
+    it 'uses production endpoint without retry on success' do
+      with_mocked_verifier(receipt_collection) do
+        subject.verify_subscription(
+          data, secret
+        ).must_be_same_as receipt_collection
+        assert_recorded([production_endpoint, data, secret])
+      end
+    end
+
+    it 'only uses production endpoint for normal failures' do
+      failure = get_failure(21_000)
+      with_mocked_verifier(failure) do
+        subject.verify_subscription(data, secret).must_be_same_as failure
+        assert_recorded([production_endpoint, data, secret])
       end
     end
   end

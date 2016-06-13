@@ -117,4 +117,22 @@ describe CandyCheck::PlayStore::Subscription do
       subject.payment_pending?.must_be_true
     end
   end
+
+  describe 'trial' do
+    let(:attributes) do
+      {
+        'paymentState' => 1,
+        'priceCurrencyCode' => 'SOMECODE',
+        'priceAmountMicros' => '0'
+      }
+    end
+
+    it 'is trual?' do
+      subject.trial?.must_be_true
+    end
+
+    it 'returns the price_currency_code' do
+      subject.price_currency_code.must_equal 'SOMECODE'
+    end
+  end
 end
