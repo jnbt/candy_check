@@ -100,6 +100,17 @@ describe CandyCheck::AppStore::Verifier do
         assert_recorded([production_endpoint, data, secret])
       end
     end
+
+    it 'retries production endpoint for redirect error' do
+      failure = get_failure(21_007)
+      with_mocked_verifier(failure, receipt) do
+        subject.verify_subscription(data, secret).must_be_same_as receipt
+        assert_recorded(
+          [production_endpoint, data, secret],
+          [sandbox_endpoint, data, secret]
+        )
+      end
+    end
   end
 
   private
