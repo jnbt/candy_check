@@ -7,12 +7,13 @@ module CandyCheck
       # @return [Hash] the raw attributes returned from the server
       attr_reader :attributes
 
-      # Values of paymentState
+      # The payment of the subscription is pending (paymentState)
       PAYMENT_PENDING = 0
+      # The payment of the subscript is received (paymentState)
       PAYMENT_RECEIVED = 1
-
-      # Values of cancelReason
+      # The subscription was canceled by the user (cancelReason)
       PAYMENT_CANCELED = 0
+      # The payment failed during processing (cancelReason)
       PAYMENT_FAILED = 1
 
       # Initializes a new instance which bases on a JSON result
@@ -67,49 +68,67 @@ module CandyCheck
         (Date.today - expires_at.to_date).to_i
       end
 
+      # Get the auto renewal status as given by Google
+      # @return [bool] true if renewing automatically, false otherwise
       def auto_renewing?
         read_bool('autoRenewing')
       end
 
+      # Get the payment state as given by Google
+      # @return [Integer]
       def payment_state
         read_integer('paymentState')
       end
 
+      # Get the price amount for the subscription in micros in the payd currency
+      # @return [Integer]
       def price_amount_micros
         read_integer('priceAmountMicros')
       end
 
+      # Get the cancel reason, as given by Google
+      # @return [Integer]
       def cancel_reason
         read_integer('cancelReason')
       end
 
+      # Get the kind of subscription as stored in the android publisher service
+      # @return [String]
       def kind
         read('kind')
       end
 
+      # Get developer-specified supplemental information about the order
+      # @return [String]
       def developer_payload
         read('developerPayload')
       end
 
+      # Get the currency code in ISO 4217 format, e.g. "GBP" for British pounds
+      # @return [String]
       def price_currency_code
         read('priceCurrencyCode')
       end
 
+      # Get start time for subscription in milliseconds since Epoch
+      # @return [Integer]
       def start_time_millis
         read_integer('startTimeMillis')
       end
 
+      # Get expiry time for subscription in milliseconds since Epoch
+      # @return [Integer]
       def expiry_time_millis
         read_integer('expiryTimeMillis')
       end
 
-      # Get start time
+      # Get start time in UTC
       # @return [DateTime]
       def starts_at
         read_datetime_from_millis('startTimeMillis')
       end
 
-      # Get expiration date
+      # Get expiration time in UTC
       # @return [DateTime]
       def expires_at
         read_datetime_from_millis('expiryTimeMillis')
