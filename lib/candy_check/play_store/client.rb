@@ -59,7 +59,7 @@ module CandyCheck
       # Calls the remote API to load the product information for a specific
       # combination of parameter which should be loaded from the client.
       # @param package [String] the app's package name
-      # @param product_id [String] the app's item id
+      # @param subscription_id [String] the app's item id
       # @param token [String] the purchase token
       # @return [Hash] result of the API call
       def verify_subscription(package, subscription_id, token)

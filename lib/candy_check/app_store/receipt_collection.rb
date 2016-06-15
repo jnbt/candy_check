@@ -2,6 +2,7 @@ module CandyCheck
   module AppStore
     # Store multiple {Receipt}s in order to perform collective operation on them
     class ReceiptCollection
+      # Multiple receipts as in verfication response
       # @return [Array<Receipt>]
       attr_reader :receipts
 
