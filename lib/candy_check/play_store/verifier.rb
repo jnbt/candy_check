@@ -36,6 +36,20 @@ module CandyCheck
         verification.call!
       end
 
+      # Contacts the Google API and requests the product state
+      # @param package [String] to query
+      # @param subscription_id [String] to query
+      # @param token [String] to use for authentication
+      # @return [Receipt] if successful
+      # @return [VerificationFailure] otherwise
+      def verify_subscription(package, subscription_id, token)
+        check_boot!
+        v = SubscriptionVerification.new(
+          @client, package, subscription_id, token
+        )
+        v.call!
+      end
+
       private
 
       def booted?

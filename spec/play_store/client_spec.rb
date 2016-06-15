@@ -64,6 +64,20 @@ describe CandyCheck::PlayStore::Client do
     result['error']['errors'].size.must_equal 1
   end
 
+  it 'returns the products call result\'s data even if it is a failure' \
+    ' when verifying subscription' do
+    bootup!
+
+    mock_subscriptions_request!('products_failure.txt')
+    result = subject.verify_subscription('the_package', 'the_id', 'the_token')
+    result.must_be_instance_of Hash
+
+    result['error']['code'].must_equal 401
+    result['error']['message'].must_equal 'The current user has insufficient' \
+      ' permissions to perform the requested operation.'
+    result['error']['errors'].size.must_equal 1
+  end
+
   it 'returns the products call result\'s data for a successful call' do
     bootup!
     mock_request!('products_success.txt')
@@ -99,6 +113,13 @@ describe CandyCheck::PlayStore::Client do
   def mock_request!(file)
     stub_request(:get, 'https://www.googleapis.com/androidpublisher/v2/' \
       'applications/the_package/purchases/products/the_id/tokens/the_token')
+      .to_return(fixture_content('play_store', file))
+  end
+
+  def mock_subscriptions_request!(file)
+    stub_request(:get, 'https://www.googleapis.com/androidpublisher/v2/' \
+      'applications/the_package/purchases/subscriptions/' \
+      'the_id/tokens/the_token')
       .to_return(fixture_content('play_store', file))
   end
 end

@@ -18,6 +18,14 @@ module CandyCheck
         (val = read(field)) && val.to_i
       end
 
+      # @return [bool] if value is either 'true' or 'false'
+      # @return [nil] if value is not 'true'/'false'
+      def read_bool(field)
+        val = read(field).to_s
+        return nil unless %w(false true).include?(val)
+        val == 'true'
+      end
+
       def read_datetime_from_string(field)
         (val = read(field)) && DateTime.parse(val)
       end

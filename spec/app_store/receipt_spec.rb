@@ -23,7 +23,9 @@ describe CandyCheck::AppStore::Receipt do
       'purchase_date_pst'          => '2015-01-09 03:40:46' \
                                       ' America/Los_Angeles',
       'bid'                        => 'some.test.app',
-      'original_purchase_date_ms'  => '1420717246868'
+      'original_purchase_date_ms'  => '1420717246868',
+      'expires_date'               => '2016-06-09 13:59:40 Etc/GMT',
+      'is_trial_period'            => 'false'
     }
   end
 
@@ -76,6 +78,15 @@ describe CandyCheck::AppStore::Receipt do
 
     it 'returns raw attributes' do
       subject.attributes.must_be_same_as attributes
+    end
+
+    it 'returns the subscription expiration date' do
+      expected = DateTime.new(2016, 6, 9, 13, 59, 40)
+      subject.expires_date.must_equal expected
+    end
+
+    it 'returns the trial status' do
+      subject.is_trial_period.must_be_false
     end
   end
 

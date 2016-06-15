@@ -52,6 +52,22 @@ describe CandyCheck::PlayStore::Verifier do
     end
   end
 
+  it 'uses a subscription verifier when booted' do
+    result = :stubbed
+    with_mocked_client do
+      subject.boot!
+    end
+    with_mocked_verifier(result) do
+      subject.verify_subscription(
+        package, product_id, token
+      ).must_be_same_as result
+
+      assert_recorded(
+        [@client, package, product_id, token]
+      )
+    end
+  end
+
   private
 
   def with_mocked_verifier(*results)
