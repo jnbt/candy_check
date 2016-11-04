@@ -87,7 +87,9 @@ Please see the class documentation for [`CandyCheck::AppStore::ReceiptCollection
 
 First initialize and **boot** a verifier instance for your application. This loads the API discovery and
 fetches the needed OAuth access token. When configuring a `cache_file` the discovery is loaded (or dumped) to
-this file:
+this file.
+
+> **Remarks:** Both `application_name` and `application_version` represent *your* application against Google's APIs. You may use any values here, but I suggest to refelect the name of the used service account here.
 
 ```ruby
 config = CandyCheck::PlayStore::Config.new(
