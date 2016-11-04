@@ -1,6 +1,6 @@
 module CandyCheck
   module PlayStore
-    # Describes a succeful subscription validation
+    # Describes a successfully validated subscription
     class Subscription
       include Utils::AttributeReader
 
@@ -80,7 +80,8 @@ module CandyCheck
         read_integer('paymentState')
       end
 
-      # Get the price amount for the subscription in micros in the payd currency
+      # Get the price amount for the subscription in micros in the payed
+      # currency
       # @return [Integer]
       def price_amount_micros
         read_integer('priceAmountMicros')

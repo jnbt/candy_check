@@ -5,3 +5,9 @@ AllCops:
     - 'vendor/**/*'
 Style/Documentation:
   Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/NumericPredicate:
+  Enabled: false
+Lint/UnifiedInteger:
+  Enabled: false

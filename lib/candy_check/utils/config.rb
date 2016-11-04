@@ -5,9 +5,11 @@ module CandyCheck
       # Initializes a new configuration from a hash
       # @param attributes [Hash]
       def initialize(attributes)
-        attributes.each do |k, v|
-          instance_variable_set "@#{k}", v
-        end if attributes.is_a? Hash
+        if attributes.is_a?(Hash)
+          attributes.each do |k, v|
+            instance_variable_set "@#{k}", v
+          end
+        end
         validate!
       end
 
