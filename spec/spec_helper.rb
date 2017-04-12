@@ -9,6 +9,8 @@ require 'minitest/around/spec'
 
 require 'webmock/minitest'
 
+require 'timecop'
+
 require_relative 'support/with_fixtures'
 require_relative 'support/with_temp_file'
 require_relative 'support/with_command'

@@ -34,6 +34,12 @@ describe CandyCheck::AppStore::ReceiptCollection do
       expected = DateTime.new(2015, 4, 15, 12, 52, 40)
       subject.expires_at.must_equal expected
     end
+
+    it 'is expired? one second ago' do
+      Timecop.freeze(Time.utc(2015, 04, 15, 12, 52, 40)) do
+        subject.expired?.must_be_true
+      end
+    end
   end
 
   describe 'unexpired trial subscription' do
