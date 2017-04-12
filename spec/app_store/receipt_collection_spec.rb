@@ -35,8 +35,8 @@ describe CandyCheck::AppStore::ReceiptCollection do
       subject.expires_at.must_equal expected
     end
 
-    it 'is expired? one second ago' do
-      Timecop.freeze(Time.utc(2015, 04, 15, 12, 52, 40)) do
+    it 'is expired? at same pointin time' do
+      Timecop.freeze(Time.utc(2015, 4, 15, 12, 52, 40)) do
         subject.expired?.must_be_true
       end
     end
