@@ -11,3 +11,14 @@ Style/NumericPredicate:
   Enabled: false
 Lint/UnifiedInteger:
   Enabled: false
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: ()
+    "%i": ()
+    "%w": ()
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+Security/MarshalLoad:
+  Exclude:
+    - 'lib/candy_check/play_store/discovery_repository.rb'
