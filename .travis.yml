@@ -2,13 +2,13 @@ language: ruby
 sudo: false
 cache: bundler
 rvm:
-  - '2.3.1'
-  - '2.3.0'
-  - '2.2'
-  - '2.1'
-  - '2.0'
+  - 2.4.1
+  - 2.3.4
+  - 2.2
+  - 2.1
+  - 2.0
   - ruby-head
-  - rbx-2
+  - rbx-3.74
   - jruby-20mode
   - jruby-21mode
   - jruby-head
@@ -16,4 +16,6 @@ matrix:
   allow_failures:
     - rvm: ruby-head
     - rvm: jruby-head
+    - rvm: rbx-3.74
   fast_finish: true
+before_install: gem install bundler -v 1.14.6
