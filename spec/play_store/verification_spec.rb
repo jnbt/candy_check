@@ -12,11 +12,11 @@ describe CandyCheck::PlayStore::Verification do
   describe 'valid' do
     let(:response) do
       {
-        'kind' => 'androidpublisher#productPurchase',
-        'purchaseTimeMillis' => '1421676237413',
-        'purchaseState' => 0,
-        'consumptionState' => 0,
-        'developerPayload' => 'payload that gets stored and returned'
+        kind: 'androidpublisher#productPurchase',
+        purchase_time_millis: 1_421_676_237_413,
+        purchase_state: 0,
+        consumption_state: 0,
+        developer_payload: 'payload that gets stored and returned'
       }
     end
 
@@ -38,7 +38,7 @@ describe CandyCheck::PlayStore::Verification do
   describe 'failure' do
     let(:response) do
       {
-        'error' => {
+        error: {
           'code'    => 401,
           'message' => 'The current user has insufficient permissions'
         }

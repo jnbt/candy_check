@@ -30,14 +30,14 @@ module CandyCheck
         if valid?
           Receipt.new(@response)
         else
-          VerificationFailure.new(@response['error'])
+          VerificationFailure.new(@response[:error])
         end
       end
 
       private
 
       def valid?
-        @response && @response['purchaseState'] && @response['consumptionState']
+        @response && @response[:purchase_state] && @response[:consumption_state]
       end
 
       def verify!

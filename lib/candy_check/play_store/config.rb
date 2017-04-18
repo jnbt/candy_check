@@ -1,3 +1,5 @@
+require 'google/api_client/auth/key_utils'
+
 module CandyCheck
   module PlayStore
     # Configure the usage of the official Google API SDK client

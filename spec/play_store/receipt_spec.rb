@@ -6,11 +6,11 @@ describe CandyCheck::PlayStore::Receipt do
   describe 'valid and non-consumed product' do
     let(:attributes) do
       {
-        'kind' => 'androidpublisher#productPurchase',
-        'purchaseTimeMillis' => '1421676237413',
-        'purchaseState' => 0,
-        'consumptionState' => 0,
-        'developerPayload' => 'payload that gets stored and returned'
+        kind: 'androidpublisher#productPurchase',
+        purchase_time_millis: 1_421_676_237_413,
+        purchase_state: 0,
+        consumption_state: 0,
+        developer_payload: 'payload that gets stored and returned'
       }
     end
 
@@ -53,11 +53,11 @@ describe CandyCheck::PlayStore::Receipt do
   describe 'valid and consumed product' do
     let(:attributes) do
       {
-        'kind' => 'androidpublisher#productPurchase',
-        'purchaseTimeMillis' => '1421676237413',
-        'purchaseState' => 0,
-        'consumptionState' => 1,
-        'developerPayload' => 'payload that gets stored and returned'
+        kind: 'androidpublisher#productPurchase',
+        purchase_time_millis: 1_421_676_237_413,
+        purchase_state: 0,
+        consumption_state: 1,
+        developer_payload: 'payload that gets stored and returned'
       }
     end
 
@@ -73,11 +73,11 @@ describe CandyCheck::PlayStore::Receipt do
   describe 'non-valid product' do
     let(:attributes) do
       {
-        'kind' => 'androidpublisher#productPurchase',
-        'purchaseTimeMillis' => '1421676237413',
-        'purchaseState' => 1,
-        'consumptionState' => 0,
-        'developerPayload' => 'payload that gets stored and returned'
+        kind: 'androidpublisher#productPurchase',
+        purchase_time_millis: 1_421_676_237_413,
+        purchase_state: 1,
+        consumption_state: 0,
+        developer_payload: 'payload that gets stored and returned'
       }
     end
 

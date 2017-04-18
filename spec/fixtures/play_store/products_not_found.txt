@@ -6,7 +6,7 @@ ETag: "ye6orv2F-1npMW3u9suM3a7C5Bo/xy4W57xFkYdtUdm4rpPIU-7grtg"
 Vary: Origin
 Vary: X-Origin
 WWW-Authenticate: Bearer realm="https://accounts.google.com/AuthSubRequest"
-Content-Type: application/json; charset=UTF-8
+Content-Type: text/html; charset=UTF-8
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 X-XSS-Protection: 1; mode=block
@@ -14,18 +14,4 @@ Content-Length: 83495
 Server: GSE
 Alternate-Protocol: 443:quic,p=0.02
 
-{
- "error": {
-  "errors": [
-   {
-    "domain": "global",
-    "reason": "applicationNotFound",
-    "message": "No application was found for the given package name.",
-    "locationType": "parameter",
-    "location": "packageName"
-   }
-  ],
-  "code": 404,
-  "message": "No application was found for the given package name."
- }
-}
+Not Found

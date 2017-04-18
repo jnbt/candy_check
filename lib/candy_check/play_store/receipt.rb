@@ -40,7 +40,7 @@ module CandyCheck
       #   * 1: Cancelled
       # @return [Fixnum]
       def purchase_state
-        read_integer('purchaseState')
+        read_integer(:purchase_state)
       end
 
       # The consumption state of the inapp product. Possible values are:
@@ -48,33 +48,33 @@ module CandyCheck
       #   * 1: Consumed
       # @return [Fixnum]
       def consumption_state
-        read_integer('consumptionState')
+        read_integer(:consumption_state)
       end
 
       # The developer payload which was used when buying the product
       # @return [String]
       def developer_payload
-        read('developerPayload')
+        read(:developer_payload)
       end
 
       # This kind represents an inappPurchase object in the androidpublisher
       # service.
       # @return [String]
       def kind
-        read('kind')
+        read(:kind)
       end
 
       # The time the product was purchased, in milliseconds since the
       # epoch (Jan 1, 1970)
       # @return [Fixnum]
       def purchase_time_millis
-        read_integer('purchaseTimeMillis')
+        read_integer(:purchase_time_millis)
       end
 
       # The date and time the product was purchased
       # @return [DateTime]
       def purchased_at
-        read_datetime_from_millis('purchaseTimeMillis')
+        read_datetime_from_millis(:purchase_time_millis)
       end
     end
   end
