@@ -43,9 +43,7 @@ called "[service account](https://developers.google.com/accounts/docs/OAuth2Serv
 new account by yourself, export the generated certificate file and grant the correct permissions to the account for
 your app using the [Google Developer Console](https://console.developers.google.com).
 
-Further more this gem uses the [official Ruby SDK](https://github.com/google/google-api-ruby-client) for the API interactions
-which suggest to use a locally cached service discovery. If you don't omit the `cache_file` configuration this is done
-automatically.
+Further more this gem uses the [official Ruby SDK](https://github.com/google/google-api-ruby-client) for the API interactions.
 
 If you have set up the Android app correctly you should get a [`purchaseToken`](http://developer.android.com/google/play/billing/billing_reference.html#getBuyIntent) per purchased item. You should use this string in combination with `packageName` and `productId`
 to verify the purchase.
@@ -85,9 +83,7 @@ Please see the class documentation for [`CandyCheck::AppStore::ReceiptCollection
 
 ### PlayStore
 
-First initialize and **boot** a verifier instance for your application. This loads the API discovery and
-fetches the needed OAuth access token. When configuring a `cache_file` the discovery is loaded (or dumped) to
-this file.
+First initialize and **boot** a verifier instance for your application. This fetches the needed OAuth access token.
 
 > **Remarks:** Both `application_name` and `application_version` represent *your* application against Google's APIs. You may use any values here, but I suggest to refelect the name of the used service account here.
 
@@ -97,8 +93,7 @@ config = CandyCheck::PlayStore::Config.new(
   application_version: '1.0',
   issuer: 'abcdefg@developer.gserviceaccount.com',
   key_file: 'local/google.p12',
-  key_secret: 'notasecret',
-  cache_file: 'tmp/candy_check_play_store_cache'
+  key_secret: 'notasecret'
 )
 verifier = CandyCheck::PlayStore::Verifier.new(config)
 verifier.boot!

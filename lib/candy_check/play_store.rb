@@ -1,4 +1,3 @@
-require 'candy_check/play_store/discovery_repository'
 require 'candy_check/play_store/client'
 require 'candy_check/play_store/config'
 require 'candy_check/play_store/receipt'

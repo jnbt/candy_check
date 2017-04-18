@@ -23,28 +23,6 @@ describe CandyCheck::PlayStore::Config do
     end
   end
 
-  describe 'maximal attributes' do
-    let(:attributes) do
-      {
-        application_name: 'the_name',
-        application_version: 'the_version',
-        issuer: 'the_issuer',
-        key_file: 'the_key_file',
-        key_secret: 'the_key_secret',
-        cache_file: 'the_cache_file'
-      }
-    end
-
-    it 'initializes and validates correctly' do
-      subject.application_name.must_equal 'the_name'
-      subject.application_version.must_equal 'the_version'
-      subject.issuer.must_equal 'the_issuer'
-      subject.key_file.must_equal 'the_key_file'
-      subject.key_secret.must_equal 'the_key_secret'
-      subject.cache_file.must_equal 'the_cache_file'
-    end
-  end
-
   describe 'invalid attributes' do
     it 'needs application_name' do
       assert_raises_missing :application_name

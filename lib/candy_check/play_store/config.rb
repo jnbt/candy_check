@@ -8,8 +8,6 @@ module CandyCheck
       attr_reader :application_name
       # @return [String] your application's version
       attr_reader :application_version
-      # @return [String] an optional file to cache the discovery API result
-      attr_reader :cache_file
       # @return [String] your issuer's service account e-mail
       attr_reader :issuer
       # @return [String] the path to your local *.p12 certificate file
@@ -37,6 +35,11 @@ module CandyCheck
         @api_key ||= begin
           Google::APIClient::KeyUtils.load_from_pkcs12(key_file, key_secret)
         end
+      end
+
+      # @deprecated No discovery cache is needed anymore
+      def cache_file
+        warn '[DEPRECATION] `cache_file` is obsolete.'
       end
 
       private
