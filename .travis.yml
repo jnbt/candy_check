@@ -9,9 +9,11 @@ rvm:
   - 2.0
   - ruby-head
   - rbx-3.74
-  - jruby-20mode
-  - jruby-21mode
+  - jruby
   - jruby-head
+env:
+  global:
+    - JRUBY_OPTS="--2.0"
 matrix:
   allow_failures:
     - rvm: ruby-head
