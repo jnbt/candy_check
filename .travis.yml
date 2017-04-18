@@ -8,7 +8,6 @@ rvm:
   - 2.1
   - 2.0
   - ruby-head
-  - rbx-3.74
   - jruby-1.7.26
   - jruby-head
 env:
@@ -18,6 +17,5 @@ matrix:
   allow_failures:
     - rvm: ruby-head
     - rvm: jruby-head
-    - rvm: rbx-3.74
   fast_finish: true
 before_install: gem install bundler -v 1.14.6
