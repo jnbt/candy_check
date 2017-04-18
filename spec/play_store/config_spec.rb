@@ -23,6 +23,25 @@ describe CandyCheck::PlayStore::Config do
     end
   end
 
+  describe 'cache_file' do
+    let(:deprecated_attributes) do
+      attributes.merge(
+        cache_file: 'foo.txt'
+      )
+    end
+
+    it 'warns about deprecation' do
+      config = nil
+      proc {
+        config = CandyCheck::PlayStore::Config.new(deprecated_attributes)
+      }.must_output(nil, "[DEPRECATION] `cache_file` is obsolete.\n")
+
+      proc {
+        config.cache_file.must_equal 'foo.txt'
+      }.must_output(nil, "[DEPRECATION] `cache_file` is obsolete.\n")
+    end
+  end
+
   describe 'invalid attributes' do
     it 'needs application_name' do
       assert_raises_missing :application_name

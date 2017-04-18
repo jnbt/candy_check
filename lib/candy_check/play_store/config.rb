@@ -28,6 +28,7 @@ module CandyCheck
       #   )
       def initialize(attributes)
         super
+        warn_deprecated_cache_file if attributes.key?(:cache_file)
       end
 
       # @return [String] the decrypted API key from Google
@@ -39,10 +40,15 @@ module CandyCheck
 
       # @deprecated No discovery cache is needed anymore
       def cache_file
-        warn '[DEPRECATION] `cache_file` is obsolete.'
+        warn_deprecated_cache_file
+        @cache_file
       end
 
       private
+
+      def warn_deprecated_cache_file
+        warn '[DEPRECATION] `cache_file` is obsolete.'
+      end
 
       def validate!
         validates_presence(:application_name)
