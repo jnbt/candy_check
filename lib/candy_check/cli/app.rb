@@ -25,20 +25,17 @@ module CandyCheck
 
       desc 'play_store PACKAGE PRODUCT_ID TOKEN', 'Verify PlayStore purchase'
       method_option :issuer,
-                    required: true,
                     type: :string,
                     aliases: '-i',
                     desc: 'The issuer\'s email address for the API call'
       method_option :key_file,
-                    required: true,
                     type: :string,
                     aliases: '-k',
-                    desc: 'The key file to use for API authentication'
+                    desc: '[DEPRECATION] The key file for API authentication'
       method_option :key_secret,
-                    default: 'notasecret',
                     type: :string,
                     aliases: '-s',
-                    desc: 'The secret to decrypt the key_file'
+                    desc: '[DEPRECATION] The secret to decrypt the key file'
       method_option :application_name,
                     default: 'CandyCheck',
                     type: :string,
@@ -49,6 +46,10 @@ module CandyCheck
                     type: :string,
                     aliases: '-v',
                     desc: 'Your application\'s version'
+      method_option :secrets_file,
+                    type: :string,
+                    aliases: '-c',
+                    desc: 'The client secrets JSON file to use'
       def play_store(package, product_id, token)
         Commands::PlayStore.run(package, product_id, token, options)
       end

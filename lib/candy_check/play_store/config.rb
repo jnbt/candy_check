@@ -1,5 +1,3 @@
-require 'google/api_client/auth/key_utils'
-
 module CandyCheck
   module PlayStore
     # Configure the usage of the official Google API SDK client
@@ -10,10 +8,17 @@ module CandyCheck
       attr_reader :application_version
       # @return [String] your issuer's service account e-mail
       attr_reader :issuer
+      # @deprecated Use secrets_file instead
       # @return [String] the path to your local *.p12 certificate file
       attr_reader :key_file
+      # @deprecated Use secrets_file instead
       # @return [String] the secret to load your certificate file
       attr_reader :key_secret
+      # @deprecated No discovery cache is used anymore
+      # @return [String] an optional file to cache the discovery API result
+      attr_reader :cache_file
+      # @return [String] the path to your local *.json secrets file
+      attr_reader :secrets_file
 
       # Initializes a new configuration from a hash
       # @param attributes [Hash]
@@ -21,41 +26,32 @@ module CandyCheck
       #   ClientConfig.new(
       #     application_name: 'YourApplication',
       #     application_version: '1.0',
-      #     cache_file: 'tmp/google_api_cache',
       #     issuer: 'abcdefg@developer.gserviceaccount.com',
-      #     key_file: 'local/google.p12',
-      #     key_secret: 'notasecret'
+      #     secrets_file: 'local/client_secrets.json'
       #   )
       def initialize(attributes)
         super
-        warn_deprecated_cache_file if attributes.key?(:cache_file)
       end
 
-      # @return [String] the decrypted API key from Google
-      def api_key
-        @api_key ||= begin
-          Google::APIClient::KeyUtils.load_from_pkcs12(key_file, key_secret)
-        end
-      end
-
-      # @deprecated No discovery cache is needed anymore
-      def cache_file
-        warn_deprecated_cache_file
-        @cache_file
+      # @return [Boolean] True if a secret_file is given
+      def use_client_secrets?
+        !secrets_file.nil?
       end
 
       private
 
-      def warn_deprecated_cache_file
-        warn '[DEPRECATION] `cache_file` is obsolete.'
-      end
+      KEY_DEPRECATION = 'will be removed in' \
+        ' the next version. Use secrets_file instead. For more information' \
+        ' see: https://github.com/jnbt/candy_check#playstore-1'.freeze
 
       def validate!
         validates_presence(:application_name)
         validates_presence(:application_version)
         validates_presence(:issuer)
-        validates_presence(:key_file)
-        validates_presence(:key_secret)
+
+        deprecate(:cache_file, 'is obsolete.')
+        deprecate(:key_file, KEY_DEPRECATION)
+        deprecate(:key_secret, KEY_DEPRECATION)
       end
     end
   end

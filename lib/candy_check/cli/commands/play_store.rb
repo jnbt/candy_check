@@ -9,8 +9,9 @@ module CandyCheck
         # @param token [String]
         # @param options [Hash]
         # @option options [String] :issuer to use for API access
-        # @option options [String] :key_file to use for API access
-        # @option options [String] :key_secret to decrypt the key file
+        # @option options [String] :key_file [DEPRECATION] to use for API access
+        # @option options [String] :key_secret [DEPRECATION] to decrypt the key
+        # @option options [String] :secrets_file to use for API access
         # @option options [String] :application_name for the API call
         # @option options [String] :application_version for the API call
         def initialize(package, product_id, token, options)

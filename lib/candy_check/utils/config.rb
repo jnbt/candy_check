@@ -37,6 +37,10 @@ module CandyCheck
         raise ArgumentError, "Configuration field #{name} should be "\
                             "one of: #{values.join(', ')}"
       end
+
+      def deprecate(name, msg)
+        warn "[DEPRECATION] `#{name}` #{msg}" if send(name)
+      end
     end
   end
 end

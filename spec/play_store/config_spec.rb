@@ -7,9 +7,7 @@ describe CandyCheck::PlayStore::Config do
     {
       application_name: 'the_name',
       application_version: 'the_version',
-      issuer: 'the_issuer',
-      key_file: 'the_key_file',
-      key_secret: 'the_key_secret'
+      issuer: 'the_issuer'
     }
   end
 
@@ -18,8 +16,26 @@ describe CandyCheck::PlayStore::Config do
       subject.application_name.must_equal 'the_name'
       subject.application_version.must_equal 'the_version'
       subject.issuer.must_equal 'the_issuer'
-      subject.key_file.must_equal 'the_key_file'
-      subject.key_secret.must_equal 'the_key_secret'
+    end
+  end
+
+  describe 'key_file and key_secret' do
+    let(:deprecated_attributes) do
+      attributes.merge(
+        key_file: 'the_key_file',
+        key_secret: 'the_key_secret'
+      )
+    end
+
+    it 'warns about deprecation' do
+      config = nil
+      proc {
+        config = CandyCheck::PlayStore::Config.new(deprecated_attributes)
+      }.must_output(nil, /key_file.*key_secret/m)
+    end
+
+    it 'doesnt uses client_secrets' do
+      subject.use_client_secrets?.must_be_false
     end
   end
 
@@ -34,11 +50,24 @@ describe CandyCheck::PlayStore::Config do
       config = nil
       proc {
         config = CandyCheck::PlayStore::Config.new(deprecated_attributes)
-      }.must_output(nil, "[DEPRECATION] `cache_file` is obsolete.\n")
+      }.must_output(nil, /cache_file/)
+    end
+  end
 
-      proc {
-        config.cache_file.must_equal 'foo.txt'
-      }.must_output(nil, "[DEPRECATION] `cache_file` is obsolete.\n")
+  describe 'client_secrets' do
+    include WithFixtures
+
+    let(:attributes) do
+      {
+        application_name: 'the_name',
+        application_version: 'the_version',
+        issuer: 'the_issuer',
+        secrets_file: fixture_path('play_store', 'client_secrets.json')
+      }
+    end
+
+    it 'uses client_secrets' do
+      subject.use_client_secrets?.must_be_true
     end
   end
 
@@ -55,14 +84,6 @@ describe CandyCheck::PlayStore::Config do
       assert_raises_missing :issuer
     end
 
-    it 'needs key_file' do
-      assert_raises_missing :key_file
-    end
-
-    it 'needs key_secret' do
-      assert_raises_missing :key_secret
-    end
-
     private
 
     def assert_raises_missing(name)
@@ -70,24 +91,6 @@ describe CandyCheck::PlayStore::Config do
       proc do
         subject
       end.must_raise ArgumentError
-    end
-  end
-
-  describe 'p12 certificate' do
-    include WithFixtures
-
-    let(:attributes) do
-      {
-        application_name: 'the_name',
-        application_version: 'the_version',
-        issuer: 'the_issuer',
-        key_file: fixture_path('play_store', 'dummy.p12'),
-        key_secret: 'notasecret'
-      }
-    end
-
-    it 'load the api_key from a file' do
-      subject.api_key.wont_be_nil
     end
   end
 end

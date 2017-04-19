@@ -1,5 +1,4 @@
 require 'multi_json'
-require 'google/apis/androidpublisher_v2'
 
 module CandyCheck
   module PlayStore
@@ -18,6 +17,7 @@ module CandyCheck
       Androidpublisher = Google::Apis::AndroidpublisherV2
 
       # Error thrown if the discovery of the API wasn't successful
+      # @deprecated No discovery is used anymore
       class DiscoveryError < RuntimeError; end
 
       # API endpoint
@@ -84,13 +84,8 @@ module CandyCheck
       end
 
       def authorize!
-        api_client.authorization = Signet::OAuth2::Client.new(
-          token_credential_uri: API_URL,
-          audience:             API_URL,
-          scope:                API_SCOPE,
-          issuer:               config.issuer,
-          signing_key:          config.api_key
-        )
+        builder = AuthorizationBuilder.new(config)
+        api_client.authorization = builder.build_authorization
         api_client.authorization.fetch_access_token!
       end
 
