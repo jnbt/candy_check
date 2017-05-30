@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe CandyCheck::AppStore::Verifier do
@@ -105,6 +107,38 @@ describe CandyCheck::AppStore::Verifier do
       failure = get_failure(21_007)
       with_mocked_verifier(failure, receipt) do
         subject.verify_subscription(data, secret).must_be_same_as receipt
+        assert_recorded(
+          [production_endpoint, data, secret],
+          [sandbox_endpoint, data, secret]
+        )
+      end
+    end
+  end
+
+  describe 'subscription' do
+    let(:environment) { :production }
+
+    it 'uses production endpoint without retry on success' do
+      with_mocked_verifier(receipt_collection) do
+        subject.verify_subscription_with_full_response(
+          data, secret
+        ).must_be_same_as receipt_collection
+        assert_recorded([production_endpoint, data, secret])
+      end
+    end
+
+    it 'only uses production endpoint for normal failures' do
+      failure = get_failure(21_000)
+      with_mocked_verifier(failure) do
+        subject.verify_subscription_with_full_response(data, secret).must_be_same_as failure
+        assert_recorded([production_endpoint, data, secret])
+      end
+    end
+
+    it 'retries production endpoint for redirect error' do
+      failure = get_failure(21_007)
+      with_mocked_verifier(failure, receipt) do
+        subject.verify_subscription_with_full_response(data, secret).must_be_same_as receipt
         assert_recorded(
           [production_endpoint, data, secret],
           [sandbox_endpoint, data, secret]

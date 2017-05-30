@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 module CandyCheck
   module AppStore
     # Verifies receipts against the verification servers.
     # The call return either an {Receipt} or a {VerificationFailure}
     class Verifier
       # HTTPS endpoint for production receipts
-      PRODUCTION_ENDPOINT = 'https://buy.itunes.apple.com/verifyReceipt'.freeze
+      PRODUCTION_ENDPOINT = 'https://buy.itunes.apple.com/verifyReceipt'
       # HTTPS endpoint for sandbox receipts
-      SANDBOX_ENDPOINT = 'https://sandbox.itunes.apple.com/verifyReceipt'.freeze
+      SANDBOX_ENDPOINT = 'https://sandbox.itunes.apple.com/verifyReceipt'
       # Status code from production endpoint when receiving a sandbox
       # receipt which occurs during the app's review process
       REDIRECT_TO_SANDBOX_CODE = 21_007
@@ -41,6 +43,16 @@ module CandyCheck
       # @return [Verification] otherwise
       def verify_subscription(receipt_data, secret = nil)
         @verifier = SubscriptionVerification
+        fetch_receipt_information(receipt_data, secret)
+      end
+
+      # Calls a subscription verification for the given input
+      # @param receipt_data [String] the raw data to be verified
+      # @param secret [string] the optional shared secret
+      # @return [SubscriptionReceipt] if successful
+      # @return [VerificationFailure] otherwise
+      def verify_subscription_with_full_response(receipt_data, secret = nil)
+        @verifier = FullSubscriptionVerification
         fetch_receipt_information(receipt_data, secret)
       end
 

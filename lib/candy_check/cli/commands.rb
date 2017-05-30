@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'candy_check/cli/commands/base'
 require 'candy_check/cli/commands/app_store'
 require 'candy_check/cli/commands/play_store'

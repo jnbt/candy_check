@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CandyCheck
   module AppStore
     # Store multiple {Receipt}s in order to perform collective operation on them

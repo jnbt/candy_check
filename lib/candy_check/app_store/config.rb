@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CandyCheck
   module AppStore
     # Configure the verifier
