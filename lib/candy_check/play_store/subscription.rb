@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module CandyCheck
   module PlayStore
     # Describes a succeful subscription validation

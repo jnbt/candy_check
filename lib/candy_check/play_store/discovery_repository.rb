@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module CandyCheck
   module PlayStore
     # A file-based repository to cache a local copy of the Google API

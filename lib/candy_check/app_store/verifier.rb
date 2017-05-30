@@ -1,12 +1,13 @@
+# frozen_string_literal: true
 module CandyCheck
   module AppStore
     # Verifies receipts against the verification servers.
     # The call return either an {Receipt} or a {VerificationFailure}
     class Verifier
       # HTTPS endpoint for production receipts
-      PRODUCTION_ENDPOINT = 'https://buy.itunes.apple.com/verifyReceipt'.freeze
+      PRODUCTION_ENDPOINT = 'https://buy.itunes.apple.com/verifyReceipt'
       # HTTPS endpoint for sandbox receipts
-      SANDBOX_ENDPOINT = 'https://sandbox.itunes.apple.com/verifyReceipt'.freeze
+      SANDBOX_ENDPOINT = 'https://sandbox.itunes.apple.com/verifyReceipt'
       # Status code from production endpoint when receiving a sandbox
       # receipt which occurs during the app's review process
       REDIRECT_TO_SANDBOX_CODE = 21_007

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module CandyCheck
   module AppStore
     # Verifies a latest_receipt_info block against a verification server.

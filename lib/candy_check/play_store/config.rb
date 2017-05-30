@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module CandyCheck
   module PlayStore
     # Configure the usage of the official Google API SDK client

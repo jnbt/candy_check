@@ -1,4 +1,5 @@
 # coding: utf-8
+# frozen_string_literal: true
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'candy_check/version'
@@ -23,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'google-api-client', '~> 0.8.6'
   spec.add_dependency 'thor',              '~> 0.19'
 
-  spec.add_development_dependency 'rubocop',         '~> 0.39'
+  spec.add_development_dependency 'rubocop',         '~> 0.41'
   spec.add_development_dependency 'inch',            '~> 0.5'
   spec.add_development_dependency 'bundler',         '~> 1.7'
   spec.add_development_dependency 'rake',            '~> 11.1'

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 describe CandyCheck::PlayStore::SubscriptionVerification do
@@ -85,8 +86,7 @@ describe CandyCheck::PlayStore::SubscriptionVerification do
   DummyGoogleSubsClient = Struct.new(:response) do
     attr_reader :package, :product_id, :token
 
-    def boot!
-    end
+    def boot!; end
 
     def verify_subscription(package, product_id, token)
       @package = package

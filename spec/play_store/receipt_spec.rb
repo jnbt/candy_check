@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 describe CandyCheck::PlayStore::Receipt do
@@ -45,7 +46,7 @@ describe CandyCheck::PlayStore::Receipt do
     end
 
     it 'returns the purchased_at' do
-      expected = DateTime.new(2015, 1, 19, 14, 03, 57)
+      expected = DateTime.new(2015, 1, 19, 14, 0o3, 57)
       subject.purchased_at.must_equal expected
     end
   end

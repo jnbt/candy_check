@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module CandyCheck
   module PlayStore
     # Verifies purchase tokens against the Google API.

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'candy_check/version'
 require 'candy_check/utils'
 require 'candy_check/app_store'

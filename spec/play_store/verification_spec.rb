@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 describe CandyCheck::PlayStore::Verification do
@@ -69,8 +70,7 @@ describe CandyCheck::PlayStore::Verification do
   DummyGoogleClient = Struct.new(:response) do
     attr_reader :package, :product_id, :token
 
-    def boot!
-    end
+    def boot!; end
 
     def verify(package, product_id, token)
       @package = package
