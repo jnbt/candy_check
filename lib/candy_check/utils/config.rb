@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CandyCheck
   module Utils
     # Very basic base implementation to store and validate a configuration

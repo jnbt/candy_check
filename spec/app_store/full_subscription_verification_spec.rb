@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-describe CandyCheck::AppStore::SubscriptionVerification do
+describe CandyCheck::AppStore::FullSubscriptionVerification do
   subject do
-    CandyCheck::AppStore::SubscriptionVerification.new(endpoint, data, secret)
+    CandyCheck::AppStore::FullSubscriptionVerification.new(endpoint, data, secret)
   end
   let(:endpoint) { 'https://some.endpoint' }
   let(:data)     { 'some_data'   }
@@ -36,7 +36,7 @@ describe CandyCheck::AppStore::SubscriptionVerification do
     end
   end
 
-  it 'returns a collection of receipt when status is 0 and receipts exists' do
+  it 'returns a verification failure when status is 0 and receipt is missing' do
     response = {
       'status' => 0,
       'latest_receipt_info' => [
@@ -46,11 +46,40 @@ describe CandyCheck::AppStore::SubscriptionVerification do
     }
     with_mocked_response(response) do
       result = subject.call!
-      result.must_be_instance_of CandyCheck::AppStore::ReceiptCollection
-      result.receipts.must_be_instance_of Array
-      last = result.receipts.last
+      result.must_be_instance_of CandyCheck::AppStore::VerificationFailure
+      result.code.must_equal(0)
+    end
+  end
+
+  it 'returns a verification failure when status is 0 and latest_receipt_info is missing' do
+    response = {
+      'status' => 0,
+      'receipt' => { 'item_id' => 'some_id' }
+    }
+    with_mocked_response(response) do
+      result = subject.call!
+      result.must_be_instance_of CandyCheck::AppStore::VerificationFailure
+      result.code.must_equal(0)
+    end
+  end
+
+  it 'returns a struct containing a Receipt and a ReceiptCollection when status is 0 and receipt and latest_receipt_info is present' do
+    response = {
+      'status' => 0,
+      'receipt' => { 'item_id' => 'some_id' },
+      'latest_receipt_info' => [
+        { 'item_id' => 'some_id' },
+        { 'item_id' => 'some_other_id' }
+      ]
+    }
+    with_mocked_response(response) do
+      result = subject.call!
+      result.receipt_collection.must_be_instance_of CandyCheck::AppStore::ReceiptCollection
+      result.receipt_collection.receipts.must_be_instance_of Array
+      last = result.receipt_collection.receipts.last
       last.must_be_instance_of CandyCheck::AppStore::Receipt
       last.item_id.must_equal('some_other_id')
+      result.receipt.must_be_instance_of CandyCheck::AppStore::Receipt
     end
   end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CandyCheck
   module PlayStore
     # Describes a successful response from the Google verification server

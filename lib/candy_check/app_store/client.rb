@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'multi_json'
 require 'net/http'
 
@@ -7,7 +9,7 @@ module CandyCheck
     # servers (either sandbox or production).
     class Client
       # Mimetype for JSON objects
-      JSON_MIME_TYPE = 'application/json'.freeze
+      JSON_MIME_TYPE = 'application/json'
 
       # Initialize a new client bound to an endpoint
       # @param endpoint_url [String]

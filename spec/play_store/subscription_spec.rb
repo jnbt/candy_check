@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe CandyCheck::PlayStore::Subscription do
@@ -46,11 +48,11 @@ describe CandyCheck::PlayStore::Subscription do
     end
 
     it 'returns the start_time_millis' do
-      subject.start_time_millis.must_equal 145_954_011_324_4
+      subject.start_time_millis.must_equal 1_459_540_113_244
     end
 
     it 'returns the expiry_time_millis' do
-      subject.expiry_time_millis.must_equal 146_213_208_861_0
+      subject.expiry_time_millis.must_equal 1_462_132_088_610
     end
 
     it 'returns the starts_at' do

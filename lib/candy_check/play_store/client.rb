@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CandyCheck
   module PlayStore
     # A client which uses the official Google API SDK to authenticate
@@ -15,13 +17,13 @@ module CandyCheck
       class DiscoveryError < RuntimeError; end
 
       # API endpoint
-      API_URL      = 'https://accounts.google.com/o/oauth2/token'.freeze
+      API_URL      = 'https://accounts.google.com/o/oauth2/token'
       # API scope for Android services
-      API_SCOPE    = 'https://www.googleapis.com/auth/androidpublisher'.freeze
+      API_SCOPE    = 'https://www.googleapis.com/auth/androidpublisher'
       # API discovery namespace
-      API_DISCOVER = 'androidpublisher'.freeze
+      API_DISCOVER = 'androidpublisher'
       # API version
-      API_VERSION  = 'v2'.freeze
+      API_VERSION  = 'v2'
 
       # Initializes a client using a configuration.
       # @param config [ClientConfig]

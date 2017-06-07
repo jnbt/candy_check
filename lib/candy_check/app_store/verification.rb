@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CandyCheck
   module AppStore
     # Verifies a receipt block against a verification server.
@@ -37,8 +39,16 @@ module CandyCheck
 
       private
 
+      def response_status_ok?
+        @response && @response['status'] == STATUS_OK
+      end
+
+      def response_has_receipt?
+        @response && @response['receipt']
+      end
+
       def valid?
-        @response && @response['status'] == STATUS_OK && @response['receipt']
+        response_status_ok? && response_has_receipt?
       end
 
       def verify!

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CandyCheck
   module AppStore
     # Represents a failing call against the verification server
@@ -64,6 +66,8 @@ module CandyCheck
       add 21_008, 'This receipt is from the production environment, but it' \
                   ' was sent to the test environment for verification.' \
                   ' Send it to the production environment instead.'
+      add 21_009, 'There was a problem with the (internal) receipt validation' \
+                 ' process. Please try again.'
       freeze!
     end
   end
