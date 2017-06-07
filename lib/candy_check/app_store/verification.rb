@@ -40,11 +40,15 @@ module CandyCheck
       private
 
       def response_status_ok?
-        @response['status'] == STATUS_OK
+        @response && @response['status'] == STATUS_OK
+      end
+
+      def response_has_receipt?
+        @response && @response['receipt']
       end
 
       def valid?
-        @response && response_status_ok? && @response['receipt']
+        response_status_ok? && response_has_receipt?
       end
 
       def verify!
