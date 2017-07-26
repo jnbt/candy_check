@@ -8,11 +8,11 @@ rvm:
   - 2.1
   - 2.0
   - ruby-head
-  - jruby-1.7.26
+  - jruby-9.1
   - jruby-head
 env:
   global:
-    - JRUBY_OPTS="--2.0"
+    - JRUBY_OPTS="--debug"
 matrix:
   allow_failures:
     - rvm: ruby-head

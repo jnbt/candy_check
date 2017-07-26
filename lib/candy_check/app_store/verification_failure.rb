@@ -31,7 +31,15 @@ module CandyCheck
         private
 
         def fallback(code)
-          new(code || -1, 'Unknown error')
+          if internal_error?(code)
+            new(code, 'Internal data access error')
+          else
+            new(code || -1, 'Unknown error')
+          end
+        end
+
+        def internal_error?(code)
+          code && code >= 21_100 && code <= 21_199
         end
 
         def known
@@ -57,13 +65,15 @@ module CandyCheck
       add 21_006, 'This receipt is valid but the subscription has expired.' \
                   ' When this status code is returned to your server, the' \
                   ' receipt data is also decoded and returned as part of'\
-                 ' the response.'
+                  ' the response.'
       add 21_007, 'This receipt is from the test environment, but it was' \
                   ' sent to the production environment for verification.' \
                   ' Send it to the test environment instead.'
       add 21_008, 'This receipt is from the production environment, but it' \
                   ' was sent to the test environment for verification.' \
                   ' Send it to the production environment instead.'
+      add 21_010, 'This receipt could not be authorized.' \
+                  ' Treat this the same as if a purchase was never made.'
       freeze!
     end
   end

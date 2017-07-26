@@ -6,6 +6,7 @@ require 'candy_check/app_store/verification'
 require 'candy_check/app_store/subscription_verification'
 require 'candy_check/app_store/verification_failure'
 require 'candy_check/app_store/verifier'
+require 'candy_check/app_store/unified'
 
 module CandyCheck
   # Module to request and verify a AppStore receipt

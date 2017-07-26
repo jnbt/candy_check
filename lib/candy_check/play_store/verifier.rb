@@ -40,7 +40,7 @@ module CandyCheck
       # @param package [String] to query
       # @param subscription_id [String] to query
       # @param token [String] to use for authentication
-      # @return [Receipt] if successful
+      # @return [Subscription] if successful
       # @return [VerificationFailure] otherwise
       def verify_subscription(package, subscription_id, token)
         check_boot!

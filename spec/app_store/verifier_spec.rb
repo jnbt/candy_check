@@ -113,6 +113,43 @@ describe CandyCheck::AppStore::Verifier do
     end
   end
 
+  describe 'unified' do
+    let(:environment) { :production }
+    let(:verified_response) do
+      CandyCheck::AppStore::Unified::VerifiedResponse.new({})
+    end
+
+    subject do
+      CandyCheck::AppStore::Verifier.new(config).verify_unified(data, secret)
+    end
+
+    it 'uses production endpoint without retry on success' do
+      with_mocked_verifier(verified_response) do
+        subject.must_be_same_as verified_response
+        assert_recorded([production_endpoint, data, secret])
+      end
+    end
+
+    it 'only uses production endpoint for normal failures' do
+      failure = get_failure(21_000)
+      with_mocked_verifier(failure) do
+        subject.must_be_same_as failure
+        assert_recorded([production_endpoint, data, secret])
+      end
+    end
+
+    it 'retries production endpoint for redirect error' do
+      failure = get_failure(21_007)
+      with_mocked_verifier(failure, verified_response) do
+        subject.must_be_same_as verified_response
+        assert_recorded(
+          [production_endpoint, data, secret],
+          [sandbox_endpoint, data, secret]
+        )
+      end
+    end
+  end
+
   private
 
   def with_mocked_verifier(*results)

@@ -44,6 +44,17 @@ module CandyCheck
         fetch_receipt_information(receipt_data, secret)
       end
 
+      # Calls a verification for the given receipt data which presents in
+      # ios7 style grand unified format
+      # @param receipt_data [String] the raw data to be verified
+      # @param secret [string] the optional shared secret
+      # @return [Unified::VerifiedResponse] if successful
+      # @return [VerificationFailure] otherwise
+      def verify_unified(receipt_data, secret = nil)
+        @verifier = Unified::Verification
+        fetch_receipt_information(receipt_data, secret)
+      end
+
       private
 
       def fetch_receipt_information(receipt_data, secret = nil)

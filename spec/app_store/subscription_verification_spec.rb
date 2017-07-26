@@ -8,6 +8,8 @@ describe CandyCheck::AppStore::SubscriptionVerification do
   let(:data)     { 'some_data'   }
   let(:secret)   { 'some_secret' }
 
+  include AppStore::WithMockedResponse
+
   it 'returns a verification failure for status != 0' do
     with_mocked_response('status' => 21_000) do |client, recorded|
       result = subject.call!
@@ -49,30 +51,6 @@ describe CandyCheck::AppStore::SubscriptionVerification do
       last = result.receipts.last
       last.must_be_instance_of CandyCheck::AppStore::Receipt
       last.item_id.must_equal('some_other_id')
-    end
-  end
-
-  private
-
-  DummyClient = Struct.new(:response) do
-    attr_reader :receipt_data, :secret
-
-    def verify(receipt_data, secret)
-      @receipt_data = receipt_data
-      @secret = secret
-      response
-    end
-  end
-
-  def with_mocked_response(response)
-    recorded = []
-    dummy    = DummyClient.new(response)
-    stub     = proc do |*args|
-      recorded << args
-      dummy
-    end
-    CandyCheck::AppStore::Client.stub :new, stub do
-      yield dummy, recorded
     end
   end
 end
