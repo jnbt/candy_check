@@ -17,7 +17,7 @@ module CandyCheck
       private
 
       def subscription_receipt
-        receipt = Receipt.new(@response['receipt'])
+        receipt = instance_receipt(@response['receipt'])
         receipt_collection = ReceiptCollection.new(
           @response['latest_receipt_info']
         )

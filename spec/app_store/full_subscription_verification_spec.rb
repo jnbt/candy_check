@@ -40,8 +40,8 @@ describe CandyCheck::AppStore::FullSubscriptionVerification do
     response = {
       'status' => 0,
       'latest_receipt_info' => [
-        { 'item_id' => 'some_id' },
-        { 'item_id' => 'some_other_id' }
+        { 'product_id' => 'some_id' },
+        { 'product_id' => 'some_other_id' }
       ]
     }
     with_mocked_response(response) do
@@ -54,7 +54,7 @@ describe CandyCheck::AppStore::FullSubscriptionVerification do
   it 'returns a verification failure when status is 0 and latest_receipt_info is missing' do
     response = {
       'status' => 0,
-      'receipt' => { 'item_id' => 'some_id' }
+      'receipt' => { 'product_id' => 'some_id' }
     }
     with_mocked_response(response) do
       result = subject.call!
@@ -66,10 +66,10 @@ describe CandyCheck::AppStore::FullSubscriptionVerification do
   it 'returns a struct containing a Receipt and a ReceiptCollection when status is 0 and receipt and latest_receipt_info is present' do
     response = {
       'status' => 0,
-      'receipt' => { 'item_id' => 'some_id' },
+      'receipt' => { 'product_id' => 'some_id' },
       'latest_receipt_info' => [
-        { 'item_id' => 'some_id' },
-        { 'item_id' => 'some_other_id' }
+        { 'product_id' => 'some_id' },
+        { 'product_id' => 'some_other_id' }
       ]
     }
     with_mocked_response(response) do
@@ -77,9 +77,9 @@ describe CandyCheck::AppStore::FullSubscriptionVerification do
       result.receipt_collection.must_be_instance_of CandyCheck::AppStore::ReceiptCollection
       result.receipt_collection.receipts.must_be_instance_of Array
       last = result.receipt_collection.receipts.last
-      last.must_be_instance_of CandyCheck::AppStore::Receipt
-      last.item_id.must_equal('some_other_id')
-      result.receipt.must_be_instance_of CandyCheck::AppStore::Receipt
+      last.must_be_instance_of CandyCheck::AppStore::Unified::InAppReceipt
+      last.product_id.must_equal('some_other_id')
+      result.receipt.must_be_instance_of CandyCheck::AppStore::Unified::AppReceipt
     end
   end
 

@@ -61,6 +61,38 @@ module CandyCheck
           read_datetime_from_string('cancellation_date')
         end
 
+        # The expiration date for the subscription,
+        # expressed as the number of milliseconds
+        # since January 1, 1970, 00:00:00 GMT.
+        # @return [DateTime]
+        def expires_date
+          read_datetime_from_string('expires_date')
+        end
+
+        EXPIRATION_INTENTS = {
+          1 => 'Customer canceled their subscription.',
+          2 => 'Billing error; for example customer’s payment information'\
+               'was no longer valid.',
+          3 => 'Customer did not agree to a recent price increase.',
+          4 => 'Product was not available for purchase at the time of renewal.',
+          5 => 'Unknown error.'
+        }.freeze
+
+        # For an expired subscription, the reason for the
+        # subscription expiration.
+        # @return [Integer]
+        def expiration_intent
+          read_integer('expiration_intent')
+        end
+
+        # For an expired subscription, the reason for the
+        # subscription expiration.
+        # @return [String]
+        def expiration_intent_string
+          code = expiration_intent
+          code && EXPIRATION_INTENTS[code]
+        end
+
         CANCELATION_REASONS = {
           1 => 'Customer canceled their transaction due to an actual' \
                'or perceived issue within your app.',
@@ -69,10 +101,23 @@ module CandyCheck
         }.freeze
 
         # For a transaction that was cancelled, the reason for cancellation
-        # @return [String]
+        # @return [Integer]
         def cancellation_reason
-          code = read_integer('cancellation_reason')
+          read_integer('cancellation_reason')
+        end
+
+        # For a transaction that was cancelled, the reason for cancellation
+        # @return [String]
+        def cancellation_reason_string
+          code = cancellation_reason
           code && CANCELATION_REASONS[code]
+        end
+
+        # For a subscription, whether or not it is in the Free Trial period.
+        # rubocop:disable PredicateName
+        def is_trial_period
+          # rubocop:enable PredicateName
+          read_bool('is_trial_period')
         end
 
         # A string that the App Store uses to uniquely identify the

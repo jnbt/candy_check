@@ -5,14 +5,14 @@ module CandyCheck
     # Store multiple {Receipt}s in order to perform collective operation on them
     class ReceiptCollection
       # Multiple receipts as in verfication response
-      # @return [Array<Receipt>]
+      # @return [Array<Unified::InAppReceipt>]
       attr_reader :receipts
 
       # Initializes a new instance which bases on a JSON result
       # from Apple's verification server
       # @param attributes [Array<Hash>]
       def initialize(attributes)
-        @receipts = attributes.map { |r| Receipt.new(r) }
+        @receipts = attributes.map { |r| Unified::InAppReceipt.new(r) }
       end
 
       # Check if the latest expiration date is passed

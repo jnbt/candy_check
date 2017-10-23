@@ -51,9 +51,14 @@ describe CandyCheck::AppStore::Unified::InAppReceipt do
   end
 
   it 'returns cancellation_reason' do
+    expected = 1
+    subject.cancellation_reason.must_equal expected
+  end
+
+  it 'returns cancellation_reason_string' do
     expected = 'Customer canceled their transaction due to an actual' \
                'or perceived issue within your app.'
-    subject.cancellation_reason.must_equal expected
+    subject.cancellation_reason_string.must_equal expected
   end
 
   it 'returns app_item_id' do

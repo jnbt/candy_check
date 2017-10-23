@@ -48,7 +48,7 @@ module CandyCheck
       def response_has_receipt?
         @response && @response['receipt']
       end
-      
+
       def instance_receipt(raw_receipt)
         if raw_receipt['item_id']
           Receipt.new(raw_receipt)

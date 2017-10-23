@@ -40,8 +40,8 @@ describe CandyCheck::AppStore::SubscriptionVerification do
     response = {
       'status' => 0,
       'latest_receipt_info' => [
-        { 'item_id' => 'some_id' },
-        { 'item_id' => 'some_other_id' }
+        { 'product_id' => 'some_id' },
+        { 'product_id' => 'some_other_id' }
       ]
     }
     with_mocked_response(response) do
@@ -49,8 +49,8 @@ describe CandyCheck::AppStore::SubscriptionVerification do
       result.must_be_instance_of CandyCheck::AppStore::ReceiptCollection
       result.receipts.must_be_instance_of Array
       last = result.receipts.last
-      last.must_be_instance_of CandyCheck::AppStore::Receipt
-      last.item_id.must_equal('some_other_id')
+      last.must_be_instance_of CandyCheck::AppStore::Unified::InAppReceipt
+      last.product_id.must_equal('some_other_id')
     end
   end
 
