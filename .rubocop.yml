@@ -22,3 +22,5 @@ Metrics/BlockLength:
 Security/MarshalLoad:
   Exclude:
     - 'lib/candy_check/play_store/discovery_repository.rb'
+Style/DateTime:
+  Enabled: false

@@ -65,7 +65,7 @@ module CandyCheck
       # Get number of overdue days. If this is negative, it is not overdue.
       # @return [Integer]
       def overdue_days
-        (Date.today - expires_at.to_date).to_i
+        (Time.now.utc.to_date - expires_at.to_date).to_i
       end
 
       # Get the auto renewal status as given by Google
