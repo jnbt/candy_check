@@ -24,12 +24,14 @@ module CandyCheck
       end
 
       # Performs the verification against the remote server
-      # @return [Receipt] if successful
+      # @return [Receipt] for ios 6 style transaction receipt if successful
+      # @return [Unified::AppReceipt] for ios 7 style grand unified receipt
+      # if successful
       # @return [VerificationFailure] otherwise
       def call!
         verify!
         if valid?
-          Receipt.new(@response['receipt'])
+          instance_receipt(@response['receipt'])
         else
           VerificationFailure.fetch(@response['status'])
         end
@@ -37,8 +39,24 @@ module CandyCheck
 
       private
 
+      def response_status_ok?
+        @response && @response['status'] == STATUS_OK
+      end
+
+      def response_has_receipt?
+        @response && @response['receipt']
+      end
+
+      def instance_receipt(raw_receipt)
+        if raw_receipt['item_id']
+          Receipt.new(raw_receipt)
+        else
+          Unified::AppReceipt.new(raw_receipt)
+        end
+      end
+
       def valid?
-        @response && @response['status'] == STATUS_OK && @response['receipt']
+        response_status_ok? && response_has_receipt?
       end
 
       def verify!

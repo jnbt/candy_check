@@ -7,8 +7,12 @@ Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
-Style/NumericPredicate:
-  Enabled: false
+Metrics/BlockLength:
+  Exclude:
+   - 'spec/**/*'
+Metrics/LineLength:
+  Exclude:
+   - 'spec/**/*'
 Lint/UnifiedInteger:
   Enabled: false
 Style/PercentLiteralDelimiters:

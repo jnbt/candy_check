@@ -44,6 +44,16 @@ module CandyCheck
         fetch_receipt_information(receipt_data, secret)
       end
 
+      # Calls a subscription verification for the given input
+      # @param receipt_data [String] the raw data to be verified
+      # @param secret [string] the optional shared secret
+      # @return [SubscriptionReceipt] if successful
+      # @return [VerificationFailure] otherwise
+      def verify_subscription_with_full_response(receipt_data, secret = nil)
+        @verifier = FullSubscriptionVerification
+        fetch_receipt_information(receipt_data, secret)
+      end
+
       private
 
       def fetch_receipt_information(receipt_data, secret = nil)

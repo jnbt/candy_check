@@ -25,17 +25,18 @@ module CandyCheck
 
       # Check if the expiration date is passed
       # @return [bool]
+      # rubocop:disable Style/NumericPredicate
       def expired?
         overdue_days > 0
       end
+      # rubocop:enable Style/NumericPredicate
 
       # Check if in trial. This is actually not given by Google, but we assume
       # that it is a trial going on if the paid amount is 0 and
       # renewal is activated.
       # @return [bool]
       def trial?
-        price_is_zero = price_amount_micros == 0
-        price_is_zero && payment_received?
+        price_amount_micros.zero? && payment_received?
       end
 
       # see if payment is ok

@@ -1,6 +1,7 @@
 module CandyCheck
   module AppStore
     # Describes a successful response from the AppStore verification server
+    # which present in ios 6 style transaction receipt format
     class Receipt
       include Utils::AttributeReader
 
