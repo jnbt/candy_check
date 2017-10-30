@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module CandyCheck
   module AppStore
     # Represents a failing call against the verification server

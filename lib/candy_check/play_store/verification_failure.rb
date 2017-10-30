@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module CandyCheck
   module PlayStore
     # Represents a failing call against the Google API server
