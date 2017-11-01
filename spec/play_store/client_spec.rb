@@ -20,27 +20,34 @@ describe CandyCheck::PlayStore::Client do
   end
 
   describe 'discovery' do
-    describe 'w/o cache file' do
-      it 'boot loads and dumps discovery file' do
-        mock_discovery!('discovery.txt')
-        mock_authorize!('auth_success.txt')
-        subject.boot!
-        File.exist?(cache_file_path).must_be_true
-      end
+    describe 'valid rpc' do
+      it 'returns rpc' do
+        discovery_api_mock = MiniTest::Mock.new
+        discovery_api_mock.expect :rpc, 'TEST' do |hash|
+          hash.fetch(:api_client).is_a? Google::APIClient
+        end
 
-      it 'fails if discovery fails' do
-        mock_discovery!('empty.txt')
-        proc { subject.boot! }.must_raise \
-          CandyCheck::PlayStore::Client::DiscoveryError
+        CandyCheck::PlayStore::DiscoveryApi.stub :new, discovery_api_mock do
+          bootup!
+        end
+
+        assert_mock discovery_api_mock
       end
     end
 
-    describe 'with cache file' do
-      let(:cache_file_path) { fixture_path('play_store', 'api_cache.dump') }
+    describe 'exception' do
+      it 'raises DiscoveryError' do
+        discovery_api_mock = MiniTest::Mock.new
 
-      it 'loads the discovery from cache file' do
-        mock_authorize!('auth_success.txt')
-        subject.boot!
+        def discovery_api_mock.rpc(*)
+          raise CandyCheck::PlayStore::DiscoveryApi::Error
+        end
+
+        CandyCheck::PlayStore::DiscoveryApi.stub :new, discovery_api_mock do
+          proc {
+            bootup!
+          }.must_raise CandyCheck::PlayStore::Client::DiscoveryError
+        end
       end
     end
   end
