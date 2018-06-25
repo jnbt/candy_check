@@ -35,7 +35,8 @@ module CandyCheck
       def boot!
         @api_client = Google::APIClient.new(
           application_name:    config.application_name,
-          application_version: config.application_version
+          application_version: config.application_version,
+          user_agent: user_agent
         )
         discover!
         authorize!
@@ -84,6 +85,18 @@ module CandyCheck
           api_method: api_method,
           parameters: parameters
         ).data.to_hash
+      end
+
+      # Builds a custom user agent to prevent Google::APIClient to
+      # use an invalid auto-generated one
+      # @see https://github.com/google/google-api-ruby-client/blob/15853007bf1fc8ad000bb35dafdd3ca6bfa8ae26/lib/google/api_client.rb#L112
+      def user_agent
+        [
+          "#{config.application_name}/#{config.application_version}",
+          "google-api-ruby-client/#{Google::APIClient::VERSION::STRING}",
+          Google::APIClient::ENV::OS_VERSION,
+          '(gzip)'
+        ].join(' ').delete("\n")
       end
 
       def discover!
