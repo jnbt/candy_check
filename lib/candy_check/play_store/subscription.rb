@@ -71,68 +71,68 @@ module CandyCheck
       # Get the auto renewal status as given by Google
       # @return [bool] true if renewing automatically, false otherwise
       def auto_renewing?
-        read_bool('autoRenewing')
+        read_bool(:autoRenewing)
       end
 
       # Get the payment state as given by Google
       # @return [Integer]
       def payment_state
-        read_integer('paymentState')
+        read_integer(:paymentState)
       end
 
       # Get the price amount for the subscription in micros in the payed
       # currency
       # @return [Integer]
       def price_amount_micros
-        read_integer('priceAmountMicros')
+        read_integer(:priceAmountMicros)
       end
 
       # Get the cancel reason, as given by Google
       # @return [Integer]
       def cancel_reason
-        read_integer('cancelReason')
+        read_integer(:cancelReason)
       end
 
       # Get the kind of subscription as stored in the android publisher service
       # @return [String]
       def kind
-        read('kind')
+        read(:kind)
       end
 
       # Get developer-specified supplemental information about the order
       # @return [String]
       def developer_payload
-        read('developerPayload')
+        read(:developerPayload)
       end
 
       # Get the currency code in ISO 4217 format, e.g. "GBP" for British pounds
       # @return [String]
       def price_currency_code
-        read('priceCurrencyCode')
+        read(:priceCurrencyCode)
       end
 
       # Get start time for subscription in milliseconds since Epoch
       # @return [Integer]
       def start_time_millis
-        read_integer('startTimeMillis')
+        read_integer(:start_time_millis)
       end
 
       # Get expiry time for subscription in milliseconds since Epoch
       # @return [Integer]
       def expiry_time_millis
-        read_integer('expiryTimeMillis')
+        read_integer(:expiry_time_millis)
       end
 
       # Get start time in UTC
       # @return [DateTime]
       def starts_at
-        read_datetime_from_millis('startTimeMillis')
+        read_datetime_from_millis(:start_time_millis)
       end
 
       # Get expiration time in UTC
       # @return [DateTime]
       def expires_at
-        read_datetime_from_millis('expiryTimeMillis')
+        read_datetime_from_millis(:expiry_time_millis)
       end
     end
   end

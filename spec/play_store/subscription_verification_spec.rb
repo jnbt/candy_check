@@ -14,13 +14,13 @@ describe CandyCheck::PlayStore::SubscriptionVerification do
   describe 'valid' do
     let(:response) do
       {
-        'kind' => 'androidpublisher#subscriptionPurchase',
-        'startTimeMillis' => '1459540113244',
-        'expiryTimeMillis' => '1462132088610',
-        'autoRenewing' => false,
-        'developerPayload' => 'payload that gets stored and returned',
-        'cancelReason' => 0,
-        'paymentState' => '1'
+        :kind => 'androidpublisher#subscriptionPurchase',
+        :start_time_millis => '1459540113244',
+        :expiry_time_millis => '1462132088610',
+        :autoRenewing => false,
+        :developerPayload => 'payload that gets stored and returned',
+        :cancelReason => 0,
+        :paymentState => '1'
       }
     end
 
@@ -70,7 +70,7 @@ describe CandyCheck::PlayStore::SubscriptionVerification do
   describe 'invalid response kind' do
     let(:response) do
       {
-        'kind' => 'something weird'
+        :kind => 'something weird'
       }
     end
 

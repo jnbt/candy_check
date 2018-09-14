@@ -6,13 +6,13 @@ describe CandyCheck::PlayStore::Subscription do
   describe 'expired and canceled subscription' do
     let(:attributes) do
       {
-        'kind' => 'androidpublisher#subscriptionPurchase',
-        'startTimeMillis' => '1459540113244',
-        'expiryTimeMillis' => '1462132088610',
-        'autoRenewing' => false,
-        'developerPayload' => 'payload that gets stored and returned',
-        'cancelReason' => 0,
-        'paymentState' => '1'
+        :kind => 'androidpublisher#subscriptionPurchase',
+        :start_time_millis => '1459540113244',
+        :expiry_time_millis => '1462132088610',
+        :autoRenewing => false,
+        :developerPayload => 'payload that gets stored and returned',
+        :cancelReason => 0,
+        :paymentState => '1'
       }
     end
 
@@ -68,8 +68,8 @@ describe CandyCheck::PlayStore::Subscription do
     two_days_from_now = DateTime.now + 2
     let(:attributes) do
       {
-        'expiryTimeMillis' => (two_days_from_now.to_time.to_i * 1000).to_s,
-        'autoRenewing' => true
+        :expiry_time_millis => (two_days_from_now.to_time.to_i * 1000).to_s,
+        :autoRenewing => true
       }
     end
 
@@ -85,9 +85,9 @@ describe CandyCheck::PlayStore::Subscription do
   describe 'expired due to payment failure' do
     let(:attributes) do
       {
-        'expiryTimeMillis' => '1462132088610',
-        'autoRenewing' => true,
-        'cancelReason' => 1
+        :expiry_time_millis => '1462132088610',
+        :autoRenewing => true,
+        :cancelReason => 1
       }
     end
 
@@ -103,9 +103,9 @@ describe CandyCheck::PlayStore::Subscription do
   describe 'expired with pending payment' do
     let(:attributes) do
       {
-        'expiryTimeMillis' => '1462132088610',
-        'autoRenewing' => true,
-        'paymentState' => 0
+        :expiry_time_millis => '1462132088610',
+        :autoRenewing => true,
+        :paymentState => 0
       }
     end
 
@@ -121,9 +121,9 @@ describe CandyCheck::PlayStore::Subscription do
   describe 'trial' do
     let(:attributes) do
       {
-        'paymentState' => 1,
-        'priceCurrencyCode' => 'SOMECODE',
-        'priceAmountMicros' => '0'
+        :paymentState => 1,
+        :priceCurrencyCode => 'SOMECODE',
+        :priceAmountMicros => '0'
       }
     end
 
