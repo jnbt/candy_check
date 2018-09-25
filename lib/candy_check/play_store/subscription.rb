@@ -71,26 +71,26 @@ module CandyCheck
       # Get the auto renewal status as given by Google
       # @return [bool] true if renewing automatically, false otherwise
       def auto_renewing?
-        read_bool(:autoRenewing)
+        read_bool(:auto_renewing)
       end
 
       # Get the payment state as given by Google
       # @return [Integer]
       def payment_state
-        read_integer(:paymentState)
+        read_integer(:payment_state)
       end
 
       # Get the price amount for the subscription in micros in the payed
       # currency
       # @return [Integer]
       def price_amount_micros
-        read_integer(:priceAmountMicros)
+        read_integer(:price_amount_micros)
       end
 
       # Get the cancel reason, as given by Google
       # @return [Integer]
       def cancel_reason
-        read_integer(:cancelReason)
+        read_integer(:cancel_reason)
       end
 
       # Get the kind of subscription as stored in the android publisher service
@@ -102,13 +102,13 @@ module CandyCheck
       # Get developer-specified supplemental information about the order
       # @return [String]
       def developer_payload
-        read(:developerPayload)
+        read(:developer_payload)
       end
 
       # Get the currency code in ISO 4217 format, e.g. "GBP" for British pounds
       # @return [String]
       def price_currency_code
-        read(:priceCurrencyCode)
+        read(:price_currency_code)
       end
 
       # Get start time for subscription in milliseconds since Epoch
