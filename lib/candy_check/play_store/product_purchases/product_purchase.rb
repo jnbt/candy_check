@@ -2,7 +2,7 @@ module CandyCheck
   module PlayStore
     module ProductPurchases
       # Describes a successful response from the Google verification server
-      class Receipt
+      class ProductPurchase
         include Utils::AttributeReader
 
         # @return [Hash] the raw attributes returned from the server

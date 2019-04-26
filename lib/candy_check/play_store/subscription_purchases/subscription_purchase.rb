@@ -2,7 +2,7 @@ module CandyCheck
   module PlayStore
     module SubscriptionPurchases
       # Describes a successfully validated subscription
-      class Subscription
+      class SubscriptionPurchase
         include Utils::AttributeReader
 
         # @return [Hash] the raw attributes returned from the server
