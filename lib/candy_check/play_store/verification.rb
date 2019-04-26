@@ -2,7 +2,7 @@ module CandyCheck
   module PlayStore
     # Verifies a purchase token against the Google API
     # The call return either an {Receipt} or an {VerificationFailure}
-    class Verification
+    class ProductVerification
       # @return [String] the package which will be queried
       attr_reader :package
       # @return [String] the item id which will be queried
@@ -28,16 +28,16 @@ module CandyCheck
       def call!
         verify!
         if valid?
-          Receipt.new(@response)
+          CandyCheck::PlayStore::ProductPurchase::Receipt.new(@response)
         else
-          VerificationFailure.new(@response['error'])
+          VerificationFailure.new(@response["error"])
         end
       end
 
       private
 
       def valid?
-        @response && @response['purchaseState'] && @response['consumptionState']
+        @response && @response["purchaseState"] && @response["consumptionState"]
       end
 
       def verify!
