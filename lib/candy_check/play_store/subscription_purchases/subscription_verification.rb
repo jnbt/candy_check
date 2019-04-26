@@ -29,9 +29,9 @@ module CandyCheck
         def call!
           verify!
           if valid?
-            CandyCheck::PlayStore::SubscriptionPurchase::Subscription.new(@response)
+            CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase.new(@response)
           else
-            VerificationFailure.new(@response["error"])
+            CandyCheck::PlayStore::VerificationFailure.new(@response["error"])
           end
         end
 

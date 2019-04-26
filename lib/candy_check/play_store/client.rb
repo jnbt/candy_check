@@ -11,17 +11,18 @@ module CandyCheck
     #   # ... multiple calls from now on
     #   client.verify('my.bundle', 'product_1', 'another-long-token')
     class Client
+
       # Error thrown if the discovery of the API wasn't successful
       class DiscoveryError < RuntimeError; end
 
       # API endpoint
-      API_URL      = 'https://accounts.google.com/o/oauth2/token'.freeze
+      API_URL = "https://accounts.google.com/o/oauth2/token".freeze
       # API scope for Android services
-      API_SCOPE    = 'https://www.googleapis.com/auth/androidpublisher'.freeze
+      API_SCOPE = "https://www.googleapis.com/auth/androidpublisher".freeze
       # API discovery namespace
-      API_DISCOVER = 'androidpublisher'.freeze
+      API_DISCOVER = "androidpublisher".freeze
       # API version
-      API_VERSION  = 'v2'.freeze
+      API_VERSION = "v2".freeze
 
       # Initializes a client using a configuration.
       # @param config [ClientConfig]
@@ -34,9 +35,9 @@ module CandyCheck
       # If the config has a cache_file the client tries to load discovery
       def boot!
         @api_client = Google::APIClient.new(
-          application_name:    config.application_name,
+          application_name: config.application_name,
           application_version: config.application_version,
-          user_agent: user_agent
+          user_agent: user_agent,
         )
         discover!
         authorize!
@@ -50,9 +51,9 @@ module CandyCheck
       # @return [Hash] result of the API call
       def verify(package, product_id, token)
         parameters = {
-          'packageName' => package,
-          'productId'   => product_id,
-          'token'       => token
+          "packageName" => package,
+          "productId" => product_id,
+          "token" => token,
         }
         execute(parameters, rpc.purchases.products.get)
       end
@@ -65,9 +66,9 @@ module CandyCheck
       # @return [Hash] result of the API call
       def verify_subscription(package, subscription_id, token)
         parameters = {
-          'packageName'    => package,
-          'subscriptionId' => subscription_id,
-          'token'          => token
+          "packageName" => package,
+          "subscriptionId" => subscription_id,
+          "token" => token,
         }
         execute(parameters, rpc.purchases.subscriptions.get)
       end
@@ -83,7 +84,7 @@ module CandyCheck
       def execute(parameters, api_method)
         api_client.execute(
           api_method: api_method,
-          parameters: parameters
+          parameters: parameters,
         ).data.to_hash
       end
 
@@ -95,8 +96,8 @@ module CandyCheck
           "#{config.application_name}/#{config.application_version}",
           "google-api-ruby-client/#{Google::APIClient::VERSION::STRING}",
           Google::APIClient::ENV::OS_VERSION,
-          '(gzip)'
-        ].join(' ').delete("\n")
+          "(gzip)",
+        ].join(" ").delete("\n")
       end
 
       def discover!
@@ -112,19 +113,19 @@ module CandyCheck
       def authorize!
         api_client.authorization = Signet::OAuth2::Client.new(
           token_credential_uri: API_URL,
-          audience:             API_URL,
-          scope:                API_SCOPE,
-          issuer:               config.issuer,
-          signing_key:          config.api_key
+          audience: API_URL,
+          scope: API_SCOPE,
+          issuer: config.issuer,
+          signing_key: config.api_key,
         )
         api_client.authorization.fetch_access_token!
       end
 
       def validate_rpc!
         return if rpc.purchases.products.get
-        raise DiscoveryError, 'Unable to get the API discovery'
+        raise DiscoveryError, "Unable to get the API discovery"
       rescue NoMethodError
-        raise DiscoveryError, 'Unable to get the API discovery'
+        raise DiscoveryError, "Unable to get the API discovery"
       end
 
       def load_discover_dump

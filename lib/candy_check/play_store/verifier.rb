@@ -32,7 +32,7 @@ module CandyCheck
       # @return [VerificationFailure] otherwise
       def verify(package, product_id, token)
         check_boot!
-        verification = Verification.new(@client, package, product_id, token)
+        verification = CandyCheck::PlayStore::ProductPurchases::ProductVerification.new(@client, package, product_id, token)
         verification.call!
       end
 
@@ -44,7 +44,7 @@ module CandyCheck
       # @return [VerificationFailure] otherwise
       def verify_subscription(package, subscription_id, token)
         check_boot!
-        v = SubscriptionVerification.new(
+        v = CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionVerification.new(
           @client, package, subscription_id, token
         )
         v.call!
@@ -58,8 +58,8 @@ module CandyCheck
 
       def check_boot!
         return if booted?
-        boot_error 'You need to boot the verifier service first: '\
-                   'CandyCheck::PlayStore::Verifier#boot!'
+        boot_error "You need to boot the verifier service first: " \
+                   "CandyCheck::PlayStore::Verifier#boot!"
       end
 
       def boot_error(message)
