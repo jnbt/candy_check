@@ -2,6 +2,11 @@ module CandyCheck
   module PlayStore
     # Configure the usage of the official Google API SDK client
     class Config < Utils::Config
+      # API endpoint
+      API_URL = "https://accounts.google.com/o/oauth2/token".freeze
+      # API scope for Android services
+      API_SCOPE = "https://www.googleapis.com/auth/androidpublisher".freeze
+
       # @return [String] your application name
       attr_reader :application_name
       # @return [String] your application's version
@@ -28,6 +33,7 @@ module CandyCheck
       #   )
       def initialize(attributes)
         super
+        authorize!
       end
 
       # @return [String] the decrypted API key from Google
@@ -45,6 +51,18 @@ module CandyCheck
         validates_presence(:issuer)
         validates_presence(:key_file)
         validates_presence(:key_secret)
+      end
+
+      def authorize!
+        default = Google::Apis::RequestOptions.default
+
+        default.authorization = Signet::OAuth2::Client.new(
+          token_credential_uri: API_URL,
+          audience: API_URL,
+          scope: API_SCOPE,
+          issuer: issuer,
+          signing_key: api_key,
+        )
       end
     end
   end

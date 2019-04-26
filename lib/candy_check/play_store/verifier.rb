@@ -20,8 +20,9 @@ module CandyCheck
       # @return [Receipt] if successful
       # @return [VerificationFailure] otherwise
       def verify(package, product_id, token)
-        verification = CandyCheck::PlayStore::ProductPurchases::ProductVerification.new(@client, package, product_id, token)
-        verification.call!
+        v = CandyCheck::PlayStore::ProductPurchases::ProductVerification
+        verifier = v.new(package, product_id, token)
+        verifier.call!
       end
 
       # Contacts the Google API and requests the product state
@@ -31,10 +32,9 @@ module CandyCheck
       # @return [Receipt] if successful
       # @return [VerificationFailure] otherwise
       def verify_subscription(package, subscription_id, token)
-        v = CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionVerification.new(
-          @client, package, subscription_id, token
-        )
-        v.call!
+        v = CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionVerification
+        verifier = v.new(package, subscription_id, token)
+        verifier.call!
       end
     end
   end

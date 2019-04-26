@@ -12,12 +12,10 @@ module CandyCheck
         attr_reader :token
 
         # Initializes a new call to the API
-        # @param client [Client] a shared client instance
         # @param package [String]
         # @param product_id [String]
         # @param token [String]
         def initialize(client, package, product_id, token)
-          @client = client
           @package = package
           @product_id = product_id
           @token = token
@@ -42,7 +40,12 @@ module CandyCheck
         end
 
         def verify!
-          @response = @client.verify(package, product_id, token)
+          args = {
+            "packageName" => package,
+            "productId" => product_id,
+            "token" => token,
+          }
+          @response = Google::Apis::AndroidpublisherV3::ProductPurchase.new(args)
         end
       end
     end

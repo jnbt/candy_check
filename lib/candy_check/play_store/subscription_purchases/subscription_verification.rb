@@ -7,19 +7,17 @@ module CandyCheck
         # @return [String] the package which will be queried
         attr_reader :package
         # @return [String] the item id which will be queried
-        attr_reader :product_id
+        attr_reader :subscription_id
         # @return [String] the token for authentication
         attr_reader :token
 
         # Initializes a new call to the API
-        # @param client [Client] a shared client instance
         # @param package [String]
-        # @param product_id [String]
+        # @param subscription_id [String]
         # @param token [String]
-        def initialize(client, package, product_id, token)
-          @client = client
+        def initialize(client, package, subscription_id, token)
           @package = package
-          @product_id = product_id
+          @subscription_id = subscription_id
           @token = token
         end
 
@@ -43,7 +41,12 @@ module CandyCheck
         end
 
         def verify!
-          @response = @client.verify_subscription(package, product_id, token)
+          parameters = {
+            "packageName" => package,
+            "subscriptionId" => subscription_id,
+            "token" => token,
+          }
+          @response = Google::Apis::AndroidpublisherV3::SubscriptionPurchase.new(args)
         end
       end
     end
