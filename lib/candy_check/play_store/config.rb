@@ -2,23 +2,7 @@ module CandyCheck
   module PlayStore
     # Configure the usage of the official Google API SDK client
     class Config < Utils::Config
-      # API endpoint
-      API_URL = "https://accounts.google.com/o/oauth2/token".freeze
-      # API scope for Android services
-      API_SCOPE = "https://www.googleapis.com/auth/androidpublisher".freeze
-
-      # @return [String] your application name
-      attr_reader :application_name
-      # @return [String] your application's version
-      attr_reader :application_version
-      # @return [String] an optional file to cache the discovery API result
-      attr_reader :cache_file
-      # @return [String] your issuer's service account e-mail
-      attr_reader :issuer
-      # @return [String] the path to your local *.p12 certificate file
-      attr_reader :key_file
-      # @return [String] the secret to load your certificate file
-      attr_reader :key_secret
+      attr_reader :json_key_file
 
       # Initializes a new configuration from a hash
       # @param attributes [Hash]
@@ -26,43 +10,29 @@ module CandyCheck
       #   ClientConfig.new(
       #     application_name: 'YourApplication',
       #     application_version: '1.0',
-      #     cache_file: 'tmp/google_api_cache',
       #     issuer: 'abcdefg@developer.gserviceaccount.com',
-      #     key_file: 'local/google.p12',
-      #     key_secret: 'notasecret'
+      #     json_key_file: 'local/key.json',
       #   )
       def initialize(attributes)
         super
         authorize!
       end
 
-      # @return [String] the decrypted API key from Google
-      def api_key
-        @api_key ||= begin
-          Google::APIClient::KeyUtils.load_from_pkcs12(key_file, key_secret)
-        end
-      end
-
       private
 
       def validate!
-        validates_presence(:application_name)
-        validates_presence(:application_version)
-        validates_presence(:issuer)
-        validates_presence(:key_file)
-        validates_presence(:key_secret)
+        validates_presence(:json_key_file)
       end
 
       def authorize!
-        default = Google::Apis::RequestOptions.default
+        scope = "https://www.googleapis.com/auth/androidpublisher"
 
-        default.authorization = Signet::OAuth2::Client.new(
-          token_credential_uri: API_URL,
-          audience: API_URL,
-          scope: API_SCOPE,
-          issuer: issuer,
-          signing_key: api_key,
+        authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
+          json_key_io: File.open(json_key_file),
+          scope: scope,
         )
+
+        Google::Apis::RequestOptions.default.authorization = authorizer
       end
     end
   end

@@ -4,6 +4,7 @@ module CandyCheck
       # Verifies a purchase token against the Google API
       # The call return either an {Receipt} or an {VerificationFailure}
       class SubscriptionVerification
+        include CandyCheck::PlayStore::AndroidPublisherService
         # @return [String] the package which will be queried
         attr_reader :package
         # @return [String] the item id which will be queried
@@ -15,7 +16,7 @@ module CandyCheck
         # @param package [String]
         # @param subscription_id [String]
         # @param token [String]
-        def initialize(client, package, subscription_id, token)
+        def initialize(package, subscription_id, token)
           @package = package
           @subscription_id = subscription_id
           @token = token
@@ -27,26 +28,25 @@ module CandyCheck
         def call!
           verify!
           if valid?
-            CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase.new(@response)
+            CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase.new(@response[:result])
           else
-            CandyCheck::PlayStore::VerificationFailure.new(@response["error"])
+            CandyCheck::PlayStore::VerificationFailure.new(@response[:error])
           end
         end
 
         private
 
         def valid?
-          ok_kind = @response["kind"] == "androidpublisher#subscriptionPurchase"
-          @response && @response["expiryTimeMillis"] && ok_kind
+          return false unless @response[:result]
+          ok_kind = @response[:result].kind == "androidpublisher#subscriptionPurchase"
+          @response && @response[:result].expiry_time_millis && ok_kind
         end
 
         def verify!
-          parameters = {
-            "packageName" => package,
-            "subscriptionId" => subscription_id,
-            "token" => token,
-          }
-          @response = Google::Apis::AndroidpublisherV3::SubscriptionPurchase.new(args)
+          service = android_publisher_service
+          service.get_purchase_subscription(package, subscription_id, token) do |result, error|
+            @response = { result: result, error: error }
+          end
         end
       end
     end

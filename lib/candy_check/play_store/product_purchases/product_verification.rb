@@ -4,6 +4,7 @@ module CandyCheck
       # Verifies a purchase token against the Google API
       # The call return either an {Receipt} or an {VerificationFailure}
       class ProductVerification
+        include CandyCheck::PlayStore::AndroidPublisherService
         # @return [String] the package which will be queried
         attr_reader :package
         # @return [String] the item id which will be queried
@@ -15,7 +16,7 @@ module CandyCheck
         # @param package [String]
         # @param product_id [String]
         # @param token [String]
-        def initialize(client, package, product_id, token)
+        def initialize(package, product_id, token)
           @package = package
           @product_id = product_id
           @token = token
@@ -27,25 +28,23 @@ module CandyCheck
         def call!
           verify!
           if valid?
-            CandyCheck::PlayStore::ProductPurchases::ProductPurchase.new(@response)
+            CandyCheck::PlayStore::ProductPurchases::ProductPurchase.new(@response[:result])
           else
-            CandyCheck::PlayStore::VerificationFailure.new(@response["error"])
+            CandyCheck::PlayStore::VerificationFailure.new(@response[:error])
           end
         end
 
         private
 
         def valid?
-          @response && @response["purchaseState"] && @response["consumptionState"]
+          @response[:result] && @response[:result].purchase_state && @response[:result].consumption_state
         end
 
         def verify!
-          args = {
-            "packageName" => package,
-            "productId" => product_id,
-            "token" => token,
-          }
-          @response = Google::Apis::AndroidpublisherV3::ProductPurchase.new(args)
+          service = android_publisher_service
+          service.get_purchase_product(package, product_id, token) do |result, error|
+            @response = { result: result, error: error }
+          end
         end
       end
     end

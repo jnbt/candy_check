@@ -23,7 +23,6 @@ module CandyCheck
         # Print the result of the verification to the terminal
         def run
           verifier = CandyCheck::PlayStore::Verifier.new(config)
-          verifier.boot!
           result = verifier.verify(@package, @product_id, @token)
           out.print "#{result.class}:"
           out.pretty result

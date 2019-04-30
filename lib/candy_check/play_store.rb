@@ -1,7 +1,7 @@
 require "google/apis/androidpublisher_v3"
 
-require "candy_check/play_store/client"
 require "candy_check/play_store/config"
+require "candy_check/play_store/android_publisher_service"
 require "candy_check/play_store/product_purchases/product_purchase"
 require "candy_check/play_store/subscription_purchases/subscription_purchase"
 require "candy_check/play_store/product_purchases/product_verification"

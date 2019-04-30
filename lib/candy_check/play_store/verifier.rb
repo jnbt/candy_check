@@ -3,16 +3,6 @@ module CandyCheck
     # Verifies purchase tokens against the Google API.
     # The call return either an {Receipt} or a {VerificationFailure}
     class Verifier
-      # @return [Config] the current configuration
-      attr_reader :config
-
-      # Initializes a new verifier for the application which is bound
-      # to a configuration
-      # @param config [Config]
-      def initialize(config)
-        @config = config
-      end
-
       # Contacts the Google API and requests the product state
       # @param package [String] to query
       # @param product_id [String] to query
