@@ -8,6 +8,7 @@ describe CandyCheck::AppStore::Verifier do
   let(:environment) { :production }
   let(:data)     { 'some_data'   }
   let(:secret)   { 'some_secret' }
+  let(:product_ids)   { nil }
   let(:receipt)  { CandyCheck::AppStore::Receipt.new({}) }
   let(:receipt_collection) { CandyCheck::AppStore::ReceiptCollection.new({}) }
   let(:production_endpoint) do
@@ -27,7 +28,7 @@ describe CandyCheck::AppStore::Verifier do
     it 'uses sandbox endpoint without retry on success' do
       with_mocked_verifier(receipt) do
         subject.verify(data, secret).must_be_same_as receipt
-        assert_recorded([sandbox_endpoint, data, secret])
+        assert_recorded([sandbox_endpoint, data, secret, product_ids])
       end
     end
 
@@ -35,7 +36,7 @@ describe CandyCheck::AppStore::Verifier do
       failure = get_failure(21_000)
       with_mocked_verifier(failure) do
         subject.verify(data, secret).must_be_same_as failure
-        assert_recorded([sandbox_endpoint, data, secret])
+        assert_recorded([sandbox_endpoint, data, secret, product_ids])
       end
     end
 
@@ -44,8 +45,8 @@ describe CandyCheck::AppStore::Verifier do
       with_mocked_verifier(failure, receipt) do
         subject.verify(data, secret).must_be_same_as receipt
         assert_recorded(
-          [sandbox_endpoint, data, secret],
-          [production_endpoint, data, secret]
+          [sandbox_endpoint, data, secret, product_ids],
+          [production_endpoint, data, secret, product_ids]
         )
       end
     end
@@ -57,7 +58,7 @@ describe CandyCheck::AppStore::Verifier do
     it 'uses production endpoint without retry on success' do
       with_mocked_verifier(receipt) do
         subject.verify(data, secret).must_be_same_as receipt
-        assert_recorded([production_endpoint, data, secret])
+        assert_recorded([production_endpoint, data, secret, product_ids])
       end
     end
 
@@ -65,7 +66,7 @@ describe CandyCheck::AppStore::Verifier do
       failure = get_failure(21_000)
       with_mocked_verifier(failure) do
         subject.verify(data, secret).must_be_same_as failure
-        assert_recorded([production_endpoint, data, secret])
+        assert_recorded([production_endpoint, data, secret, product_ids])
       end
     end
 
@@ -74,8 +75,8 @@ describe CandyCheck::AppStore::Verifier do
       with_mocked_verifier(failure, receipt) do
         subject.verify(data, secret).must_be_same_as receipt
         assert_recorded(
-          [production_endpoint, data, secret],
-          [sandbox_endpoint, data, secret]
+          [production_endpoint, data, secret, product_ids],
+          [sandbox_endpoint, data, secret, product_ids]
         )
       end
     end
@@ -89,7 +90,7 @@ describe CandyCheck::AppStore::Verifier do
         subject.verify_subscription(
           data, secret
         ).must_be_same_as receipt_collection
-        assert_recorded([production_endpoint, data, secret])
+        assert_recorded([production_endpoint, data, secret, product_ids])
       end
     end
 
@@ -97,7 +98,7 @@ describe CandyCheck::AppStore::Verifier do
       failure = get_failure(21_000)
       with_mocked_verifier(failure) do
         subject.verify_subscription(data, secret).must_be_same_as failure
-        assert_recorded([production_endpoint, data, secret])
+        assert_recorded([production_endpoint, data, secret, product_ids])
       end
     end
 
@@ -106,8 +107,8 @@ describe CandyCheck::AppStore::Verifier do
       with_mocked_verifier(failure, receipt) do
         subject.verify_subscription(data, secret).must_be_same_as receipt
         assert_recorded(
-          [production_endpoint, data, secret],
-          [sandbox_endpoint, data, secret]
+          [production_endpoint, data, secret, product_ids],
+          [sandbox_endpoint, data, secret, product_ids]
         )
       end
     end
@@ -134,7 +135,7 @@ describe CandyCheck::AppStore::Verifier do
     CandyCheck::AppStore::VerificationFailure.fetch(code)
   end
 
-  DummyAppStoreVerification = Struct.new(:endpoint, :data, :secret) do
+  DummyAppStoreVerification = Struct.new(:endpoint, :data, :secret, :product_ids) do
     attr_accessor :results
     def call!
       results.shift

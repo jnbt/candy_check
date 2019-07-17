@@ -81,6 +81,14 @@ For **subscription verification**, Apple also returns a list of the user's purch
 verifier.verify_subscription(your_receipt_data, your_secret) # => ReceiptCollection or VerificationFailure
 ```
 
+If you want to restrict the subscription verification to some specific products, pass their ids as an array:
+
+```ruby
+# ... create your verifier as above
+product_ids = ['sk_product_id_1', 'sk_product_id_2'...] 
+verifier.verify_subscription(your_receipt_data, your_secret, product_ids) # => ReceiptCollection or VerificationFailure
+```
+
 Please see the class documentation for [`CandyCheck::AppStore::ReceiptCollection`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/AppStore/ReceiptCollection) for further details.
 
 ### PlayStore

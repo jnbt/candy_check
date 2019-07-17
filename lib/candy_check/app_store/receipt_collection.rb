@@ -9,8 +9,10 @@ module CandyCheck
       # Initializes a new instance which bases on a JSON result
       # from Apple's verification server
       # @param attributes [Array<Hash>]
-      def initialize(attributes)
-        @receipts = attributes.map { |r| Receipt.new(r) }
+      def initialize(attributes, product_ids = nil)
+        @receipts = attributes.map {|r| Receipt.new(r) }.select {|receipt|
+          product_ids.nil? || product_ids.include?(receipt.product_id)
+        }
       end
 
       # Check if the latest expiration date is passed

@@ -39,24 +39,24 @@ module CandyCheck
       # @param secret [string] the optional shared secret
       # @return [ReceiptCollection] if successful
       # @return [Verification] otherwise
-      def verify_subscription(receipt_data, secret = nil)
+      def verify_subscription(receipt_data, secret = nil, product_ids = nil)
         @verifier = SubscriptionVerification
-        fetch_receipt_information(receipt_data, secret)
+        fetch_receipt_information(receipt_data, secret, product_ids)
       end
 
       private
 
-      def fetch_receipt_information(receipt_data, secret = nil)
+      def fetch_receipt_information(receipt_data, secret = nil, product_ids = nil)
         default_endpoint, opposite_endpoint = endpoints
-        result = call_for(default_endpoint, receipt_data, secret)
+        result = call_for(default_endpoint, receipt_data, secret, product_ids)
         if should_retry?(result)
-          return call_for(opposite_endpoint, receipt_data, secret)
+          return call_for(opposite_endpoint, receipt_data, secret, product_ids)
         end
         result
       end
 
-      def call_for(endpoint_url, receipt_data, secret)
-        @verifier.new(endpoint_url, receipt_data, secret).call!
+      def call_for(endpoint_url, receipt_data, secret, product_ids)
+        @verifier.new(endpoint_url, receipt_data, secret, product_ids).call!
       end
 
       def should_retry?(result)
