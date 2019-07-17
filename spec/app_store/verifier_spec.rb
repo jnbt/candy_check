@@ -89,7 +89,7 @@ describe CandyCheck::AppStore::Verifier do
         subject.verify_subscription(
           data, secret
         ).must_be_same_as receipt_collection
-        assert_recorded([production_endpoint, data, secret])
+        assert_recorded([production_endpoint, data, secret, nil])
       end
     end
 
@@ -97,7 +97,7 @@ describe CandyCheck::AppStore::Verifier do
       failure = get_failure(21_000)
       with_mocked_verifier(failure) do
         subject.verify_subscription(data, secret).must_be_same_as failure
-        assert_recorded([production_endpoint, data, secret])
+        assert_recorded([production_endpoint, data, secret, nil])
       end
     end
 
@@ -106,9 +106,19 @@ describe CandyCheck::AppStore::Verifier do
       with_mocked_verifier(failure, receipt) do
         subject.verify_subscription(data, secret).must_be_same_as receipt
         assert_recorded(
-          [production_endpoint, data, secret],
-          [sandbox_endpoint, data, secret]
+          [production_endpoint, data, secret, nil],
+          [sandbox_endpoint, data, secret, nil]
         )
+      end
+    end
+
+    it 'passed the product_ids' do
+      product_ids = ['product_1']
+      with_mocked_verifier(receipt_collection) do
+        subject.verify_subscription(
+          data, secret, product_ids
+        ).must_be_same_as receipt_collection
+        assert_recorded([production_endpoint, data, secret, product_ids])
       end
     end
   end
@@ -134,8 +144,17 @@ describe CandyCheck::AppStore::Verifier do
     CandyCheck::AppStore::VerificationFailure.fetch(code)
   end
 
-  DummyAppStoreVerification = Struct.new(:endpoint, :data, :secret) do
+  class DummyAppStoreVerification
+    attr_reader :endpoint, :data, :secret, :product_ids
     attr_accessor :results
+
+    def initialize(endpoint, data, secret, product_ids = nil)
+      @endpoint = endpoint
+      @data = data
+      @secret = secret
+      @product_ids = product_ids
+    end
+
     def call!
       results.shift
     end

@@ -30,33 +30,33 @@ module CandyCheck
       # @return [Receipt] if successful
       # @return [VerificationFailure] otherwise
       def verify(receipt_data, secret = nil)
-        @verifier = Verification
-        fetch_receipt_information(receipt_data, secret)
+        fetch_receipt_information(Verification, [receipt_data, secret])
       end
 
       # Calls a subscription verification for the given input
       # @param receipt_data [String] the raw data to be verified
-      # @param secret [string] the optional shared secret
+      # @param secret [String] optional: shared secret
+      # @param product_ids [Array<String>] optional: products to filter
       # @return [ReceiptCollection] if successful
       # @return [Verification] otherwise
-      def verify_subscription(receipt_data, secret = nil)
-        @verifier = SubscriptionVerification
-        fetch_receipt_information(receipt_data, secret)
+      def verify_subscription(receipt_data, secret = nil, product_ids = nil)
+        args = [receipt_data, secret, product_ids]
+        fetch_receipt_information(SubscriptionVerification, args)
       end
 
       private
 
-      def fetch_receipt_information(receipt_data, secret = nil)
+      def fetch_receipt_information(verifier_class, args)
         default_endpoint, opposite_endpoint = endpoints
-        result = call_for(default_endpoint, receipt_data, secret)
+        result = call_for(verifier_class, args.dup.unshift(default_endpoint))
         if should_retry?(result)
-          return call_for(opposite_endpoint, receipt_data, secret)
+          return call_for(verifier_class, args.dup.unshift(opposite_endpoint))
         end
         result
       end
 
-      def call_for(endpoint_url, receipt_data, secret)
-        @verifier.new(endpoint_url, receipt_data, secret).call!
+      def call_for(verifier_class, args)
+        verifier_class.new(*args).call!
       end
 
       def should_retry?(result)
