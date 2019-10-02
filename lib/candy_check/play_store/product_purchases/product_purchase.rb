@@ -5,9 +5,6 @@ module CandyCheck
       class ProductPurchase
         include Utils::AttributeReader
 
-        # @return [Hash] the raw attributes returned from the server
-        attr_reader :attributes
-
         # Purchased product (0 is purchased, don't ask me why)
         # @see https://developers.google.com/android-publisher/api-ref/purchases/products
         PURCHASE_STATE_PURCHASED = 0
@@ -18,8 +15,48 @@ module CandyCheck
         # Initializes a new instance which bases on a JSON result
         # from Google API servers
         # @param attributes [Hash]
-        def initialize(attributes)
-          @attributes = attributes
+        def initialize(product_purchase)
+          @product_purchase = product_purchase
+        end
+
+        # The purchase state of the order. Possible values are:
+        #   * 0: Purchased
+        #   * 1: Cancelled
+        # @return [Fixnum]
+        def purchase_state
+          @product_purchase.purchase_state
+        end
+
+        # The consumption state of the inapp product. Possible values are:
+        #   * 0: Yet to be consumed
+        #   * 1: Consumed
+        # @return [Fixnum]
+        def consumption_state
+          @product_purchase.consumption_state
+        end
+
+        # The developer payload which was used when buying the product
+        # @return [String]
+        def developer_payload
+          @product_purchase.developer_payload
+        end
+
+        # This kind represents an inappPurchase object in the androidpublisher
+        # service.
+        # @return [String]
+        def kind
+          @product_purchase.kind
+        end
+
+        def order_id
+          @product_purchase.order_id
+        end
+
+        # The time the product was purchased, in milliseconds since the
+        # epoch (Jan 1, 1970)
+        # @return [Fixnum]
+        def purchase_time_millis
+          @product_purchase.purchase_time_millis
         end
 
         # A product may be purchased or canceled. Ensure a receipt
@@ -36,46 +73,10 @@ module CandyCheck
           consumption_state == CONSUMPTION_STATE_CONSUMED
         end
 
-        # The purchase state of the order. Possible values are:
-        #   * 0: Purchased
-        #   * 1: Cancelled
-        # @return [Fixnum]
-        def purchase_state
-          read_integer("purchaseState")
-        end
-
-        # The consumption state of the inapp product. Possible values are:
-        #   * 0: Yet to be consumed
-        #   * 1: Consumed
-        # @return [Fixnum]
-        def consumption_state
-          read_integer("consumptionState")
-        end
-
-        # The developer payload which was used when buying the product
-        # @return [String]
-        def developer_payload
-          read("developerPayload")
-        end
-
-        # This kind represents an inappPurchase object in the androidpublisher
-        # service.
-        # @return [String]
-        def kind
-          read("kind")
-        end
-
-        # The time the product was purchased, in milliseconds since the
-        # epoch (Jan 1, 1970)
-        # @return [Fixnum]
-        def purchase_time_millis
-          read_integer("purchaseTimeMillis")
-        end
-
         # The date and time the product was purchased
         # @return [DateTime]
         def purchased_at
-          read_datetime_from_millis("purchaseTimeMillis")
+          Time.at(purchase_time_millis / 1000).utc.to_datetime
         end
       end
     end
