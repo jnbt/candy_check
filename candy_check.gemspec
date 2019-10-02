@@ -35,6 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "timecop", "~> 0.8"
   spec.add_development_dependency "webmock", "~> 3.0"
   spec.add_development_dependency "pry"
+  spec.add_development_dependency "awesome_print"
   spec.add_development_dependency "guard"
   spec.add_development_dependency "guard-minitest"
 end
