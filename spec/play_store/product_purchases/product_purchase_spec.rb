@@ -1,17 +1,19 @@
 require "spec_helper"
+require "ostruct"
 
 describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
-  subject { CandyCheck::PlayStore::ProductPurchases::ProductPurchase.new(attributes) }
+  subject { CandyCheck::PlayStore::ProductPurchases::ProductPurchase.new(fake_product_purchase) }
 
   describe "valid and non-consumed product" do
-    let(:attributes) do
-      {
-        "kind" => "androidpublisher#productPurchase",
-        "purchaseTimeMillis" => "1421676237413",
-        "purchaseState" => 0,
-        "consumptionState" => 0,
-        "developerPayload" => "payload that gets stored and returned",
-      }
+    let(:fake_product_purchase) do
+      OpenStruct.new(
+        consumption_state: 0,
+        developer_payload: "payload that gets stored and returned",
+        kind: "androidpublisher#productPurchase",
+        order_id: "ABC123",
+        purchase_state: 0,
+        purchase_time_millis: 1421676237413,
+      )
     end
 
     it "is valid?" do
@@ -31,13 +33,11 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
     end
 
     it "returns the developer_payload" do
-      subject.developer_payload.must_equal \
-        "payload that gets stored and returned"
+      subject.developer_payload.must_equal "payload that gets stored and returned"
     end
 
     it "returns the kind" do
-      subject.kind.must_equal \
-        "androidpublisher#productPurchase"
+      subject.kind.must_equal "androidpublisher#productPurchase"
     end
 
     it "returns the purchase_time_millis" do
@@ -51,14 +51,15 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
   end
 
   describe "valid and consumed product" do
-    let(:attributes) do
-      {
-        "kind" => "androidpublisher#productPurchase",
-        "purchaseTimeMillis" => "1421676237413",
-        "purchaseState" => 0,
-        "consumptionState" => 1,
-        "developerPayload" => "payload that gets stored and returned",
-      }
+    let(:fake_product_purchase) do
+      OpenStruct.new(
+        consumption_state: 1,
+        developer_payload: "payload that gets stored and returned",
+        kind: "androidpublisher#productPurchase",
+        order_id: "ABC123",
+        purchase_state: 0,
+        purchase_time_millis: 1421676237413,
+      )
     end
 
     it "is valid?" do
@@ -71,14 +72,15 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
   end
 
   describe "non-valid product" do
-    let(:attributes) do
-      {
-        "kind" => "androidpublisher#productPurchase",
-        "purchaseTimeMillis" => "1421676237413",
-        "purchaseState" => 1,
-        "consumptionState" => 0,
-        "developerPayload" => "payload that gets stored and returned",
-      }
+    let(:fake_product_purchase) do
+      OpenStruct.new(
+        consumption_state: 0,
+        developer_payload: "payload that gets stored and returned",
+        kind: "androidpublisher#productPurchase",
+        order_id: "ABC123",
+        purchase_state: 1,
+        purchase_time_millis: 1421676237413,
+      )
     end
 
     it "is valid?" do
