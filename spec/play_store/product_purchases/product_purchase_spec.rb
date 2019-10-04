@@ -1,12 +1,21 @@
 require "spec_helper"
-require "ostruct"
 
 describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
   subject { CandyCheck::PlayStore::ProductPurchases::ProductPurchase.new(fake_product_purchase) }
 
+  FakeProductPurchase = Struct.new(
+    :consumption_state,
+    :developer_payload,
+    :kind,
+    :order_id,
+    :purchase_state,
+    :purchase_time_millis,
+    keyword_init: true,
+  )
+
   describe "valid and non-consumed product" do
     let(:fake_product_purchase) do
-      OpenStruct.new(
+      FakeProductPurchase.new(
         consumption_state: 0,
         developer_payload: "payload that gets stored and returned",
         kind: "androidpublisher#productPurchase",
@@ -52,7 +61,7 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
 
   describe "valid and consumed product" do
     let(:fake_product_purchase) do
-      OpenStruct.new(
+      FakeProductPurchase.new(
         consumption_state: 1,
         developer_payload: "payload that gets stored and returned",
         kind: "androidpublisher#productPurchase",
@@ -73,7 +82,7 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
 
   describe "non-valid product" do
     let(:fake_product_purchase) do
-      OpenStruct.new(
+      FakeProductPurchase.new(
         consumption_state: 0,
         developer_payload: "payload that gets stored and returned",
         kind: "androidpublisher#productPurchase",
