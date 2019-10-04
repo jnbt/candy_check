@@ -11,12 +11,10 @@ require "candy_check/play_store/verifier"
 module CandyCheck
   # Module to request and verify a AppStore receipt
   module PlayStore
-    def self.build_authorizer(json_key_file)
-      scope = "https://www.googleapis.com/auth/androidpublisher"
-
+    def self.authorization(json_key_file)
       Google::Auth::ServiceAccountCredentials.make_creds(
         json_key_io: File.open(json_key_file),
-        scope: scope,
+        scope: "https://www.googleapis.com/auth/androidpublisher",
       )
     end
   end
