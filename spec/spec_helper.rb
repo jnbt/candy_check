@@ -13,6 +13,7 @@ require "minitest/around/spec"
 require "minitest/focus" unless in_continuous_integration_environment?
 
 require "webmock/minitest"
+require "vcr"
 
 require "timecop"
 
@@ -43,4 +44,9 @@ module MiniTest
     infect_an_assertion :assert_true, :must_be_true, :unary
     infect_an_assertion :assert_false, :must_be_false, :unary
   end
+end
+
+VCR.configure do |config|
+  config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
+  config.hook_into :webmock
 end
