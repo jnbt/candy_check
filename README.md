@@ -85,37 +85,62 @@ Please see the class documentation for [`CandyCheck::AppStore::ReceiptCollection
 
 ### PlayStore
 
-First initialize and **boot** a verifier instance for your application. This loads the API discovery and
-fetches the needed OAuth access token. When configuring a `cache_file` the discovery is loaded (or dumped) to
-this file.
+#### Authorization
 
-> **Remarks:** Both `application_name` and `application_version` represent *your* application against Google's APIs. You may use any values here, but I suggest to refelect the name of the used service account here.
+First we have to build an `authorization` object:
 
 ```ruby
-config = CandyCheck::PlayStore::Config.new(
-  application_name: 'YourApplication',
-  application_version: '1.0',
-  issuer: 'abcdefg@developer.gserviceaccount.com',
-  key_file: 'local/google.p12',
-  key_secret: 'notasecret',
-  cache_file: 'tmp/candy_check_play_store_cache'
+authorization = Google::Auth::ServiceAccountCredentials.make_creds(
+  json_key_io: File.open("path/to/key.json"),
+  scope: "https://www.googleapis.com/auth/androidpublisher",
 )
-verifier = CandyCheck::PlayStore::Verifier.new(config)
-verifier.boot!
 ```
 
-For the PlayStore your client should deliver the purchases token, package name and product id:
+> **Note:** More info about the `authorization` object can be found [here](https://github.com/googleapis/google-api-ruby-client#passing-authorization-to-requests)
+
+#### Building a verifier
+
+With the `authorization` object in place, we can build a verifier:
 
 ```ruby
-verifier.verify(package, product_id, token) # => Receipt or VerificationFailure
+verifier = CandyCheck::PlayStore::Verifier.new(auth: authorization)
 ```
 
-Please see the class documenations [`CandyCheck::PlayStore::Receipt`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/Receipt) and [`CandyCheck::PlayStore::VerificationFailure`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/VerificationFailure) for further details about the responses.
+> Tip: If you need to verify against multiple Google Service Accounts, just instantiate another verifier with different credentials.
+
+#### Verifying product purchases
+
+This `verifier` can be used to verify product purchases in the PlayStore, all you need to do is to pass the `package_name`, `product_id` and `token` of the product purchase you want to verify:
+
+```ruby
+result = verifier.verify(package_name, product_id, token) # => ProductPurchase or VerificationFailure
+```
+
+On success this will return an instance of `CandyCheck::Playstore::ProductPurchases::ProductPurchase`, which is a wrapper for the raw [google-api-ruby-client](https://github.com/googleapis/google-api-ruby-client) data, but additionally provides some handy convenience methods for the non-intuitive integer attributes `consumption_state`, `purchase_state`, `purchase_time_millis`:
+
+```ruby
+# Raw API call attributes
+result.consumption_state    # => 0 || 1
+result.developer_payload    # => "..."
+result.kind                 # => "androidpublisher#productPurchase"
+result.order_id             # => "<some ID>"
+result.purchase_state       # => 0 || 1 || 2
+result.purchase_time_millis # => Integer (Unix timestamp)
+
+# convenience methods
+result.valid?       # => true if product was purchased (purchase_state == 0)
+result.consumed?    # => true if product has been consumed (consumption_state == 1)
+result.purchased_at # => DateTime
+```
+
+Please see the class documentations [`CandyCheck::PlayStore::Receipt`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/Receipt) and [`CandyCheck::PlayStore::VerificationFailure`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/VerificationFailure) for further details about the responses.
+
+#### Verifying subscriptions
 
 In order to **verify a subscription** from the Play Store, do the following:
 
 ```ruby
-verifier.verify_subscription(package, subscription_id, token) # => Subscription or VerificationFailure
+verifier.verify_subscription(package, subscription_id, token) # => SubscriptionPurchase or VerificationFailure
 ```
 
 Please see documenation for [`CandyCheck::PlayStore::Subscription`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/Subscription) for further details.
