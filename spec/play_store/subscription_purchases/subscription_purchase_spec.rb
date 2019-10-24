@@ -1,19 +1,32 @@
 require "spec_helper"
 
 describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
-  subject { CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase.new(attributes) }
+  subject { CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase.new(fake_subscription_purchase) }
 
   describe "expired and canceled subscription" do
-    let(:attributes) do
-      {
-        "kind" => "androidpublisher#subscriptionPurchase",
-        "startTimeMillis" => "1459540113244",
-        "expiryTimeMillis" => "1462132088610",
-        "autoRenewing" => false,
-        "developerPayload" => "payload that gets stored and returned",
-        "cancelReason" => 0,
-        "paymentState" => "1",
-      }
+    FakeSubscriptionPurchase = Struct.new(
+      :kind,
+      :start_time_millis,
+      :expiry_time_millis,
+      :auto_renewing,
+      :developer_payload,
+      :cancel_reason,
+      :payment_state,
+      :price_amount_micros,
+      :price_currency_code,
+      keyword_init: true,
+    )
+
+    let(:fake_subscription_purchase) do
+      FakeSubscriptionPurchase.new(
+        kind: "androidpublisher#subscriptionPurchase",
+        start_time_millis: 1459540113244,
+        expiry_time_millis: 1462132088610,
+        auto_renewing: false,
+        developer_payload: "payload that gets stored and returned",
+        cancel_reason: 0,
+        payment_state: 1,
+      )
     end
 
     it "is expired?" do
@@ -66,11 +79,16 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
 
   describe "unexpired and renewing subscription" do
     two_days_from_now = DateTime.now + 2
-    let(:attributes) do
-      {
-        "expiryTimeMillis" => (two_days_from_now.to_time.to_i * 1000).to_s,
-        "autoRenewing" => true,
-      }
+    let(:fake_subscription_purchase) do
+      FakeSubscriptionPurchase.new(
+        kind: "androidpublisher#subscriptionPurchase",
+        start_time_millis: 1459540113244,
+        expiry_time_millis: (two_days_from_now.to_time.to_i * 1000),
+        auto_renewing: true,
+        developer_payload: "payload that gets stored and returned",
+        cancel_reason: 0,
+        payment_state: 1,
+      )
     end
 
     it "is expired?" do
@@ -83,12 +101,16 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
   end
 
   describe "expired due to payment failure" do
-    let(:attributes) do
-      {
-        "expiryTimeMillis" => "1462132088610",
-        "autoRenewing" => true,
-        "cancelReason" => 1,
-      }
+    let(:fake_subscription_purchase) do
+      FakeSubscriptionPurchase.new(
+        kind: "androidpublisher#subscriptionPurchase",
+        start_time_millis: 1459540113244,
+        expiry_time_millis: 1462132088610,
+        auto_renewing: true,
+        developer_payload: "payload that gets stored and returned",
+        cancel_reason: 1,
+        payment_state: 1,
+      )
     end
 
     it "is expired?" do
@@ -101,12 +123,16 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
   end
 
   describe "expired with pending payment" do
-    let(:attributes) do
-      {
-        "expiryTimeMillis" => "1462132088610",
-        "autoRenewing" => true,
-        "paymentState" => 0,
-      }
+    let(:fake_subscription_purchase) do
+      FakeSubscriptionPurchase.new(
+        kind: "androidpublisher#subscriptionPurchase",
+        start_time_millis: 1459540113244,
+        expiry_time_millis: 1462132088610,
+        auto_renewing: true,
+        developer_payload: "payload that gets stored and returned",
+        cancel_reason: 0,
+        payment_state: 0,
+      )
     end
 
     it "is expired?" do
@@ -119,15 +145,21 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
   end
 
   describe "trial" do
-    let(:attributes) do
-      {
-        "paymentState" => 1,
-        "priceCurrencyCode" => "SOMECODE",
-        "priceAmountMicros" => "0",
-      }
+    let(:fake_subscription_purchase) do
+      FakeSubscriptionPurchase.new(
+        kind: "androidpublisher#subscriptionPurchase",
+        start_time_millis: 1459540113244,
+        expiry_time_millis: 1462132088610,
+        auto_renewing: false,
+        developer_payload: "payload that gets stored and returned",
+        cancel_reason: 0,
+        payment_state: 1,
+        price_currency_code: "SOMECODE",
+        price_amount_micros: 0,
+      )
     end
 
-    it "is trual?" do
+    it "is trial?" do
       subject.trial?.must_be_true
     end
 

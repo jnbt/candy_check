@@ -6,7 +6,7 @@ module CandyCheck
         include Utils::AttributeReader
 
         # @return [Hash] the raw attributes returned from the server
-        attr_reader :attributes
+        attr_reader :subscription_purchase
 
         # The payment of the subscription is pending (paymentState)
         PAYMENT_PENDING = 0
@@ -20,8 +20,8 @@ module CandyCheck
         # Initializes a new instance which bases on a JSON result
         # from Google's servers
         # @param attributes [Hash]
-        def initialize(attributes)
-          @attributes = attributes
+        def initialize(subscription_purchase)
+          @subscription_purchase = subscription_purchase
         end
 
         # Check if the expiration date is passed
@@ -72,68 +72,68 @@ module CandyCheck
         # Get the auto renewal status as given by Google
         # @return [bool] true if renewing automatically, false otherwise
         def auto_renewing?
-          read_bool("autoRenewing")
+          @subscription_purchase.auto_renewing
         end
 
         # Get the payment state as given by Google
         # @return [Integer]
         def payment_state
-          read_integer("paymentState")
+          @subscription_purchase.payment_state
         end
 
         # Get the price amount for the subscription in micros in the payed
         # currency
         # @return [Integer]
         def price_amount_micros
-          read_integer("priceAmountMicros")
+          @subscription_purchase.price_amount_micros
         end
 
         # Get the cancel reason, as given by Google
         # @return [Integer]
         def cancel_reason
-          read_integer("cancelReason")
+          @subscription_purchase.cancel_reason
         end
 
         # Get the kind of subscription as stored in the android publisher service
         # @return [String]
         def kind
-          read("kind")
+          @subscription_purchase.kind
         end
 
         # Get developer-specified supplemental information about the order
         # @return [String]
         def developer_payload
-          read("developerPayload")
+          @subscription_purchase.developer_payload
         end
 
         # Get the currency code in ISO 4217 format, e.g. "GBP" for British pounds
         # @return [String]
         def price_currency_code
-          read("priceCurrencyCode")
+          @subscription_purchase.price_currency_code
         end
 
         # Get start time for subscription in milliseconds since Epoch
         # @return [Integer]
         def start_time_millis
-          read_integer("startTimeMillis")
+          @subscription_purchase.start_time_millis
         end
 
         # Get expiry time for subscription in milliseconds since Epoch
         # @return [Integer]
         def expiry_time_millis
-          read_integer("expiryTimeMillis")
+          @subscription_purchase.expiry_time_millis
         end
 
         # Get start time in UTC
         # @return [DateTime]
         def starts_at
-          read_datetime_from_millis("startTimeMillis")
+          Time.at(start_time_millis / 1000).utc.to_datetime
         end
 
         # Get expiration time in UTC
         # @return [DateTime]
         def expires_at
-          read_datetime_from_millis("expiryTimeMillis")
+          Time.at(expiry_time_millis / 1000).utc.to_datetime
         end
       end
     end
