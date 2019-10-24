@@ -29,7 +29,7 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductVerification do
 
   describe "failure" do
     it "returns a verification failure" do
-      VCR.use_cassette("play_store/product_purchases/authentication_error") do
+      VCR.use_cassette("play_store/product_purchases/permission_denied") do
         result = subject.call!
         result.must_be_instance_of CandyCheck::PlayStore::VerificationFailure
         result.code.must_equal 401
