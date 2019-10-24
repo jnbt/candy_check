@@ -29,7 +29,7 @@ module CandyCheck
       # @param token [String] to use for authentication
       # @return [Receipt] if successful
       # @return [VerificationFailure] otherwise
-      def verify_subscription(package_name:, subscription_id:, token:)
+      def verify_subscription_purchase(package_name:, subscription_id:, token:)
         verifier = CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionVerification.new(
           package_name: package_name,
           subscription_id: subscription_id,
