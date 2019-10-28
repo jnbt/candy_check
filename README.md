@@ -85,20 +85,29 @@ Please see the class documentation for [`CandyCheck::AppStore::ReceiptCollection
 
 ### PlayStore
 
+> Note: Version `0.2.0` of `CandyCheck` introduced some breaking changes to the PlayStore functionality to adapt to changes in the Google API. If you're upgrading from a `CandyCheck` version `< 0.2.0` see the [migration guide](/MIGRATION_GUIDE_0_2_0.md) for more.
+
 #### Authorization
 
-First we have to build an `authorization` object:
+##### Getting the JSON Key File
+
+First we have to get a `.json` key file, that gives access to the Google API.
+
+This `.json` key file can be generated under the following URL (make sure to adapt the `project=my-project-name` parameter accordingly):
+
+[https://console.developers.google.com/apis/credentials/serviceaccountkey?project=my-project-name](https://console.developers.google.com/apis/credentials/serviceaccountkey?project=my-project-name)
+
+##### Building an Authorization Object
+
+With the `.json` key file downloaded, we can build an authorization object:
 
 ```ruby
-authorization = Google::Auth::ServiceAccountCredentials.make_creds(
-  json_key_io: File.open("path/to/key.json"),
-  scope: "https://www.googleapis.com/auth/androidpublisher",
-)
+authorization = CandyCheck::PlayStore.authorization("/path/to/key.json") }
 ```
 
-> **Note:** More info about the `authorization` object can be found [here](https://github.com/googleapis/google-api-ruby-client#passing-authorization-to-requests)
+> **Note:** `CandyCheck` provides the `CandyCheck::PlayStore.authorization` method as convenience to build an authorization object. In case you need more control over  your authorization object, refer to the [`google-auth-library-ruby`](https://github.com/googleapis/google-auth-library-ruby) docs, which describes building authorization objects in detail.
 
-#### Building a verifier
+##### Building a verifier
 
 With the `authorization` object in place, we can build a verifier:
 
@@ -106,20 +115,25 @@ With the `authorization` object in place, we can build a verifier:
 verifier = CandyCheck::PlayStore::Verifier.new(auth: authorization)
 ```
 
-> Tip: If you need to verify against multiple Google Service Accounts, just instantiate another verifier with different credentials.
+> Tip: If you need to verify against multiple Google Service Accounts, just instantiate a new verifier with another authorization object that got build with a different `.json` key file.
 
 #### Verifying product purchases
 
 This `verifier` can be used to verify product purchases in the PlayStore, all you need to do is to pass the `package_name`, `product_id` and `token` of the product purchase you want to verify:
 
 ```ruby
-result = verifier.verify(package_name, product_id, token) # => ProductPurchase or VerificationFailure
+result = verifier.verify_product_purchase(
+  package_name: "my-package-name",
+  product_id: "my product id",
+  token: "my token"
+)
+# => ProductPurchase or VerificationFailure
 ```
 
 On success this will return an instance of `CandyCheck::Playstore::ProductPurchases::ProductPurchase`, which is a wrapper for the raw [google-api-ruby-client](https://github.com/googleapis/google-api-ruby-client) data, but additionally provides some handy convenience methods for the non-intuitive integer attributes `consumption_state`, `purchase_state`, `purchase_time_millis`:
 
 ```ruby
-# Raw API call attributes
+# raw API call attributes
 result.consumption_state    # => 0 || 1
 result.developer_payload    # => "..."
 result.kind                 # => "androidpublisher#productPurchase"
@@ -133,14 +147,61 @@ result.consumed?    # => true if product has been consumed (consumption_state ==
 result.purchased_at # => DateTime
 ```
 
-Please see the class documentations [`CandyCheck::PlayStore::Receipt`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/Receipt) and [`CandyCheck::PlayStore::VerificationFailure`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/VerificationFailure) for further details about the responses.
+Please see the class documentations [`CandyCheck::PlayStore::ProductPurchases::ProductPurchase`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/Receipt) and [`CandyCheck::PlayStore::VerificationFailure`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/VerificationFailure) for further details about the responses.
 
 #### Verifying subscriptions
 
 In order to **verify a subscription** from the Play Store, do the following:
 
 ```ruby
-verifier.verify_subscription(package, subscription_id, token) # => SubscriptionPurchase or VerificationFailure
+result = verifier.verify_subscription_purchase(
+  package_name: "my-package-name",
+  subscription_id: "my-subscription-id",
+  token: "my-token"
+)
+# => SubscriptionPurchase or VerificationFailure
+```
+
+Again, `CandyCheck` wraps the
+
+```ruby
+result.auto_renewing?      # => Boolean
+result.payment_state       # => 0 || 1 || 2 || 3
+result.price_amount_micros # => Integer
+
+def cancel_reason
+  @subscription_purchase.cancel_reason
+end
+
+# Get the kind of subscription as stored in the android publisher service
+# @return [String]
+def kind
+  @subscription_purchase.kind
+end
+
+# Get developer-specified supplemental information about the order
+# @return [String]
+def developer_payload
+  @subscription_purchase.developer_payload
+end
+
+# Get the currency code in ISO 4217 format, e.g. "GBP" for British pounds
+# @return [String]
+def price_currency_code
+  @subscription_purchase.price_currency_code
+end
+
+# Get start time for subscription in milliseconds since Epoch
+# @return [Integer]
+def start_time_millis
+  @subscription_purchase.start_time_millis
+end
+
+# Get expiry time for subscription in milliseconds since Epoch
+# @return [Integer]
+def expiry_time_millis
+  @subscription_purchase.expiry_time_millis
+end
 ```
 
 Please see documenation for [`CandyCheck::PlayStore::Subscription`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/Subscription) for further details.
