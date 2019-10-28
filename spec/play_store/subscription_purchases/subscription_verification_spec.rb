@@ -3,47 +3,38 @@ require "spec_helper"
 describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionVerification do
   subject do
     CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionVerification.new(
-      package, product_id, token
+      package_name: package_name,
+      subscription_id: subscription_id,
+      token: token,
+      authorization: authorization,
     )
   end
-  let(:package) { "the_package" }
-  let(:product_id) { "the_product" }
-  let(:token) { "the_token" }
+
+  let(:json_key_file) { File.expand_path("../../fixtures/play_store/random_dummy_key.json", __dir__) }
+  let(:authorization) { CandyCheck::PlayStore.authorization(json_key_file) }
+
+  let(:package_name) { "my_package_name" }
+  let(:subscription_id) { "my_subscription_id" }
+  let(:token) { "my_token" }
 
   describe "valid" do
-    let(:response) do
-      {
-        "kind" => "androidpublisher#subscriptionPurchase",
-        "startTimeMillis" => "1459540113244",
-        "expiryTimeMillis" => "1462132088610",
-        "autoRenewing" => false,
-        "developerPayload" => "payload that gets stored and returned",
-        "cancelReason" => 0,
-        "paymentState" => "1",
-      }
-    end
-
     it "returns a subscription" do
-      result = subject.call!
-      result.must_be_instance_of CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase
-      result.expired?.must_be_true
+      VCR.use_cassette("play_store/subscription_purchases/valid_but_expired") do
+        result = subject.call!
+
+        result.must_be_instance_of CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase
+        result.expired?.must_be_true
+      end
     end
   end
 
   describe "failure" do
-    let(:response) do
-      {
-        "error" => {
-          "code" => 401,
-          "message" => "The current user has insufficient permissions",
-        },
-      }
-    end
-
     it "returns a verification failure" do
-      result = subject.call!
-      result.must_be_instance_of CandyCheck::PlayStore::VerificationFailure
-      result.code.must_equal 401
+      VCR.use_cassette("play_store/subscription_purchases/permission_denied") do
+        result = subject.call!
+        result.must_be_instance_of CandyCheck::PlayStore::VerificationFailure
+        result.code.must_equal 401
+      end
     end
   end
 
