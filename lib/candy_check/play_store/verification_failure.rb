@@ -9,7 +9,7 @@ module CandyCheck
 
       # Initializes a new instance which bases on a JSON result
       # from Google API servers
-      # @param attributes [Hash]
+      # @param error [Hash]
       def initialize(error)
         @error = error
       end

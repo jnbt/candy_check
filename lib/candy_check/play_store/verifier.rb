@@ -1,17 +1,17 @@
 module CandyCheck
   module PlayStore
     # Verifies purchase tokens against the Google API.
-    # The call return either an {Receipt} or a {VerificationFailure}
+    # The call return either a {SubscriptionPurchases::SubscriptionPurchase} or a {VerificationFailure}
     class Verifier
       def initialize(authorization:)
         @authorization = authorization
       end
 
       # Contacts the Google API and requests the product state
-      # @param package [String] to query
+      # @param package_name [String] to query
       # @param product_id [String] to query
       # @param token [String] to use for authentication
-      # @return [Receipt] if successful
+      # @return [ProductPurchases::ProductPurchase] if successful
       # @return [VerificationFailure] otherwise
       def verify_product_purchase(package_name:, product_id:, token:)
         verifier = CandyCheck::PlayStore::ProductPurchases::ProductVerification.new(
@@ -24,10 +24,10 @@ module CandyCheck
       end
 
       # Contacts the Google API and requests the product state
-      # @param package [String] to query
+      # @param package_name [String] to query
       # @param subscription_id [String] to query
       # @param token [String] to use for authentication
-      # @return [Receipt] if successful
+      # @return [SubscriptionPurchases::SubscriptionPurchase] if successful
       # @return [VerificationFailure] otherwise
       def verify_subscription_purchase(package_name:, subscription_id:, token:)
         verifier = CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionVerification.new(

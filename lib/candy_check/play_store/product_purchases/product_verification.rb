@@ -2,7 +2,7 @@ module CandyCheck
   module PlayStore
     module ProductPurchases
       # Verifies a purchase token against the Google API
-      # The call return either an {Receipt} or an {VerificationFailure}
+      # The call return either a {ProductPurchase} or a {VerificationFailure}
       class ProductVerification
         # @return [String] the package_name which will be queried
         attr_reader :package_name

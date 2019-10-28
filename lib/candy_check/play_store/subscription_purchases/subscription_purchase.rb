@@ -19,7 +19,7 @@ module CandyCheck
 
         # Initializes a new instance which bases on a JSON result
         # from Google's servers
-        # @param attributes [Hash]
+        # @param subscription_purchase [Google::Apis::AndroidpublisherV3::SubscriptionPurchase]
         def initialize(subscription_purchase)
           @subscription_purchase = subscription_purchase
         end
