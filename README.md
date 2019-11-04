@@ -85,7 +85,7 @@ Please see the class documentation for [`CandyCheck::AppStore::ReceiptCollection
 
 ### PlayStore
 
-> Note: Version `0.2.0` of `CandyCheck` introduced some breaking changes to the PlayStore functionality to adapt to changes in the Google API. If you're upgrading from a `CandyCheck` version `< 0.2.0` see the [migration guide](/MIGRATION_GUIDE_0_2_0.md) for more.
+> :warning: Version `0.2.0` of `CandyCheck` introduced some breaking changes to the PlayStore functionality to adapt to changes in the Google API. If you're upgrading from a `CandyCheck` version `< 0.2.0` see the [migration guide](/MIGRATION_GUIDE_0_2_0.md) for more.
 
 #### Authorization
 
