@@ -1,7 +1,7 @@
 module CandyCheck
   module PlayStore
     module ProductPurchases
-      # Describes a successful response from the Google verification server
+      # Describes a successful response from the PlayStore verification server
       class ProductPurchase
         include Utils::AttributeReader
 
