@@ -1,6 +1,6 @@
 # Migration Guide from v0.1.x to v0.2.0
 
-Due to changes in the `Google API`, `Candy Check` needed to introduce some breaking changes in version `0.2.0`.
+Due to changes in the PlayStore API, Candy Check needed to introduce some breaking changes in version `0.2.0`.
 
 To adapt your old implementation to these changes, follow the steps below:
 
