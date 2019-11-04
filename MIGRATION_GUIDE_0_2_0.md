@@ -28,7 +28,7 @@ to
 
 ```ruby
 # v0.2.0
-authorization = CandyCheck::PlayStore.authorization("/path/to/key.json") }
+authorization = CandyCheck::PlayStore.authorization("/path/to/key.json")
 verifier = CandyCheck::PlayStore::Verifier.new(auth: authorization)
 ```
 
