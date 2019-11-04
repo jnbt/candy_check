@@ -102,7 +102,7 @@ This `.json` key file can be generated under the following URL (make sure to ada
 With the `.json` key file downloaded, we can build an authorization object:
 
 ```ruby
-authorization = CandyCheck::PlayStore.authorization("/path/to/key.json") }
+authorization = CandyCheck::PlayStore.authorization("/path/to/key.json")
 ```
 
 > **Note:** `CandyCheck` provides the `CandyCheck::PlayStore.authorization` method as convenience to build an authorization object. In case you need more control over  your authorization object, refer to the [`google-auth-library-ruby`](https://github.com/googleapis/google-auth-library-ruby) docs, which describes building authorization objects in detail.
