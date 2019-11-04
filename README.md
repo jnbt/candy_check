@@ -130,24 +130,8 @@ result = verifier.verify_product_purchase(
 # => ProductPurchase or VerificationFailure
 ```
 
-On success this will return an instance of `CandyCheck::Playstore::ProductPurchases::ProductPurchase`, which is a wrapper for the raw [google-api-ruby-client](https://github.com/googleapis/google-api-ruby-client) data, but additionally provides some handy convenience methods for the non-intuitive integer attributes `consumption_state`, `purchase_state`, `purchase_time_millis`:
-
-```ruby
-# raw API call attributes
-result.consumption_state    # => 0 || 1
-result.developer_payload    # => "..."
-result.kind                 # => "androidpublisher#productPurchase"
-result.order_id             # => "<some ID>"
-result.purchase_state       # => 0 || 1 || 2
-result.purchase_time_millis # => Integer (Unix timestamp)
-
-# convenience methods
-result.valid?       # => true if product was purchased (purchase_state == 0)
-result.consumed?    # => true if product has been consumed (consumption_state == 1)
-result.purchased_at # => DateTime
-```
-
-Please see the class documentations [`CandyCheck::PlayStore::ProductPurchases::ProductPurchase`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/Receipt) and [`CandyCheck::PlayStore::VerificationFailure`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/VerificationFailure) for further details about the responses.
+On success this will return an instance of `CandyCheck::Playstore::ProductPurchases::ProductPurchase`, which is a wrapper for the raw [google-api-ruby-client](https://github.com/googleapis/google-api-ruby-client) data, but additionally provides some handy convenience methods.
+Please see the class documentations [`CandyCheck::PlayStore::ProductPurchases::ProductPurchase`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/ProductPurchases/ProductPurchase) and [`CandyCheck::PlayStore::VerificationFailure`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/VerificationFailure) for further details about the responses.
 
 #### Verifying subscriptions
 
@@ -162,49 +146,7 @@ result = verifier.verify_subscription_purchase(
 # => SubscriptionPurchase or VerificationFailure
 ```
 
-Again, `CandyCheck` wraps the
-
-```ruby
-result.auto_renewing?      # => Boolean
-result.payment_state       # => 0 || 1 || 2 || 3
-result.price_amount_micros # => Integer
-
-def cancel_reason
-  @subscription_purchase.cancel_reason
-end
-
-# Get the kind of subscription as stored in the android publisher service
-# @return [String]
-def kind
-  @subscription_purchase.kind
-end
-
-# Get developer-specified supplemental information about the order
-# @return [String]
-def developer_payload
-  @subscription_purchase.developer_payload
-end
-
-# Get the currency code in ISO 4217 format, e.g. "GBP" for British pounds
-# @return [String]
-def price_currency_code
-  @subscription_purchase.price_currency_code
-end
-
-# Get start time for subscription in milliseconds since Epoch
-# @return [Integer]
-def start_time_millis
-  @subscription_purchase.start_time_millis
-end
-
-# Get expiry time for subscription in milliseconds since Epoch
-# @return [Integer]
-def expiry_time_millis
-  @subscription_purchase.expiry_time_millis
-end
-```
-
-Please see documenation for [`CandyCheck::PlayStore::Subscription`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/Subscription) for further details.
+Please see documenation for [`CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/SubscriptionPurchases/SubscriptionPurchase) for further details.
 
 ## CLI
 
