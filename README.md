@@ -115,7 +115,7 @@ With the `authorization` object in place, we can build a verifier:
 verifier = CandyCheck::PlayStore::Verifier.new(auth: authorization)
 ```
 
-> Tip: If you need to verify against multiple Google Service Accounts, just instantiate a new verifier with another authorization object that got build with a different `.json` key file.
+> **Note:** If you need to verify against multiple Google Service Accounts, just instantiate a new verifier with another authorization object that got build with a different `.json` key file.
 
 #### Verifying product purchases
 
