@@ -38,7 +38,7 @@ If you need other means of authentication follow this part of the [`README`](htt
 
 ## Verifying Purchases
 
-To be more descriptive and consistent with the Google API, the verifier methods got a new signature and return values have been adapted accordingly.
+To be more descriptive and consistent with the PlayStore API, the verifier got a new signature and return values have been adapted accordingly.
 
 ### Verifying Product Purchases
 
