@@ -13,7 +13,7 @@ module CandyCheck
         CONSUMPTION_STATE_CONSUMED = 1
 
         # Initializes a new instance which bases on a JSON result
-        # from Google API servers
+        # from PlayStore API servers
         # @param product_purchase [Google::Apis::AndroidpublisherV3::ProductPurchase]
         def initialize(product_purchase)
           @product_purchase = product_purchase
