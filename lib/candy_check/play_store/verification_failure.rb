@@ -17,12 +17,9 @@ module CandyCheck
       # The code of the failure
       # @return [Fixnum]
       def code
-        status_code = begin
-                        Integer(error.status_code)
-                      rescue
-                        nil
-                      end
-        status_code || -1
+        Integer(error.status_code)
+      rescue
+        -1
       end
 
       # The message of the failure
