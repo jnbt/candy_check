@@ -7,7 +7,7 @@ require "candy_check/version"
 Gem::Specification.new do |spec|
   spec.name = "candy_check"
   spec.version = CandyCheck::VERSION
-  spec.authors = ["Jonas Thiel"]
+  spec.authors = ["Jonas Thiel", "Christoph Weegen"]
   spec.email = ["jonas@thiel.io"]
   spec.summary = "Check and verify in-app receipts"
   spec.homepage = "https://github.com/jnbt/candy_check"
