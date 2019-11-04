@@ -29,7 +29,7 @@ to
 ```ruby
 # v0.2.0
 authorization = CandyCheck::PlayStore.authorization("/path/to/key.json")
-verifier = CandyCheck::PlayStore::Verifier.new(auth: authorization)
+verifier = CandyCheck::PlayStore::Verifier.new(authorization: authorization)
 ```
 
 If you're not sure how to get a `.json` key file, follow this part of the [`README`](/README.md#getting-the-json-key-file).

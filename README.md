@@ -112,7 +112,7 @@ authorization = CandyCheck::PlayStore.authorization("/path/to/key.json")
 With the `authorization` object in place, we can build a verifier:
 
 ```ruby
-verifier = CandyCheck::PlayStore::Verifier.new(auth: authorization)
+verifier = CandyCheck::PlayStore::Verifier.new(authorization: authorization)
 ```
 
 > **Note:** If you need to verify against multiple Google Service Accounts, just instantiate a new verifier with another authorization object that got build with a different `.json` key file.
