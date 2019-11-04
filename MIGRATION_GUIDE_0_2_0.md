@@ -69,6 +69,7 @@ verifier.verify_product_purchase(
 Change all occurences of
 
 ```ruby
+# < v0.2.0
 verifier.verify_subscription("my-package-name", "my-subscription-id", "my-token")
 # => Subscription or VerificationFailure
 ```
@@ -76,6 +77,7 @@ verifier.verify_subscription("my-package-name", "my-subscription-id", "my-token"
 to
 
 ```ruby
+# v0.2.0
 verifier.verify_subscription_purchase(
   package_name: "my-package-name",
   subscription_id: "my-subscription-id",
