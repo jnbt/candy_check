@@ -5,6 +5,8 @@ module CandyCheck
       class ProductPurchase
         include Utils::AttributeReader
 
+        attr_reader :product_purchase
+
         # Purchased product (0 is purchased, don't ask me why)
         # @see https://developers.google.com/android-publisher/api-ref/purchases/products
         PURCHASE_STATE_PURCHASED = 0
