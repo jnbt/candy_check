@@ -64,6 +64,40 @@ verifier.verify_product_purchase(
 
 *NOTE:* Take a closer look at the possible return values: `CandyCheck::PlayStore::Receipt` was moved to `CandyCheck::PlayStore::ProductPurchases::ProductPurchase`. In case you're matching at the class name of the result, please adapt your code accordingly.
 
+#### Accessing Raw ProductPurchase Attributes
+
+CandyCheck `< 0.2.0` provided the raw `ProductPurchase` attributes given by the PlayStore API like this:
+
+```ruby
+# < v0.2.0
+result = verifier.verify("my-package-name", "my product id", "my token")
+result.attributes
+# => Hash
+```
+
+To get the same behaviour in CandyCheck `0.2.0`, change the code above to:
+
+```ruby
+# v0.2.0
+result = verifier.verify_product_purchase(
+  package_name: "my-package-name",
+  product_id: "my product id",
+  token: "my token"
+)
+result.product_purchase.to_h
+# => Hash
+```
+
+The hash key access must be changed from strings in `camelCase` to symbols in `snake_case`:
+
+```ruby
+# < 0.2.0
+result.attributes["purchaseState"]
+
+# 0.2.0
+result.product_purchase.to_h[:purchase_state]
+```
+
 ## Verifying Subscription Purchases
 
 Change all occurences of
