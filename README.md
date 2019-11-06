@@ -43,12 +43,7 @@ called "[service account](https://developers.google.com/accounts/docs/OAuth2Serv
 new account by yourself, export the generated certificate file and grant the correct permissions to the account for
 your app using the [Google Developer Console](https://console.developers.google.com).
 
-Further more this gem uses the [official Ruby SDK](https://github.com/google/google-api-ruby-client) for the API interactions
-which suggest to use a locally cached service discovery. If you don't omit the `cache_file` configuration this is done
-automatically.
-
-If you have set up the Android app correctly you should get a [`purchaseToken`](http://developer.android.com/google/play/billing/billing_reference.html#getBuyIntent) per purchased item. You should use this string in combination with `packageName` and `productId`
-to verify the purchase.
+If you have set up the Android app correctly you should get a [`purchaseToken`](http://developer.android.com/google/play/billing/billing_reference.html#getBuyIntent) per purchased item. You should use this string in combination with `packageName` and `productId` to verify the purchase.
 
 ## Usage
 
@@ -105,7 +100,7 @@ With the `.json` key file downloaded, we can build an authorization object:
 authorization = CandyCheck::PlayStore.authorization("/path/to/key.json")
 ```
 
-> **Note:** `CandyCheck` provides the `CandyCheck::PlayStore.authorization` method as convenience to build an authorization object. In case you need more control over  your authorization object, refer to the [`google-auth-library-ruby`](https://github.com/googleapis/google-auth-library-ruby) docs, which describes building authorization objects in detail.
+> **Note:** `CandyCheck` provides the `CandyCheck::PlayStore.authorization` method as convenience to build an authorization object. In case you need more control over your authorization object, refer to the [`google-auth-library-ruby`](https://github.com/googleapis/google-auth-library-ruby) docs, which describes building authorization objects in detail.
 
 ##### Building a verifier
 
