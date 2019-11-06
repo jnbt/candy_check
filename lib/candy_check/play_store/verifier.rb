@@ -3,6 +3,8 @@ module CandyCheck
     # Verifies purchase tokens against the Google API.
     # The call return either a {SubscriptionPurchases::SubscriptionPurchase} or a {VerificationFailure}
     class Verifier
+      # Initializes a new verifier which is bound to an authorization
+      # @param authorization [Google::Auth::ServiceAccountCredentials] to use against the PlayStore API
       def initialize(authorization:)
         @authorization = authorization
       end
