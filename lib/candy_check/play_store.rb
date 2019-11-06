@@ -11,6 +11,8 @@ require "candy_check/play_store/verifier"
 module CandyCheck
   # Module to request and verify a AppStore receipt
   module PlayStore
+    # Build an authorization object
+    # @param json_key_file [String]
     # @return [Google::Auth::ServiceAccountCredentials]
     def self.authorization(json_key_file)
       Google::Auth::ServiceAccountCredentials.make_creds(

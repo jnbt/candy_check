@@ -5,6 +5,8 @@ module CandyCheck
       class ProductPurchase
         include Utils::AttributeReader
 
+        # Returns the raw ProductPurchase from google-api-client gem
+        # @return [Google::Apis::AndroidpublisherV3::ProductPurchase]
         attr_reader :product_purchase
 
         # Purchased product (0 is purchased, don't ask me why)
@@ -50,6 +52,8 @@ module CandyCheck
           @product_purchase.kind
         end
 
+        # The order id
+        # @return [String]
         def order_id
           @product_purchase.order_id
         end
