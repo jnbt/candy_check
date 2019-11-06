@@ -10,7 +10,7 @@ module CandyCheck
         # @param options [Hash]
         # @option options [String] :json_key_file to use for API access
         def initialize(package_name, product_id, token, options)
-          @package = package
+          @package = package_name
           @product_id = product_id
           @token = token
           super(options)
