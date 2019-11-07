@@ -8,7 +8,7 @@ module CandyCheck
 
       # Initializes a new instance which bases on a JSON result
       # from Apple's verification server
-      # @param attributes [Array<Hash>]
+      # @param attributes [Array<Hash>] raw data from Apple's server
       def initialize(attributes)
         @receipts = attributes.map { |r| Receipt.new(r) }
       end

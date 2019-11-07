@@ -16,7 +16,7 @@ module CandyCheck
       # Builds a fresh verification run
       # @param endpoint_url [String] the verification URL to use
       # @param receipt_data [String] the raw data to be verified
-      # @param secret [String] the optional shared secret
+      # @param secret [String] optional: shared secret
       def initialize(endpoint_url, receipt_data, secret = nil)
         @endpoint_url = endpoint_url
         @receipt_data = receipt_data
