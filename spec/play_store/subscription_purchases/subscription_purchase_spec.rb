@@ -4,19 +4,6 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
   subject { CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase.new(fake_subscription_purchase) }
 
   describe "expired and canceled subscription" do
-    FakeSubscriptionPurchase = Struct.new(
-      :kind,
-      :start_time_millis,
-      :expiry_time_millis,
-      :auto_renewing,
-      :developer_payload,
-      :cancel_reason,
-      :payment_state,
-      :price_amount_micros,
-      :price_currency_code,
-      keyword_init: true,
-    )
-
     let(:fake_subscription_purchase) do
       FakeSubscriptionPurchase.new(
         kind: "androidpublisher#subscriptionPurchase",
@@ -165,6 +152,30 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
 
     it "returns the price_currency_code" do
       subject.price_currency_code.must_equal "SOMECODE"
+    end
+  end
+
+  private
+
+  class FakeSubscriptionPurchase
+    FIELDS = [
+      :kind,
+      :start_time_millis,
+      :expiry_time_millis,
+      :auto_renewing,
+      :developer_payload,
+      :cancel_reason,
+      :payment_state,
+      :price_amount_micros,
+      :price_currency_code,
+    ].freeze
+
+    attr_accessor *FIELDS
+
+    def initialize(hash)
+      FIELDS.each do |key|
+        self.public_send("#{key}=", hash[key])
+      end
     end
   end
 end

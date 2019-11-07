@@ -3,16 +3,6 @@ require "spec_helper"
 describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
   subject { CandyCheck::PlayStore::ProductPurchases::ProductPurchase.new(fake_product_purchase) }
 
-  FakeProductPurchase = Struct.new(
-    :consumption_state,
-    :developer_payload,
-    :kind,
-    :order_id,
-    :purchase_state,
-    :purchase_time_millis,
-    keyword_init: true,
-  )
-
   describe "valid and non-consumed product" do
     let(:fake_product_purchase) do
       FakeProductPurchase.new(
@@ -94,6 +84,27 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
 
     it "is valid?" do
       subject.valid?.must_be_false
+    end
+  end
+
+  private
+
+  class FakeProductPurchase
+    FIELDS = [
+      :consumption_state,
+      :developer_payload,
+      :kind,
+      :order_id,
+      :purchase_state,
+      :purchase_time_millis,
+    ].freeze
+
+    attr_accessor *FIELDS
+
+    def initialize(hash)
+      FIELDS.each do |key|
+        self.public_send("#{key}=", hash[key])
+      end
     end
   end
 end
