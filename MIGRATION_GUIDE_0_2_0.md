@@ -34,7 +34,7 @@ verifier = CandyCheck::PlayStore::Verifier.new(authorization: authorization)
 
 If you're not sure how to get a `.json` key file, follow this part of the [`README`](/README.md#getting-the-json-key-file).
 
-If you need other means of authentication follow this part of the [`README`](http://localhost:6419/README.md#building-an-authorization-object).
+If you need other means of authentication follow this part of the [`README`](/README.md#building-an-authorization-object).
 
 ## Verifying Purchases
 
