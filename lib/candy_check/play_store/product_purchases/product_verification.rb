@@ -23,7 +23,7 @@ module CandyCheck
         end
 
         # Performs the verification against the remote server
-        # @return [Receipt] if successful
+        # @return [ProductPurchase] if successful
         # @return [VerificationFailure] otherwise
         def call!
           verify!

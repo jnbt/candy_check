@@ -23,7 +23,7 @@ module CandyCheck
         end
 
         # Performs the verification against the remote server
-        # @return [Subscription] if successful
+        # @return [SubscriptionPurchase] if successful
         # @return [VerificationFailure] otherwise
         def call!
           verify!
