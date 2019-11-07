@@ -4,17 +4,13 @@ module CandyCheck
       # Command to verify an PlayStore purchase
       class PlayStore < Base
         # Prepare a verification run from the terminal
-        # @param package [String]
+        # @param package_name [String]
         # @param product_id [String]
         # @param token [String]
         # @param options [Hash]
-        # @option options [String] :issuer to use for API access
-        # @option options [String] :key_file to use for API access
-        # @option options [String] :key_secret to decrypt the key file
-        # @option options [String] :application_name for the API call
-        # @option options [String] :application_version for the API call
-        def initialize(package, product_id, token, options)
-          @package = package
+        # @option options [String] :json_key_file to use for API access
+        def initialize(package_name, product_id, token, options)
+          @package = package_name
           @product_id = product_id
           @token = token
           super(options)
@@ -22,17 +18,20 @@ module CandyCheck
 
         # Print the result of the verification to the terminal
         def run
-          verifier = CandyCheck::PlayStore::Verifier.new(config)
-          verifier.boot!
-          result = verifier.verify(@package, @product_id, @token)
+          verifier = CandyCheck::PlayStore::Verifier.new(authorization: authorization)
+          result = verifier.verify_product_purchase(
+            package_name: @package,
+            product_id: @product_id,
+            token: @token,
+          )
           out.print "#{result.class}:"
           out.pretty result
         end
 
         private
 
-        def config
-          CandyCheck::PlayStore::Config.new(options)
+        def authorization
+          CandyCheck::PlayStore.authorization(options["json_key_file"])
         end
       end
     end

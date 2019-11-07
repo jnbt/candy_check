@@ -1,51 +1,18 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe CandyCheck::CLI::Commands::PlayStore do
   include WithCommand
-  subject { CandyCheck::CLI::Commands::PlayStore }
-  let(:arguments) { [package, product_id, token, options] }
-  let(:package)    { 'the_package' }
-  let(:product_id) { 'the_product' }
-  let(:token)      { 'the_token' }
-  let(:options) do
-    {
-      application_name: 'YourApplication',
-      application_version: '1.0',
-      issuer: 'abcdefg@developer.gserviceaccount.com',
-      key_file: 'local/google.p12',
-      key_secret: 'notasecret'
-    }
-  end
+  subject { CandyCheck::CLI::Commands::PlayStore.new(package_name, product_id, token, "json_key_file" => json_key_file) }
+  let(:package_name) { "my_package_name" }
+  let(:product_id) { "my_product_id" }
+  let(:token) { "my_token" }
+  let(:json_key_file) { File.expand_path("../../fixtures/play_store/random_dummy_key.json", __dir__) }
 
-  before do
-    stub = proc do |*args|
-      @verifier = DummyPlayStoreVerifier.new(*args)
-    end
-    CandyCheck::PlayStore::Verifier.stub :new, stub do
+  it "calls and outputs the verifier" do
+    VCR.use_cassette("play_store/product_purchases/valid_but_not_consumed") do
       run_command!
-    end
-  end
-
-  it 'calls and outputs the verifier' do
-    options.each do |k, v|
-      @verifier.config.public_send(k).must_equal v
-    end
-    @verifier.arguments.must_equal [package, product_id, token]
-    out.must_be 'Hash:', result: :stubbed
-  end
-
-  private
-
-  DummyPlayStoreVerifier = Struct.new(:config) do
-    attr_reader :arguments, :booted
-
-    def boot!
-      @booted = true
-    end
-
-    def verify(*arguments)
-      @arguments = arguments
-      { result: :stubbed }
+      assert_equal "CandyCheck::PlayStore::ProductPurchases::ProductPurchase:", out.lines.first
+      assert_equal CandyCheck::PlayStore::ProductPurchases::ProductPurchase, out.lines[1].class
     end
   end
 end

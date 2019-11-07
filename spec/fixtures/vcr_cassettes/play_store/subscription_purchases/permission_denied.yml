@@ -1,0 +1,196 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://www.googleapis.com/oauth2/v4/token
+    body:
+      encoding: ASCII-8BIT
+      string: params
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 10 Oct 2019 14:07:52 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      Cache-Control:
+      - private
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="46,43",h3-Q048=":443"; ma=2592000,h3-Q046=":443";
+        ma=2592000,h3-Q043=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "my_token",
+          "expires_in": 3600,
+          "token_type": "Bearer"
+        }
+    http_version:
+  recorded_at: Thu, 10 Oct 2019 14:07:52 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/androidpublisher/v3/applications/my_package_name/purchases/subscriptions/my_subscription_id/tokens/my_token
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - unknown/0.0.0 google-api-ruby-client/0.28.7 Linux/5.0.0-31-generic (gzip)
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Thu, 10 Oct 2019 14:07:52 GMT
+      Authorization:
+      - Bearer my_bearer
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Vary:
+      - Origin
+      - X-Origin
+      Www-Authenticate:
+      - Bearer realm="https://accounts.google.com/", error=invalid_token
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      Date:
+      - Thu, 10 Oct 2019 14:07:52 GMT
+      Expires:
+      - Thu, 10 Oct 2019 14:07:52 GMT
+      Cache-Control:
+      - private, max-age=0
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="46,43",h3-Q048=":443"; ma=2592000,h3-Q046=":443";
+        ma=2592000,h3-Q043=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {
+         "error": {
+          "errors": [
+           {
+            "domain": "androidpublisher",
+            "reason": "permissionDenied",
+            "message": "The current user has insufficient permissions to perform the requested operation."
+           }
+          ],
+          "code": 401,
+          "message": "The current user has insufficient permissions to perform the requested operation."
+         }
+        }
+    http_version:
+  recorded_at: Thu, 10 Oct 2019 14:07:52 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/androidpublisher/v3/applications/my_package_name/purchases/subscriptions/my_subscription_id/tokens/my_token
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - unknown/0.0.0 google-api-ruby-client/0.28.7 Linux/5.0.0-31-generic (gzip)
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Thu, 10 Oct 2019 14:07:53 GMT
+      Authorization:
+      - Bearer my_bearer
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Vary:
+      - Origin
+      - X-Origin
+      Www-Authenticate:
+      - Bearer realm="https://accounts.google.com/", error=invalid_token
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      Date:
+      - Thu, 10 Oct 2019 14:07:53 GMT
+      Expires:
+      - Thu, 10 Oct 2019 14:07:53 GMT
+      Cache-Control:
+      - private, max-age=0
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="46,43",h3-Q048=":443"; ma=2592000,h3-Q046=":443";
+        ma=2592000,h3-Q043=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {
+         "error": {
+          "errors": [
+           {
+            "domain": "androidpublisher",
+            "reason": "permissionDenied",
+            "message": "The current user has insufficient permissions to perform the requested operation."
+           }
+          ],
+          "code": 401,
+          "message": "The current user has insufficient permissions to perform the requested operation."
+         }
+        }
+    http_version:
+  recorded_at: Thu, 10 Oct 2019 14:07:53 GMT
+recorded_with: VCR 5.0.0

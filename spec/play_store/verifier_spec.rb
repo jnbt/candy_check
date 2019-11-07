@@ -1,111 +1,47 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe CandyCheck::PlayStore::Verifier do
-  subject { CandyCheck::PlayStore::Verifier.new(config) }
-  let(:config) do
-    CandyCheck::PlayStore::Config
-      .new(
-        application_name: 'YourApplication',
-        application_version: '1.0',
-        issuer: 'abcdefg@developer.gserviceaccount.com',
-        key_file: 'local/google.p12',
-        key_secret: 'notasecret'
-      )
-  end
-  let(:package)    { 'the_package' }
-  let(:product_id) { 'the_product' }
-  let(:token)      { 'the_token' }
+  subject { CandyCheck::PlayStore::Verifier.new(authorization: authorization) }
 
-  it 'holds the config' do
-    subject.config.must_be_same_as config
-  end
+  let(:package_name) { "my_package_name" }
+  let(:product_id) { "my_product_id" }
+  let(:subscription_id) { "my_subscription_id" }
+  let(:token) { "my_token" }
 
-  it 'requires a boot before verification' do
-    proc do
-      subject.verify(package, product_id, token)
-    end.must_raise CandyCheck::PlayStore::Verifier::BootRequiredError
-  end
+  let(:json_key_file) { File.expand_path("../fixtures/play_store/random_dummy_key.json", __dir__) }
+  let(:authorization) { CandyCheck::PlayStore.authorization(json_key_file) }
 
-  it 'it configures and boots a client but raises on second boot!' do
-    with_mocked_client do
-      subject.boot!
-      @client.config.must_be_same_as config
-      @client.booted.must_be_true
+  describe "product purchases" do
+    it "verifies a product purchase" do
+      VCR.use_cassette("play_store/product_purchases/valid_but_not_consumed") do
+        result = subject.verify_product_purchase(package_name: package_name, product_id: product_id, token: token)
+        result.must_be_instance_of CandyCheck::PlayStore::ProductPurchases::ProductPurchase
+        result.valid?.must_be_true
+        result.consumed?.must_be_false
+      end
     end
 
-    proc do
-      subject.boot!
-    end.must_raise CandyCheck::PlayStore::Verifier::BootRequiredError
-  end
-
-  it 'uses a verifier when booted' do
-    result = :stubbed
-    with_mocked_client do
-      subject.boot!
-    end
-    with_mocked_verifier(result) do
-      subject.verify(package, product_id, token).must_be_same_as result
-
-      assert_recorded(
-        [@client, package, product_id, token]
-      )
+    it "can return a product purchase verification failure" do
+      VCR.use_cassette("play_store/product_purchases/permission_denied") do
+        result = subject.verify_product_purchase(package_name: package_name, product_id: product_id, token: token)
+        result.must_be_instance_of CandyCheck::PlayStore::VerificationFailure
+      end
     end
   end
 
-  it 'uses a subscription verifier when booted' do
-    result = :stubbed
-    with_mocked_client do
-      subject.boot!
+  describe "subscription purchases" do
+    it "verifies a subscription purchase" do
+      VCR.use_cassette("play_store/subscription_purchases/valid_but_expired") do
+        result = subject.verify_subscription_purchase(package_name: package_name, subscription_id: subscription_id, token: token)
+        result.must_be_instance_of CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase
+      end
     end
-    with_mocked_verifier(result) do
-      subject.verify_subscription(
-        package, product_id, token
-      ).must_be_same_as result
 
-      assert_recorded(
-        [@client, package, product_id, token]
-      )
-    end
-  end
-
-  private
-
-  def with_mocked_verifier(*results)
-    @recorded ||= []
-    stub = proc do |*args|
-      @recorded << args
-      DummyPlayStoreVerification.new(*args).tap { |v| v.results = results }
-    end
-    CandyCheck::PlayStore::Verification.stub :new, stub do
-      yield
-    end
-  end
-
-  def with_mocked_client
-    stub = proc do |*args|
-      @client = DummyPlayStoreClient.new(*args)
-    end
-    CandyCheck::PlayStore::Client.stub :new, stub do
-      yield
-    end
-  end
-
-  def assert_recorded(*calls)
-    @recorded.must_equal calls
-  end
-
-  DummyPlayStoreVerification = Struct.new(:client, :package,
-                                          :product_id, :token) do
-    attr_accessor :results
-    def call!
-      results.shift
-    end
-  end
-
-  DummyPlayStoreClient = Struct.new(:config) do
-    attr_reader :booted
-    def boot!
-      @booted = true
+    it "can return a subscription purchase verification failure" do
+      VCR.use_cassette("play_store/subscription_purchases/permission_denied") do
+        result = subject.verify_subscription_purchase(package_name: package_name, subscription_id: subscription_id, token: token)
+        result.must_be_instance_of CandyCheck::PlayStore::VerificationFailure
+      end
     end
   end
 end
