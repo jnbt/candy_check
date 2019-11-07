@@ -121,3 +121,21 @@ verifier.verify_subscription_purchase(
 ```
 
 *NOTE:* Again take a closer look at the possible return values: `CandyCheck::PlayStore::Subscription` was moved to `CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase`. In case you're matching at the class name of the result, please adapt your code accordingly.
+
+## Using the CLI
+
+The way the CandyCheck CLI gets used, needed to be changed too.
+
+The old PlayStore command:
+
+```bash
+# < v0.2.0
+$ candy_check play_store PACKAGE PRODUCT_ID TOKEN --issuer=ISSUER --key-file=KEY_FILE
+```
+
+was changed to
+
+```bash
+# v0.2.0
+$ candy_check play_store PACKAGE PRODUCT_ID TOKEN --json-key-file=/path/to/key.json
+```

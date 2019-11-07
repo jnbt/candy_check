@@ -167,7 +167,7 @@ For the PlayStore you need to specify at least the issuer, the key file, your pa
 purchase token:
 
 ```bash
-$ candy_check play_store PACKAGE PRODUCT_ID TOKEN --issuer=ISSUER --key-file=KEY_FILE
+$ candy_check play_store PACKAGE_NAME PRODUCT_ID TOKEN --json-key-file=/path/to/key.json
 ```
 
 See all options:
