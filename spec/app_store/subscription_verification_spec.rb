@@ -68,9 +68,9 @@ describe CandyCheck::AppStore::SubscriptionVerification do
       response = {
         'status' => 0,
         'latest_receipt_info' => [
-          { 'item_id' => 'some_id', 'product_id' => 'product_1' },
-          { 'item_id' => 'some_other_id', 'product_id' => 'product_1' },
-          { 'item_id' => 'some_id', 'product_id' => 'product_2' }
+          { 'item_id' => 'some_id', 'product_id' => 'product_1', 'purchase_date' => '2016-04-15 12:52:40 Etc/GMT' },
+          { 'item_id' => 'some_other_id', 'product_id' => 'product_1', 'purchase_date' => '2016-04-15 12:52:40 Etc/GMT' },
+          { 'item_id' => 'some_id', 'product_id' => 'product_2', 'purchase_date' => '2016-04-15 12:52:40 Etc/GMT' }
         ]
       }
       with_mocked_response(response) do
