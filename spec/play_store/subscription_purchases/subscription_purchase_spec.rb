@@ -109,31 +109,58 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
     end
   end
 
-  describe "canceled subscription by user" do
-    let(:fake_subscription_purchase) do
-      FakeSubscriptionPurchase.new(
-        kind: "androidpublisher#subscriptionPurchase",
-        start_time_millis: 1459540113244,
-        expiry_time_millis: 1462132088610,
-        user_cancellation_time_millis: 1461872888000,
-        auto_renewing: true,
-        developer_payload: "payload that gets stored and returned",
-        cancel_reason: 0,
-        payment_state: 1,
-      )
+  describe "subscription cancelation by user" do
+    describe "when subscription is not canceled" do
+      let(:fake_subscription_purchase) do
+        FakeSubscriptionPurchase.new(
+          kind: "androidpublisher#subscriptionPurchase",
+          start_time_millis: 1459540113244,
+          expiry_time_millis: 1462132088610,
+          auto_renewing: true,
+          developer_payload: "payload that gets stored and returned",
+          payment_state: 1,
+        )
+      end
+
+      it "is not canceled?" do
+        subject.canceled_by_user?.must_be_false
+      end
+
+      it "returns blank user_cancellation_time_millis" do
+        subject.user_cancellation_time_millis.must_be_nil
+      end
+
+      it "returns blank canceled_at" do
+        subject.canceled_at.must_be_nil
+      end
     end
 
-    it "is canceled?" do
-      subject.canceled_by_user?.must_be_true
-    end
+    describe "when subscription is canceled" do
+      let(:fake_subscription_purchase) do
+        FakeSubscriptionPurchase.new(
+          kind: "androidpublisher#subscriptionPurchase",
+          start_time_millis: 1459540113244,
+          expiry_time_millis: 1462132088610,
+          user_cancellation_time_millis: 1461872888000,
+          auto_renewing: true,
+          developer_payload: "payload that gets stored and returned",
+          cancel_reason: 0,
+          payment_state: 1,
+        )
+      end
 
-    it "returns the user_cancellation_time_millis" do
-      subject.user_cancellation_time_millis.must_equal 146_187_288_800_0
-    end
+      it "is canceled?" do
+        subject.canceled_by_user?.must_be_true
+      end
 
-    it "returns the starts_at" do
-      expected = DateTime.new(2016, 4, 28, 19, 48, 8)
-      subject.canceled_at.must_equal expected
+      it "returns the user_cancellation_time_millis" do
+        subject.user_cancellation_time_millis.must_equal 1_461_872_888_000
+      end
+
+      it "returns the starts_at" do
+        expected = DateTime.new(2016, 4, 28, 19, 48, 8)
+        subject.canceled_at.must_equal expected
+      end
     end
   end
 
