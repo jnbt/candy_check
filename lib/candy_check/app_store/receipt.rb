@@ -7,11 +7,16 @@ module CandyCheck
       # @return [Hash] the raw attributes returned from the server
       attr_reader :attributes
 
+      # @return [Boolean] true if this appears to be an old-style receipt,
+      #   false otherwise
+      attr_reader :old_receipt
+
       # Initializes a new instance which bases on a JSON result
       # from Apple's verification server
       # @param attributes [Hash]
       def initialize(attributes)
         @attributes = attributes
+        @old_receipt = !attributes.bid.nil?
       end
 
       # In most cases a receipt is a valid transaction except when the
@@ -34,28 +39,10 @@ module CandyCheck
         read('original_transaction_id')
       end
 
-      # The version number for the app
-      # @return [String]
-      def app_version
-        read('bvrs')
-      end
-
-      # The app's bundle identifier
-      # @return [String]
-      def bundle_identifier
-        read('bid')
-      end
-
       # The app's identifier of the product (SKU)
       # @return [String]
       def product_id
         read('product_id')
-      end
-
-      # The app's item id of the product
-      # @return [String]
-      def item_id
-        read('item_id')
       end
 
       # The quantity of the product
