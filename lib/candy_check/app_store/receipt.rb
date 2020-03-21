@@ -75,7 +75,7 @@ module CandyCheck
       # The date of a subscription's expiration
       # @return [DateTime]
       def expires_date
-        read_datetime_from_string('expires_date')
+        @old_receipt ? Time.at(@attributes['expires_date'].to_i / 1000) : read_datetime_from_string('expires_date')
       end
 
       # rubocop:disable PredicateName
