@@ -29,7 +29,7 @@ module CandyCheck
       def call!
         verify!
         if valid?
-          Receipt.new(@response['latest_receipt_info'])
+          Receipt.new(@response['latest_receipt_info'][0])
         else
           VerificationFailure.fetch(@response['status'])
         end
