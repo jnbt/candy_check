@@ -34,24 +34,12 @@ describe CandyCheck::AppStore::Receipt do
       subject.valid?.must_be_true
     end
 
-    it 'returns the item\'s id' do
-      subject.item_id.must_equal 'some_item_id'
-    end
-
     it 'returns the item\'s product_id' do
       subject.product_id.must_equal 'some_product'
     end
 
     it 'returns the quantity' do
       subject.quantity.must_equal 1
-    end
-
-    it 'returns the app version' do
-      subject.app_version.must_equal '2.0'
-    end
-
-    it 'returns the bundle identifier' do
-      subject.bundle_identifier.must_equal 'some.test.app'
     end
 
     it 'returns the purchase date' do
