@@ -9,6 +9,7 @@ require "candy_check/play_store/product_acknowledgements/response"
 require "candy_check/play_store/subscription_purchases/subscription_verification"
 require "candy_check/play_store/verification_failure"
 require "candy_check/play_store/verifier"
+require "candy_check/play_store/acknowledger"
 
 module CandyCheck
   # Module to request and verify a AppStore receipt
