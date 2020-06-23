@@ -17,12 +17,12 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Acknowledgement do
   let(:authorization) { CandyCheck::PlayStore.authorization(json_key_file) }
 
   describe "#call!" do
-    it "when acknowlegement succeeds" do
+    it "when acknowledgement succeeds" do
       VCR.use_cassette("play_store/product_acknowledgements/acknowledged") do
         result = subject.call!
 
         result.must_be_instance_of CandyCheck::PlayStore::ProductAcknowledgements::Response
-        result.acknowleged?.must_be_true
+        result.acknowledged?.must_be_true
         result.error.must_be_nil
       end
     end
@@ -33,7 +33,7 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Acknowledgement do
         result = subject.call!
 
         result.must_be_instance_of CandyCheck::PlayStore::ProductAcknowledgements::Response
-        result.acknowleged?.must_be_false
+        result.acknowledged?.must_be_false
         result.error[:body].must_equal(error_body)
         result.error[:status_code].must_equal(400)
       end
@@ -45,7 +45,7 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Acknowledgement do
         result = subject.call!
 
         result.must_be_instance_of CandyCheck::PlayStore::ProductAcknowledgements::Response
-        result.acknowleged?.must_be_false
+        result.acknowledged?.must_be_false
         result.error[:body].must_equal(error_body)
         result.error[:status_code].must_equal(400)
       end

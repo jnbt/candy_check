@@ -7,7 +7,7 @@ module CandyCheck
           @error_data = error_data
         end
 
-        def acknowleged?
+        def acknowledged?
           !!result
         end
 

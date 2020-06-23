@@ -5,13 +5,13 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Response do
     CandyCheck::PlayStore::ProductAcknowledgements::Response.new(result: result, error_data: error_data)
   end
 
-  describe '#acknowleged?' do
+  describe '#acknowledged?' do
     context 'when result present' do
       let(:result) { '' }
       let(:error_data)  { nil }
 
       it 'returns true' do
-        result = subject.acknowleged?
+        result = subject.acknowledged?
 
         result.must_be_true
       end
@@ -22,7 +22,7 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Response do
       let(:error_data)  { nil }
 
       it 'returns false' do
-        result = subject.acknowleged?
+        result = subject.acknowledged?
 
         result.must_be_false
       end

@@ -23,7 +23,7 @@ module CandyCheck
         end
 
         def call!
-          acknowlege!
+          acknowledge!
 
           CandyCheck::PlayStore::ProductAcknowledgements::Response.new(
             result: @response[:result], error_data: @response[:error_data])
@@ -31,7 +31,7 @@ module CandyCheck
 
         private
 
-        def acknowlege!
+        def acknowledge!
           service = CandyCheck::PlayStore::AndroidPublisherService.new
 
           service.authorization = @authorization
