@@ -150,6 +150,34 @@ result = verifier.verify_subscription_purchase(
 
 Please see documenation for [`CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase`](http://www.rubydoc.info/github/jnbt/candy_check/master/CandyCheck/PlayStore/SubscriptionPurchases/SubscriptionPurchase) for further details.
 
+
+##### Building an acknowledger
+
+With the `authorization` object in place, we can build an acknowledger:
+
+```ruby
+acknowledger = CandyCheck::PlayStore::Acknowledger.new(authorization: authorization)
+```
+
+> **Note:** If you need to acknowledge against multiple Google Service Accounts, just instantiate a new acknowledger with another authorization object that got build with a different `.json` key file.
+
+#### Acknowledging the purchase
+Google Play purchases if not acknowledged are automatically refunded. The acknowledgement can be done client-side or server-side. If server-side validation is being used we recommend to proceed with the acknowledgement afterwards, since it is the only save way to ensure the users received what they have paid for.
+
+```ruby
+result = acknowledger.acknowledge_product_purchase(
+  package_name: "my-package-name",
+  subscription_id: "my-subscription-id",
+  token: "my-token"
+)
+# => ProductAcknowledgements::Response
+```
+
+The acknowledger response has 2 methods:
+
+- `#acknowledged?` returns a boolean. It returns true only if it has been acknowledged at this moment (that's Google Play behaviour).
+- `#error` returns a hash with `status_code` and `body` keys.
+
 ## CLI
 
 This gem ships with an executable to verify in-app purchases directly from your terminal:
