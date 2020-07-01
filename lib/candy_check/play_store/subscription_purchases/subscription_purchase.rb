@@ -124,6 +124,13 @@ module CandyCheck
           @subscription_purchase.expiry_time_millis
         end
 
+        # Get cancellation time for subscription in milliseconds since Epoch.
+        # Only present if cancelReason is 0.
+        # @return [Integer]
+        def user_cancellation_time_millis
+          @subscription_purchase.user_cancellation_time_millis if canceled_by_user?
+        end
+
         # Get start time in UTC
         # @return [DateTime]
         def starts_at
@@ -134,6 +141,12 @@ module CandyCheck
         # @return [DateTime]
         def expires_at
           Time.at(expiry_time_millis / 1000).utc.to_datetime
+        end
+
+        # Get cancellation time in UTC
+        # @return [DateTime]
+        def canceled_at
+          Time.at(user_cancellation_time_millis / 1000).utc.to_datetime if user_cancellation_time_millis
         end
       end
     end
