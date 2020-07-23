@@ -8,13 +8,15 @@ module CandyCheck
       # @param receipt_data [String] the raw data to be verified
       # @param secret [String] optional: shared secret
       # @param product_ids [Array<String>] optional: select specific products
+      # @param exclude_old_transactions [Boolean] optional: exclude older subscription transactions
       def initialize(
         endpoint_url,
         receipt_data,
         secret = nil,
-        product_ids = nil
+        product_ids = nil,
+        exclude_old_transactions = nil
       )
-        super(endpoint_url, receipt_data, secret)
+        super(endpoint_url, receipt_data, secret, exclude_old_transactions)
         @product_ids = product_ids
       end
 
