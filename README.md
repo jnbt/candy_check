@@ -167,7 +167,7 @@ Google Play purchases if not acknowledged are automatically refunded. The acknow
 ```ruby
 result = acknowledger.acknowledge_product_purchase(
   package_name: "my-package-name",
-  subscription_id: "my-subscription-id",
+  product_id: "my-subscription-id",
   token: "my-token"
 )
 # => ProductAcknowledgements::Response
