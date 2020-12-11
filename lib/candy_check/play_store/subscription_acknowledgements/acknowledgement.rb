@@ -35,7 +35,7 @@ module CandyCheck
           service = CandyCheck::PlayStore::AndroidPublisherService.new
 
           service.authorization = @authorization
-          service.acknowledge_subscription_purchase(package_name, subscription_id, token) do |result, error_data|
+          service.acknowledge_purchase_subscription(package_name, subscription_id, token) do |result, error_data|
             @response = { result: result, error_data: error_data }
           end
         end
