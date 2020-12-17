@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "google-api-client", "~> 0.43.0"
   spec.add_dependency "multi_json", "~> 1.10"
-  spec.add_dependency "thor", "~> 0.19"
+  spec.add_dependency "thor"
 
   spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "coveralls", "~> 0.8"
