@@ -77,7 +77,7 @@ describe CandyCheck::AppStore::Receipt do
     end
 
     it 'returns raw attributes' do
-      subject.attributes.must_be_same_as attributes
+      _(subject.attributes).must_be_same_as attributes
     end
 
     it 'returns the subscription expiration date' do

@@ -5,11 +5,11 @@ describe CandyCheck::CLI::Out do
   let(:out) { StringIO.new }
 
   it 'defaults to use STDOUT' do
-    CandyCheck::CLI::Out.new.out.must_be_same_as $stdout
+    _(CandyCheck::CLI::Out.new.out).must_be_same_as $stdout
   end
 
   it 'holds the outlet' do
-    subject.out.must_be_same_as out
+    _(subject.out).must_be_same_as out
   end
 
   it 'prints to outlet' do
