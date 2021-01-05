@@ -23,7 +23,7 @@ describe CandyCheck::AppStore::ReceiptCollection do
     end
 
     it 'is not a trial' do
-      subject.trial?.must_be_false
+      _(subject.trial?).must_be_false
     end
 
     it 'has positive overdue days' do
@@ -83,7 +83,7 @@ describe CandyCheck::AppStore::ReceiptCollection do
     end
 
     it 'has not expired' do
-      subject.expired?.must_be_false
+      _(subject.expired?).must_be_false
     end
 
     it 'it is a trial' do

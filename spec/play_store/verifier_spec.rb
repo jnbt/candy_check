@@ -17,7 +17,7 @@ describe CandyCheck::PlayStore::Verifier do
         result = subject.verify_product_purchase(package_name: package_name, product_id: product_id, token: token)
         result.must_be_instance_of CandyCheck::PlayStore::ProductPurchases::ProductPurchase
         result.valid?.must_be_true
-        result.consumed?.must_be_false
+        _(result.consumed?).must_be_false
       end
     end
 

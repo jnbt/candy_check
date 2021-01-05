@@ -15,7 +15,7 @@ describe CandyCheck::AppStore::Config do
     end
 
     it 'checks for production?' do
-      subject.production?.must_be_false
+      _(subject.production?).must_be_false
 
       other = CandyCheck::AppStore::Config.new(
         environment: :production

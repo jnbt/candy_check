@@ -24,7 +24,7 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Response do
       it 'returns false' do
         result = subject.acknowledged?
 
-        result.must_be_false
+        _(result).must_be_false
       end
     end
   end

@@ -22,7 +22,7 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductVerification do
         result = subject.call!
         result.must_be_instance_of CandyCheck::PlayStore::ProductPurchases::ProductPurchase
         result.valid?.must_be_true
-        result.consumed?.must_be_false
+        _(result.consumed?).must_be_false
       end
     end
   end

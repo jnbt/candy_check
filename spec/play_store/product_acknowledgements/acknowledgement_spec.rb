@@ -33,7 +33,7 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Acknowledgement do
         result = subject.call!
 
         result.must_be_instance_of CandyCheck::PlayStore::ProductAcknowledgements::Response
-        result.acknowledged?.must_be_false
+        _(result.acknowledged?).must_be_false
         result.error[:body].must_equal(error_body)
         result.error[:status_code].must_equal(400)
       end
@@ -45,7 +45,7 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Acknowledgement do
         result = subject.call!
 
         result.must_be_instance_of CandyCheck::PlayStore::ProductAcknowledgements::Response
-        result.acknowledged?.must_be_false
+        _(result.acknowledged?).must_be_false
         result.error[:body].must_equal(error_body)
         result.error[:status_code].must_equal(400)
       end
