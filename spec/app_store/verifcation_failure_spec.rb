@@ -10,7 +10,7 @@ describe CandyCheck::AppStore::VerificationFailure do
     known.each do |code|
       got = subject.fetch(code)
       got.code.must_equal code
-      got.message.wont_equal 'Unknown error'
+      _(got.message).wont_equal 'Unknown error'
     end
   end
 
