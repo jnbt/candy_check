@@ -20,7 +20,7 @@ describe CandyCheck::AppStore::Config do
       other = CandyCheck::AppStore::Config.new(
         environment: :production
       )
-      other.production?.must_be_true
+      _(other.production?).must_be_true
     end
   end
 

@@ -23,7 +23,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionVerification 
         result = subject.call!
 
         result.must_be_instance_of CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase
-        result.expired?.must_be_true
+        _(result.expired?).must_be_true
       end
     end
   end

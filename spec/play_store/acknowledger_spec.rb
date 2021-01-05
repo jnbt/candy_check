@@ -16,7 +16,7 @@ describe CandyCheck::PlayStore::Acknowledger do
         result = subject.acknowledge_product_purchase(package_name: package_name, product_id: product_id, token: token)
 
         result.must_be_instance_of CandyCheck::PlayStore::ProductAcknowledgements::Response
-        result.acknowledged?.must_be_true
+        _(result.acknowledged?).must_be_true
         result.error.must_be_nil
       end
     end

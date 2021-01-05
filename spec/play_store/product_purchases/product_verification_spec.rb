@@ -21,7 +21,7 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductVerification do
       VCR.use_cassette("play_store/product_purchases/valid_but_not_consumed") do
         result = subject.call!
         result.must_be_instance_of CandyCheck::PlayStore::ProductPurchases::ProductPurchase
-        result.valid?.must_be_true
+        _(result.valid?).must_be_true
         _(result.consumed?).must_be_false
       end
     end

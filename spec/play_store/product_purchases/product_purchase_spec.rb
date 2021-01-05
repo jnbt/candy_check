@@ -16,7 +16,7 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
     end
 
     it "is valid?" do
-      subject.valid?.must_be_true
+      _(subject.valid?).must_be_true
     end
 
     it "is not consumed" do
@@ -62,11 +62,11 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
     end
 
     it "is valid?" do
-      subject.valid?.must_be_true
+      _(subject.valid?).must_be_true
     end
 
     it "is consumed?" do
-      subject.consumed?.must_be_true
+      _(subject.consumed?).must_be_true
     end
   end
 

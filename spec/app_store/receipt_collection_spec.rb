@@ -19,7 +19,7 @@ describe CandyCheck::AppStore::ReceiptCollection do
     end
 
     it 'is expired' do
-      subject.expired?.must_be_true
+      _(subject.expired?).must_be_true
     end
 
     it 'is not a trial' do
@@ -39,7 +39,7 @@ describe CandyCheck::AppStore::ReceiptCollection do
 
     it 'is expired? at same pointin time' do
       Timecop.freeze(Time.utc(2015, 4, 15, 12, 52, 40)) do
-        subject.expired?.must_be_true
+        _(subject.expired?).must_be_true
       end
     end
   end
@@ -87,7 +87,7 @@ describe CandyCheck::AppStore::ReceiptCollection do
     end
 
     it 'it is a trial' do
-      subject.trial?.must_be_true
+      _(subject.trial?).must_be_true
     end
 
     it 'expires in two days' do

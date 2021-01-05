@@ -22,7 +22,7 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Acknowledgement do
         result = subject.call!
 
         result.must_be_instance_of CandyCheck::PlayStore::ProductAcknowledgements::Response
-        result.acknowledged?.must_be_true
+        _(result.acknowledged?).must_be_true
         result.error.must_be_nil
       end
     end

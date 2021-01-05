@@ -13,7 +13,7 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Response do
       it 'returns true' do
         result = subject.acknowledged?
 
-        result.must_be_true
+        _(result).must_be_true
       end
     end
 

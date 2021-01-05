@@ -31,7 +31,7 @@ describe CandyCheck::AppStore::Receipt do
 
   describe 'valid transaction' do
     it 'is valid' do
-      subject.valid?.must_be_true
+      _(subject.valid?).must_be_true
     end
 
     it 'returns the item\'s id' do

@@ -17,11 +17,11 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
     end
 
     it "is expired?" do
-      subject.expired?.must_be_true
+      _(subject.expired?).must_be_true
     end
 
     it "is canceled by user" do
-      subject.canceled_by_user?.must_be_true
+      _(subject.canceled_by_user?).must_be_true
     end
 
     it "returns the payment_state" do
@@ -29,7 +29,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
     end
 
     it "considers a payment as valid" do
-      subject.payment_received?.must_be_true
+      _(subject.payment_received?).must_be_true
     end
 
     it "checks that auto renewal status is false" do
@@ -101,11 +101,11 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
     end
 
     it "is expired?" do
-      subject.expired?.must_be_true
+      _(subject.expired?).must_be_true
     end
 
     it "is payment_failed?" do
-      subject.payment_failed?.must_be_true
+      _(subject.payment_failed?).must_be_true
     end
   end
 
@@ -150,7 +150,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
       end
 
       it "is canceled?" do
-        subject.canceled_by_user?.must_be_true
+        _(subject.canceled_by_user?).must_be_true
       end
 
       it "returns the user_cancellation_time_millis" do
@@ -178,11 +178,11 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
     end
 
     it "is expired?" do
-      subject.expired?.must_be_true
+      _(subject.expired?).must_be_true
     end
 
     it "is payment_pending?" do
-      subject.payment_pending?.must_be_true
+      _(subject.payment_pending?).must_be_true
     end
   end
 
@@ -202,7 +202,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
     end
 
     it "is trial?" do
-      subject.trial?.must_be_true
+      _(subject.trial?).must_be_true
     end
 
     it "returns the price_currency_code" do
