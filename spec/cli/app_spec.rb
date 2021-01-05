@@ -6,7 +6,7 @@ describe CandyCheck::CLI::App do
   it 'supports the version command' do
     stub_command(CandyCheck::CLI::Commands::Version) do
       _(subject.version).must_equal :stubbed
-      @arguments.must_be_empty
+      _(@arguments).must_be_empty
     end
   end
 
