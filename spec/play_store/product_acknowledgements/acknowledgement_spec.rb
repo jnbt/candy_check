@@ -34,8 +34,8 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Acknowledgement do
 
         _(result).must_be_instance_of CandyCheck::PlayStore::ProductAcknowledgements::Response
         _(result.acknowledged?).must_be_false
-        result.error[:body].must_equal(error_body)
-        result.error[:status_code].must_equal(400)
+        _(result.error[:body]).must_equal(error_body)
+        _(result.error[:status_code]).must_equal(400)
       end
     end
     it "when it has been refunded" do
@@ -46,8 +46,8 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Acknowledgement do
 
         _(result).must_be_instance_of CandyCheck::PlayStore::ProductAcknowledgements::Response
         _(result.acknowledged?).must_be_false
-        result.error[:body].must_equal(error_body)
-        result.error[:status_code].must_equal(400)
+        _(result.error[:body]).must_equal(error_body)
+        _(result.error[:status_code]).must_equal(400)
       end
     end
   end

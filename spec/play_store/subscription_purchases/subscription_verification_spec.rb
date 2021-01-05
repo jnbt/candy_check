@@ -33,7 +33,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionVerification 
       VCR.use_cassette("play_store/subscription_purchases/permission_denied") do
         result = subject.call!
         _(result).must_be_instance_of CandyCheck::PlayStore::VerificationFailure
-        result.code.must_equal 401
+        _(result.code).must_equal 401
       end
     end
   end
@@ -46,7 +46,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionVerification 
     it "returns a verification failure" do
       result = subject.call!
       _(result).must_be_instance_of CandyCheck::PlayStore::VerificationFailure
-      result.code.must_equal(-1)
+      _(result.code).must_equal(-1)
     end
   end
 

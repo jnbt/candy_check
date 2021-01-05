@@ -11,7 +11,7 @@ describe CandyCheck::AppStore::Config do
     end
 
     it 'returns environment' do
-      subject.environment.must_equal :sandbox
+      _(subject.environment).must_equal :sandbox
     end
 
     it 'checks for production?' do

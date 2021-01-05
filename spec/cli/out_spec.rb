@@ -16,7 +16,7 @@ describe CandyCheck::CLI::Out do
     subject.print 'some text'
     subject.print 'another line'
     close
-    out.readlines.must_equal [
+    _(out.readlines).must_equal [
       "some text\n",
       "another line\n"
     ]
@@ -26,7 +26,7 @@ describe CandyCheck::CLI::Out do
     subject.pretty dummy: 1
     subject.pretty [1, 2, 3]
     close
-    out.readlines.must_equal [
+    _(out.readlines).must_equal [
       "{:dummy=>1}\n",
       "[1, 2, 3]\n"
     ]

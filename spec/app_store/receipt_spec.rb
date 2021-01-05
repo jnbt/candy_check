@@ -35,41 +35,41 @@ describe CandyCheck::AppStore::Receipt do
     end
 
     it 'returns the item\'s id' do
-      subject.item_id.must_equal 'some_item_id'
+      _(subject.item_id).must_equal 'some_item_id'
     end
 
     it 'returns the item\'s product_id' do
-      subject.product_id.must_equal 'some_product'
+      _(subject.product_id).must_equal 'some_product'
     end
 
     it 'returns the quantity' do
-      subject.quantity.must_equal 1
+      _(subject.quantity).must_equal 1
     end
 
     it 'returns the app version' do
-      subject.app_version.must_equal '2.0'
+      _(subject.app_version).must_equal '2.0'
     end
 
     it 'returns the bundle identifier' do
-      subject.bundle_identifier.must_equal 'some.test.app'
+      _(subject.bundle_identifier).must_equal 'some.test.app'
     end
 
     it 'returns the purchase date' do
       expected = DateTime.new(2015, 1, 9, 11, 40, 46)
-      subject.purchase_date.must_equal expected
+      _(subject.purchase_date).must_equal expected
     end
 
     it 'returns the original purchase date' do
       expected = DateTime.new(2015, 1, 8, 11, 40, 46)
-      subject.original_purchase_date.must_equal expected
+      _(subject.original_purchase_date).must_equal expected
     end
 
     it 'returns the transaction id' do
-      subject.transaction_id.must_equal 'some_transaction_id'
+      _(subject.transaction_id).must_equal 'some_transaction_id'
     end
 
     it 'returns the original transaction id' do
-      subject.original_transaction_id.must_equal 'some_original_transaction_id'
+      _(subject.original_transaction_id).must_equal 'some_original_transaction_id'
     end
 
     it 'return nil for cancellation date' do
@@ -82,7 +82,7 @@ describe CandyCheck::AppStore::Receipt do
 
     it 'returns the subscription expiration date' do
       expected = DateTime.new(2016, 6, 9, 13, 59, 40)
-      subject.expires_date.must_equal expected
+      _(subject.expires_date).must_equal expected
     end
 
     it 'returns the trial status' do
@@ -101,7 +101,7 @@ describe CandyCheck::AppStore::Receipt do
 
     it 'return nil for cancellation date' do
       expected = DateTime.new(2015, 1, 12, 11, 40, 46)
-      subject.cancellation_date.must_equal expected
+      _(subject.cancellation_date).must_equal expected
     end
   end
 end

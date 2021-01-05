@@ -137,7 +137,7 @@ describe CandyCheck::AppStore::Verifier do
   end
 
   def assert_recorded(*calls)
-    @recorded.must_equal calls
+    _(@recorded).must_equal calls
   end
 
   def get_failure(code)

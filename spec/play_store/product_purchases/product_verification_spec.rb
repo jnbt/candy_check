@@ -32,7 +32,7 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductVerification do
       VCR.use_cassette("play_store/product_purchases/permission_denied") do
         result = subject.call!
         _(result).must_be_instance_of CandyCheck::PlayStore::VerificationFailure
-        result.code.must_equal 401
+        _(result.code).must_equal 401
       end
     end
   end
@@ -42,7 +42,7 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductVerification do
       VCR.use_cassette("play_store/product_purchases/response_with_empty_body") do
         result = subject.call!
         _(result).must_be_instance_of CandyCheck::PlayStore::VerificationFailure
-        result.code.must_equal(-1)
+        _(result.code).must_equal(-1)
       end
     end
   end
