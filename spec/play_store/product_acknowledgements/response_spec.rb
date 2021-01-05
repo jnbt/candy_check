@@ -59,7 +59,7 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Response do
       it 'returns false' do
         result = subject.error
 
-        result.must_be_nil
+        _(result).must_be_nil
       end
     end
   end

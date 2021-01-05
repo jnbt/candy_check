@@ -23,7 +23,7 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Acknowledgement do
 
         _(result).must_be_instance_of CandyCheck::PlayStore::ProductAcknowledgements::Response
         _(result.acknowledged?).must_be_true
-        result.error.must_be_nil
+        _(result.error).must_be_nil
       end
     end
     it "when already acknowledged" do

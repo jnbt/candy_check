@@ -127,11 +127,11 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
       end
 
       it "returns nil user_cancellation_time_millis" do
-        subject.user_cancellation_time_millis.must_be_nil
+        _(subject.user_cancellation_time_millis).must_be_nil
       end
 
       it "returns nil canceled_at" do
-        subject.canceled_at.must_be_nil
+        _(subject.canceled_at).must_be_nil
       end
     end
 

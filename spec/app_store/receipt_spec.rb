@@ -73,7 +73,7 @@ describe CandyCheck::AppStore::Receipt do
     end
 
     it 'return nil for cancellation date' do
-      subject.cancellation_date.must_be_nil
+      _(subject.cancellation_date).must_be_nil
     end
 
     it 'returns raw attributes' do
