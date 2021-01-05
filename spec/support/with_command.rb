@@ -26,8 +26,5 @@ module WithCommand
       lines << object
     end
 
-    def must_be(*expected)
-      lines.must_equal expected
-    end
   end
 end

@@ -6,6 +6,6 @@ describe CandyCheck::CLI::Commands::Version do
 
   it 'prints the gem\'s version' do
     run_command!
-    out.must_be CandyCheck::VERSION
+    _(out.lines).must_equal [CandyCheck::VERSION]
   end
 end

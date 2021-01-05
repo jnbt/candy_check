@@ -9,26 +9,26 @@ describe CandyCheck::AppStore::Verification do
   it 'returns a verification failure for status != 0' do
     with_mocked_response('status' => 21_000) do |client, recorded|
       result = subject.call!
-      client.receipt_data.must_equal data
-      client.secret.must_equal secret
+      _(client.receipt_data).must_equal data
+      _(client.secret).must_equal secret
 
-      recorded.first.must_equal [endpoint]
+      _(recorded.first).must_equal [endpoint]
 
-      result.must_be_instance_of CandyCheck::AppStore::VerificationFailure
-      result.code.must_equal 21_000
+      _(result).must_be_instance_of CandyCheck::AppStore::VerificationFailure
+      _(result.code).must_equal 21_000
     end
   end
 
   it 'returns a verification failure when receipt is missing' do
     with_mocked_response({}) do |client, recorded|
       result = subject.call!
-      client.receipt_data.must_equal data
-      client.secret.must_equal secret
+      _(client.receipt_data).must_equal data
+      _(client.secret).must_equal secret
 
-      recorded.first.must_equal [endpoint]
+      _(recorded.first).must_equal [endpoint]
 
-      result.must_be_instance_of CandyCheck::AppStore::VerificationFailure
-      result.code.must_equal(-1)
+      _(result).must_be_instance_of CandyCheck::AppStore::VerificationFailure
+      _(result.code).must_equal(-1)
     end
   end
 
@@ -36,8 +36,8 @@ describe CandyCheck::AppStore::Verification do
     response = { 'status' => 0, 'receipt' => { 'item_id' => 'some_id' } }
     with_mocked_response(response) do
       result = subject.call!
-      result.must_be_instance_of CandyCheck::AppStore::Receipt
-      result.item_id.must_equal('some_id')
+      _(result).must_be_instance_of CandyCheck::AppStore::Receipt
+      _(result.item_id).must_equal('some_id')
     end
   end
 

@@ -22,8 +22,8 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionVerification 
       VCR.use_cassette("play_store/subscription_purchases/valid_but_expired") do
         result = subject.call!
 
-        result.must_be_instance_of CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase
-        result.expired?.must_be_true
+        _(result).must_be_instance_of CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase
+        _(result.expired?).must_be_true
       end
     end
   end
@@ -32,8 +32,8 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionVerification 
     it "returns a verification failure" do
       VCR.use_cassette("play_store/subscription_purchases/permission_denied") do
         result = subject.call!
-        result.must_be_instance_of CandyCheck::PlayStore::VerificationFailure
-        result.code.must_equal 401
+        _(result).must_be_instance_of CandyCheck::PlayStore::VerificationFailure
+        _(result.code).must_equal 401
       end
     end
   end
@@ -45,8 +45,8 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionVerification 
 
     it "returns a verification failure" do
       result = subject.call!
-      result.must_be_instance_of CandyCheck::PlayStore::VerificationFailure
-      result.code.must_equal(-1)
+      _(result).must_be_instance_of CandyCheck::PlayStore::VerificationFailure
+      _(result.code).must_equal(-1)
     end
   end
 
@@ -59,7 +59,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionVerification 
 
     it "returns a verification failure" do
       result = subject.call!
-      result.must_be_instance_of CandyCheck::PlayStore::VerificationFailure
+      _(result).must_be_instance_of CandyCheck::PlayStore::VerificationFailure
     end
   end
 end

@@ -20,9 +20,9 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductVerification do
     it "returns a product purchase" do
       VCR.use_cassette("play_store/product_purchases/valid_but_not_consumed") do
         result = subject.call!
-        result.must_be_instance_of CandyCheck::PlayStore::ProductPurchases::ProductPurchase
-        result.valid?.must_be_true
-        result.consumed?.must_be_false
+        _(result).must_be_instance_of CandyCheck::PlayStore::ProductPurchases::ProductPurchase
+        _(result.valid?).must_be_true
+        _(result.consumed?).must_be_false
       end
     end
   end
@@ -31,8 +31,8 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductVerification do
     it "returns a verification failure" do
       VCR.use_cassette("play_store/product_purchases/permission_denied") do
         result = subject.call!
-        result.must_be_instance_of CandyCheck::PlayStore::VerificationFailure
-        result.code.must_equal 401
+        _(result).must_be_instance_of CandyCheck::PlayStore::VerificationFailure
+        _(result.code).must_equal 401
       end
     end
   end
@@ -41,8 +41,8 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductVerification do
     it "returns a verification failure" do
       VCR.use_cassette("play_store/product_purchases/response_with_empty_body") do
         result = subject.call!
-        result.must_be_instance_of CandyCheck::PlayStore::VerificationFailure
-        result.code.must_equal(-1)
+        _(result).must_be_instance_of CandyCheck::PlayStore::VerificationFailure
+        _(result.code).must_equal(-1)
       end
     end
   end

@@ -11,16 +11,16 @@ describe CandyCheck::AppStore::Config do
     end
 
     it 'returns environment' do
-      subject.environment.must_equal :sandbox
+      _(subject.environment).must_equal :sandbox
     end
 
     it 'checks for production?' do
-      subject.production?.must_be_false
+      _(subject.production?).must_be_false
 
       other = CandyCheck::AppStore::Config.new(
         environment: :production
       )
-      other.production?.must_be_true
+      _(other.production?).must_be_true
     end
   end
 
@@ -30,12 +30,12 @@ describe CandyCheck::AppStore::Config do
     end
 
     it 'needs an environment' do
-      proc { subject }.must_raise ArgumentError
+      _(proc { subject }).must_raise ArgumentError
     end
 
     it 'needs an included environment' do
       attributes[:environment] = :invalid
-      proc { subject }.must_raise ArgumentError
+      _(proc { subject }).must_raise ArgumentError
     end
   end
 end

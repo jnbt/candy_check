@@ -9,20 +9,20 @@ describe CandyCheck::AppStore::VerificationFailure do
   it 'fetched an failure with message for every known code' do
     known.each do |code|
       got = subject.fetch(code)
-      got.code.must_equal code
-      got.message.wont_equal 'Unknown error'
+      _(got.code).must_equal code
+      _(got.message).wont_equal 'Unknown error'
     end
   end
 
   it 'fetched an failure for unknown codes' do
     got = subject.fetch(1234)
-    got.code.must_equal 1234
-    got.message.must_equal 'Unknown error'
+    _(got.code).must_equal 1234
+    _(got.message).must_equal 'Unknown error'
   end
 
   it 'fetched an failure for nil code' do
     got = subject.fetch(nil)
-    got.code.must_equal(-1)
-    got.message.must_equal 'Unknown error'
+    _(got.code).must_equal(-1)
+    _(got.message).must_equal 'Unknown error'
   end
 end

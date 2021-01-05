@@ -18,7 +18,7 @@ describe CandyCheck::AppStore::Verifier do
   end
 
   it 'holds the config' do
-    subject.config.must_be_same_as config
+    _(subject.config).must_be_same_as config
   end
 
   describe 'sandbox' do
@@ -26,7 +26,7 @@ describe CandyCheck::AppStore::Verifier do
 
     it 'uses sandbox endpoint without retry on success' do
       with_mocked_verifier(receipt) do
-        subject.verify(data, secret).must_be_same_as receipt
+        _(subject.verify(data, secret)).must_be_same_as receipt
         assert_recorded([sandbox_endpoint, data, secret])
       end
     end
@@ -34,7 +34,7 @@ describe CandyCheck::AppStore::Verifier do
     it 'only uses sandbox endpoint for normal failures' do
       failure = get_failure(21_000)
       with_mocked_verifier(failure) do
-        subject.verify(data, secret).must_be_same_as failure
+        _(subject.verify(data, secret)).must_be_same_as failure
         assert_recorded([sandbox_endpoint, data, secret])
       end
     end
@@ -42,7 +42,7 @@ describe CandyCheck::AppStore::Verifier do
     it 'retries production endpoint for redirect error' do
       failure = get_failure(21_008)
       with_mocked_verifier(failure, receipt) do
-        subject.verify(data, secret).must_be_same_as receipt
+        _(subject.verify(data, secret)).must_be_same_as receipt
         assert_recorded(
           [sandbox_endpoint, data, secret],
           [production_endpoint, data, secret]
@@ -56,7 +56,7 @@ describe CandyCheck::AppStore::Verifier do
 
     it 'uses production endpoint without retry on success' do
       with_mocked_verifier(receipt) do
-        subject.verify(data, secret).must_be_same_as receipt
+        _(subject.verify(data, secret)).must_be_same_as receipt
         assert_recorded([production_endpoint, data, secret])
       end
     end
@@ -64,7 +64,7 @@ describe CandyCheck::AppStore::Verifier do
     it 'only uses production endpoint for normal failures' do
       failure = get_failure(21_000)
       with_mocked_verifier(failure) do
-        subject.verify(data, secret).must_be_same_as failure
+        _(subject.verify(data, secret)).must_be_same_as failure
         assert_recorded([production_endpoint, data, secret])
       end
     end
@@ -72,7 +72,7 @@ describe CandyCheck::AppStore::Verifier do
     it 'retries production endpoint for redirect error' do
       failure = get_failure(21_007)
       with_mocked_verifier(failure, receipt) do
-        subject.verify(data, secret).must_be_same_as receipt
+        _(subject.verify(data, secret)).must_be_same_as receipt
         assert_recorded(
           [production_endpoint, data, secret],
           [sandbox_endpoint, data, secret]
@@ -86,9 +86,9 @@ describe CandyCheck::AppStore::Verifier do
 
     it 'uses production endpoint without retry on success' do
       with_mocked_verifier(receipt_collection) do
-        subject.verify_subscription(
+        _(subject.verify_subscription(
           data, secret
-        ).must_be_same_as receipt_collection
+        )).must_be_same_as receipt_collection
         assert_recorded([production_endpoint, data, secret, nil])
       end
     end
@@ -96,7 +96,7 @@ describe CandyCheck::AppStore::Verifier do
     it 'only uses production endpoint for normal failures' do
       failure = get_failure(21_000)
       with_mocked_verifier(failure) do
-        subject.verify_subscription(data, secret).must_be_same_as failure
+        _(subject.verify_subscription(data, secret)).must_be_same_as failure
         assert_recorded([production_endpoint, data, secret, nil])
       end
     end
@@ -104,7 +104,7 @@ describe CandyCheck::AppStore::Verifier do
     it 'retries production endpoint for redirect error' do
       failure = get_failure(21_007)
       with_mocked_verifier(failure, receipt) do
-        subject.verify_subscription(data, secret).must_be_same_as receipt
+        _(subject.verify_subscription(data, secret)).must_be_same_as receipt
         assert_recorded(
           [production_endpoint, data, secret, nil],
           [sandbox_endpoint, data, secret, nil]
@@ -115,9 +115,9 @@ describe CandyCheck::AppStore::Verifier do
     it 'passed the product_ids' do
       product_ids = ['product_1']
       with_mocked_verifier(receipt_collection) do
-        subject.verify_subscription(
+        _(subject.verify_subscription(
           data, secret, product_ids
-        ).must_be_same_as receipt_collection
+        )).must_be_same_as receipt_collection
         assert_recorded([production_endpoint, data, secret, product_ids])
       end
     end
@@ -137,7 +137,7 @@ describe CandyCheck::AppStore::Verifier do
   end
 
   def assert_recorded(*calls)
-    @recorded.must_equal calls
+    _(@recorded).must_equal calls
   end
 
   def get_failure(code)
