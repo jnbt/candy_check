@@ -14,7 +14,7 @@ describe CandyCheck::AppStore::Verification do
 
       recorded.first.must_equal [endpoint]
 
-      result.must_be_instance_of CandyCheck::AppStore::VerificationFailure
+      _(result).must_be_instance_of CandyCheck::AppStore::VerificationFailure
       result.code.must_equal 21_000
     end
   end
@@ -27,7 +27,7 @@ describe CandyCheck::AppStore::Verification do
 
       recorded.first.must_equal [endpoint]
 
-      result.must_be_instance_of CandyCheck::AppStore::VerificationFailure
+      _(result).must_be_instance_of CandyCheck::AppStore::VerificationFailure
       result.code.must_equal(-1)
     end
   end
@@ -36,7 +36,7 @@ describe CandyCheck::AppStore::Verification do
     response = { 'status' => 0, 'receipt' => { 'item_id' => 'some_id' } }
     with_mocked_response(response) do
       result = subject.call!
-      result.must_be_instance_of CandyCheck::AppStore::Receipt
+      _(result).must_be_instance_of CandyCheck::AppStore::Receipt
       result.item_id.must_equal('some_id')
     end
   end

@@ -16,7 +16,7 @@ describe CandyCheck::AppStore::SubscriptionVerification do
 
       recorded.first.must_equal [endpoint]
 
-      result.must_be_instance_of CandyCheck::AppStore::VerificationFailure
+      _(result).must_be_instance_of CandyCheck::AppStore::VerificationFailure
       result.code.must_equal 21_000
     end
   end
@@ -29,7 +29,7 @@ describe CandyCheck::AppStore::SubscriptionVerification do
 
       recorded.first.must_equal [endpoint]
 
-      result.must_be_instance_of CandyCheck::AppStore::VerificationFailure
+      _(result).must_be_instance_of CandyCheck::AppStore::VerificationFailure
       result.code.must_equal(-1)
     end
   end
@@ -44,11 +44,11 @@ describe CandyCheck::AppStore::SubscriptionVerification do
     }
     with_mocked_response(response) do
       result = subject.call!
-      result.must_be_instance_of CandyCheck::AppStore::ReceiptCollection
-      result.receipts.must_be_instance_of Array
+      _(result).must_be_instance_of CandyCheck::AppStore::ReceiptCollection
+      _(result.receipts).must_be_instance_of Array
       result.receipts.size.must_equal(2)
       last = result.receipts.last
-      last.must_be_instance_of CandyCheck::AppStore::Receipt
+      _(last).must_be_instance_of CandyCheck::AppStore::Receipt
       last.item_id.must_equal('some_other_id')
     end
   end
@@ -75,11 +75,11 @@ describe CandyCheck::AppStore::SubscriptionVerification do
       }
       with_mocked_response(response) do
         result = subject.call!
-        result.must_be_instance_of CandyCheck::AppStore::ReceiptCollection
-        result.receipts.must_be_instance_of Array
+        _(result).must_be_instance_of CandyCheck::AppStore::ReceiptCollection
+        _(result.receipts).must_be_instance_of Array
         result.receipts.size.must_equal(2)
         last = result.receipts.last
-        last.must_be_instance_of CandyCheck::AppStore::Receipt
+        _(last).must_be_instance_of CandyCheck::AppStore::Receipt
         last.item_id.must_equal('some_other_id')
       end
     end
