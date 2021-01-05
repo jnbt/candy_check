@@ -30,12 +30,12 @@ describe CandyCheck::AppStore::Config do
     end
 
     it 'needs an environment' do
-      proc { subject }.must_raise ArgumentError
+      _(proc { subject }).must_raise ArgumentError
     end
 
     it 'needs an included environment' do
       attributes[:environment] = :invalid
-      proc { subject }.must_raise ArgumentError
+      _(proc { subject }).must_raise ArgumentError
     end
   end
 end
