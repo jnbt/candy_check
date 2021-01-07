@@ -24,6 +24,10 @@ describe CandyCheck::CLI::App do
     end
   end
 
+  it 'returns true when call .exit_on_failure?' do
+    _(CandyCheck::CLI::App.exit_on_failure?).must_equal true
+  end
+
   private
 
   def stub_command(target)
