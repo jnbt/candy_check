@@ -29,8 +29,8 @@ module CandyCheck
       # @param secret [String] the optional shared secret
       # @return [Receipt] if successful
       # @return [VerificationFailure] otherwise
-      def verify(receipt_data, secret = nil)
-        fetch_receipt_information(Verification, [receipt_data, secret])
+      def verify(receipt_data, secret = nil, exclude_old_transactions: false)
+        fetch_receipt_information(Verification, [receipt_data, secret, exclude_old_transactions])
       end
 
       # Calls a subscription verification for the given input
@@ -39,8 +39,8 @@ module CandyCheck
       # @param product_ids [Array<String>] optional: products to filter
       # @return [ReceiptCollection] if successful
       # @return [Verification] otherwise
-      def verify_subscription(receipt_data, secret = nil, product_ids = nil)
-        args = [receipt_data, secret, product_ids]
+      def verify_subscription(receipt_data, secret = nil, product_ids = nil, exclude_old_transactions: false)
+        args = [receipt_data, secret, product_ids, exclude_old_transactions]
         fetch_receipt_information(SubscriptionVerification, args)
       end
 

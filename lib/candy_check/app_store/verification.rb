@@ -9,6 +9,8 @@ module CandyCheck
       attr_reader :receipt_data
       # @return [String] the optional shared secret
       attr_reader :secret
+      # @return [Boolean] optional. Set this value to true for the response to include only the latest renewal transaction for any subscriptions.
+      attr_reader :exclude_old_transactions
 
       # Constant for successful responses
       STATUS_OK = 0
@@ -17,10 +19,11 @@ module CandyCheck
       # @param endpoint_url [String] the verification URL to use
       # @param receipt_data [String] the raw data to be verified
       # @param secret [String] optional: shared secret
-      def initialize(endpoint_url, receipt_data, secret = nil)
-        @endpoint_url = endpoint_url
-        @receipt_data = receipt_data
-        @secret = secret
+      def initialize(endpoint_url, receipt_data, secret = nil, exclude_old_transactions = nil)
+        @endpoint_url             = endpoint_url
+        @receipt_data             = receipt_data
+        @secret                   = secret
+        @exclude_old_transactions = exclude_old_transactions
       end
 
       # Performs the verification against the remote server
@@ -43,7 +46,7 @@ module CandyCheck
 
       def verify!
         client    = Client.new(endpoint_url)
-        @response = client.verify(receipt_data, secret)
+        @response = client.verify(receipt_data, secret, exclude_old_transactions)
       end
     end
   end

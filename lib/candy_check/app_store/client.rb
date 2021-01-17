@@ -19,8 +19,8 @@ module CandyCheck
       # @param receipt_data [String] base64 encoded data string from the app
       # @param secret [String] the password for auto-renewable subscriptions
       # @return [Hash]
-      def verify(receipt_data, secret = nil)
-        request  = build_request(build_request_parameters(receipt_data, secret))
+      def verify(receipt_data, secret = nil, exclude_old_transactions = nil)
+        request  = build_request(build_request_parameters(receipt_data, secret, exclude_old_transactions))
         response = perform_request(request)
         MultiJson.load(response.body)
       end
@@ -46,10 +46,11 @@ module CandyCheck
         end
       end
 
-      def build_request_parameters(receipt_data, secret)
+      def build_request_parameters(receipt_data, secret, exclude_old_transactions)
         {
-          'receipt-data' => receipt_data
+          'receipt-data' => receipt_data,
         }.tap do |h|
+          h['exclude-old-transactions'] = exclude_old_transactions if exclude_old_transactions
           h['password'] = secret if secret
         end
       end
