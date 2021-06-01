@@ -1,5 +1,6 @@
 language: ruby
-sudo: false
+os: linux
+dist: xenial
 cache: bundler
 rvm:
   - 2.7.3
@@ -8,7 +9,7 @@ rvm:
   - jruby-9.2.9.0
   - ruby-head
   - jruby-head
-matrix:
+jobs:
   allow_failures:
     - rvm: ruby-head
     - rvm: jruby-head
