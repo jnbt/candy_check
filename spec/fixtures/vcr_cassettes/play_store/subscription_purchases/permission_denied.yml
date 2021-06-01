@@ -55,7 +55,7 @@ http_interactions:
   recorded_at: Thu, 10 Oct 2019 14:07:52 GMT
 - request:
     method: get
-    uri: https://www.googleapis.com/androidpublisher/v3/applications/my_package_name/purchases/subscriptions/my_subscription_id/tokens/my_token
+    uri: https://androidpublisher.googleapis.com/androidpublisher/v3/applications/my_package_name/purchases/subscriptions/my_subscription_id/tokens/my_token
     body:
       encoding: UTF-8
       string: ''
@@ -125,7 +125,7 @@ http_interactions:
   recorded_at: Thu, 10 Oct 2019 14:07:52 GMT
 - request:
     method: get
-    uri: https://www.googleapis.com/androidpublisher/v3/applications/my_package_name/purchases/subscriptions/my_subscription_id/tokens/my_token
+    uri: https://androidpublisher.googleapis.com/androidpublisher/v3/applications/my_package_name/purchases/subscriptions/my_subscription_id/tokens/my_token
     body:
       encoding: UTF-8
       string: ''
