@@ -18,9 +18,10 @@ Gem::Specification.new do |spec|
   spec.test_files = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.4")
+  spec.required_ruby_version = Gem::Requirement.new(">= 2.5")
 
-  spec.add_dependency "google-api-client", "~> 0.43.0"
+  spec.add_dependency "google-apis-androidpublisher_v3", "~> 0.2.0"
+  spec.add_dependency "googleauth", "~> 0.16"
   spec.add_dependency "multi_json", "~> 1.10"
   spec.add_dependency "thor", "< 2.0"
 
