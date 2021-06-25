@@ -1,4 +1,5 @@
-require 'google/apis/androidpublisher_v3'
+require "google-apis-androidpublisher_v3"
+require "googleauth"
 
 require 'candy_check/play_store/android_publisher_service'
 require 'candy_check/play_store/product_purchases/product_purchase'
