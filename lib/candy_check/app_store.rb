@@ -1,5 +1,6 @@
 require 'candy_check/app_store/client'
 require 'candy_check/app_store/config'
+require 'candy_check/app_store/pending_renewal_info'
 require 'candy_check/app_store/receipt'
 require 'candy_check/app_store/receipt_collection'
 require 'candy_check/app_store/verification'

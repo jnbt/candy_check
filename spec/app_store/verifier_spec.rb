@@ -9,7 +9,7 @@ describe CandyCheck::AppStore::Verifier do
   let(:data)     { 'some_data'   }
   let(:secret)   { 'some_secret' }
   let(:receipt)  { CandyCheck::AppStore::Receipt.new({}) }
-  let(:receipt_collection) { CandyCheck::AppStore::ReceiptCollection.new({}) }
+  let(:receipt_collection) { CandyCheck::AppStore::ReceiptCollection.new({}, {}) }
   let(:production_endpoint) do
     'https://buy.itunes.apple.com/verifyReceipt'
   end

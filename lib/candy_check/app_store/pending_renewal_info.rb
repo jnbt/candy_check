@@ -1,23 +1,89 @@
 module CandyCheck
   module AppStore
+    
     # Encapsulates Apple's pending renewal info included with renewable subscriptions.
     class PendingRenewalInfo
-      attr_reader :auto_renew_status
-      attr_reader :auto_renew_product_id
-      attr_reader :expiration_intent
-      attr_reader :is_in_billing_retry_period
-      attr_reader :original_transaction_id
-      attr_reader :product_id
-
+      include Utils::AttributeReader
+      
+      # @return [Hash] the raw attributes returned from the server
+      attr_reader :attributes
+      
       # Initializes a new instance with a hash mapping to the attributes.
       # @param [Hash] the attributes for the pending renewal info
       def initialize(attributes)
-        @auto_renew_status          = attributes['auto_renew_status']
-        @auto_renew_product_id      = attributes['auto_renew_product_id']
-        @expiration_intent          = attributes['expiration_intent']
-        @is_in_billing_retry_period = attributes['is_in_billing_retry_period']
-        @original_transaction_id    = attributes['original_transaction_id']
-        @product_id                 = attributes['product_id']
+        @attributes = attributes
+      end
+
+      # productIdentifier property of the product that the customer’s subscription renews.
+      # @return [String]
+      def auto_renew_product_id
+        read('auto_renew_product_id')
+      end
+
+      # The renewal status for the auto-renewable subscription.
+      # @return [Fixnum]
+      def auto_renew_status
+        read_integer('auto_renew_status')
+      end
+
+      # The reason a subscription expired.
+      # @return [Fixnum]
+      def expiration_intent
+        read_integer('expiration_intent')
+      end
+
+      # The grace period expiration time.
+      # @return [DateTime]
+      def grace_period_expires_date
+        read_datetime_from_string('grace_period_expires_date')
+      end
+
+      # The grace period expiration time in UNIX epoch time format, in milliseconds.
+      # @return [String]
+      def grace_period_expires_date_ms
+        read_integer('grace_period_expires_date_ms')
+      end
+
+      # The grace period expiration time in PST.
+      # @return [DateTime]
+      def grace_period_expires_date_pst
+        read_datetime_from_string('grace_period_expires_date_pst')
+      end
+
+      # Whether an auto-renewable subscription is in the billing retry period.
+      # @return [Fixnum]
+      def is_in_billing_retry_period
+        read_integer('is_in_billing_retry_period')
+      end
+
+      # The offer-reference name of the subscription offer code that the customer redeemed.
+      # @return [String]
+      def offer_code_ref_name
+        read('offer_code_ref_name')
+      end
+
+      # The transaction identifier of the original purchase.
+      # @return [String]
+      def original_transaction_id
+        read('original_transaction_id')
+      end
+
+      # The price consent status for a subscription price increase.
+      # @return [Fixnum]
+      def price_consent_status
+        read_integer('price_consent_status')
+      end
+
+      # The unique identifier of the product purchased.
+      # @return [String]
+      def product_id
+        read('product_id')
+      end
+
+      # The identifier of the promotional offer for an auto-renewable subscription that the user redeemed.
+      # @return [String]
+      def promotional_offer_id
+        read('promotional_offer_id')
       end
     end
   end
