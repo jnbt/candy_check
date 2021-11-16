@@ -7,7 +7,7 @@ module CandyCheck
       
       # @return [Hash] the raw attributes returned from the server
       attr_reader :attributes
-      
+
       # Initializes a new instance with a hash mapping to the attributes.
       # @param [Hash] the attributes for the pending renewal info
       def initialize(attributes)
@@ -21,13 +21,13 @@ module CandyCheck
       end
 
       # The renewal status for the auto-renewable subscription.
-      # @return [Fixnum]
+      # @return [Integer]
       def auto_renew_status
         read_integer('auto_renew_status')
       end
 
       # The reason a subscription expired.
-      # @return [Fixnum]
+      # @return [Integer]
       def expiration_intent
         read_integer('expiration_intent')
       end
@@ -51,7 +51,7 @@ module CandyCheck
       end
 
       # Whether an auto-renewable subscription is in the billing retry period.
-      # @return [Fixnum]
+      # @return [Integer]
       def is_in_billing_retry_period
         read_integer('is_in_billing_retry_period')
       end
@@ -69,7 +69,7 @@ module CandyCheck
       end
 
       # The price consent status for a subscription price increase.
-      # @return [Fixnum]
+      # @return [Integer]
       def price_consent_status
         read_integer('price_consent_status')
       end

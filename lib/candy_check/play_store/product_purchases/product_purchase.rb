@@ -26,7 +26,7 @@ module CandyCheck
         # The purchase state of the order. Possible values are:
         #   * 0: Purchased
         #   * 1: Cancelled
-        # @return [Fixnum]
+        # @return [Integer]
         def purchase_state
           @product_purchase.purchase_state
         end
@@ -34,7 +34,7 @@ module CandyCheck
         # The consumption state of the inapp product. Possible values are:
         #   * 0: Yet to be consumed
         #   * 1: Consumed
-        # @return [Fixnum]
+        # @return [Integer]
         def consumption_state
           @product_purchase.consumption_state
         end
@@ -60,7 +60,7 @@ module CandyCheck
 
         # The time the product was purchased, in milliseconds since the
         # epoch (Jan 1, 1970)
-        # @return [Fixnum]
+        # @return [Integer]
         def purchase_time_millis
           @product_purchase.purchase_time_millis
         end

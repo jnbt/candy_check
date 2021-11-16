@@ -59,7 +59,7 @@ module CandyCheck
       end
 
       # The quantity of the product
-      # @return [Fixnum]
+      # @return [Integer]
       def quantity
         read_integer('quantity')
       end
