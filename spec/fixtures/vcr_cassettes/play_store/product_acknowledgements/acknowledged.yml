@@ -51,7 +51,7 @@ http_interactions:
   recorded_at: Mon, 22 Jun 2020 11:38:56 GMT
 - request:
     method: post
-    uri: https://www.googleapis.com/androidpublisher/v3/applications/fake_package_name/purchases/products/fake_product_id/tokens/fake_token:acknowledge
+    uri: https://androidpublisher.googleapis.com/androidpublisher/v3/applications/fake_package_name/purchases/products/fake_product_id/tokens/fake_token:acknowledge
     body:
       encoding: UTF-8
       string: ''

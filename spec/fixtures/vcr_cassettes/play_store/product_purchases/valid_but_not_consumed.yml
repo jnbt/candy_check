@@ -55,7 +55,7 @@ http_interactions:
   recorded_at: Fri, 04 Oct 2019 09:25:53 GMT
 - request:
     method: get
-    uri: https://www.googleapis.com/androidpublisher/v3/applications/my_package_name/purchases/products/my_product_id/tokens/my_token
+    uri: https://androidpublisher.googleapis.com/androidpublisher/v3/applications/my_package_name/purchases/products/my_product_id/tokens/my_token
     body:
       encoding: UTF-8
       string: ''
