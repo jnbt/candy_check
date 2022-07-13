@@ -4,3 +4,4 @@
 .yardoc
 doc
 vendor/bundle
+.idea
