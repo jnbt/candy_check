@@ -15,12 +15,17 @@ require "candy_check/play_store/acknowledger"
 module CandyCheck
   # Module to request and verify a AppStore receipt
   module PlayStore
-    # Build an authorization object
-    # @param json_key_file [String]
+    # Build an authorization object from either a file location or a JSON string
+    # @param json_key_file [String] Either a file location reference or a JSON string
     # @return [Google::Auth::ServiceAccountCredentials]
     def self.authorization(json_key_file)
+      # Build either a StringIO (from a JSON string) or File (file location) to pass into Google's authentication
+      # service.
+      # JSON string references can be used when dealing with env vars where a file representation does not exist.
+      key_io = json_key_file.include?('.json') ? File.open(json_key_file) : StringIO.open(json_key_file)
+
       Google::Auth::ServiceAccountCredentials.make_creds(
-        json_key_io: File.open(json_key_file),
+        json_key_io: key_io,
         scope: "https://www.googleapis.com/auth/androidpublisher",
       )
     end
