@@ -26,7 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "thor", "< 2.0"
 
   spec.add_development_dependency "bundler", "~> 2.0"
-  spec.add_development_dependency "coveralls", "~> 0.8"
   spec.add_development_dependency "inch", "~> 0.7"
   spec.add_development_dependency "minitest", "~> 5.10"
   spec.add_development_dependency "minitest-around", "~> 0.4"
@@ -40,4 +39,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "awesome_print"
   spec.add_development_dependency "guard"
   spec.add_development_dependency "guard-minitest"
+  spec.add_development_dependency "simplecov", "~> 0.18.0"
+  spec.add_development_dependency "simplecov-lcov", "~> 0.8.0"
 end
