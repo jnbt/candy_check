@@ -1,11 +1,24 @@
-require "coveralls"
-Coveralls.wear!
 
 require "candy_check"
 require "candy_check/cli"
 
 def in_continuous_integration_environment?
   ENV["CI"] || ENV["TRAVIS"] || ENV["CONTINUOUS_INTEGRATION"]
+end
+
+require "simplecov"
+
+SimpleCov.start do
+  if in_continuous_integration_environment?
+    require "simplecov-lcov"
+
+    SimpleCov::Formatter::LcovFormatter.config do |c|
+      c.report_with_single_file = true
+      c.single_report_path = "coverage/lcov.info"
+    end
+
+    formatter SimpleCov::Formatter::LcovFormatter
+  end
 end
 
 require "minitest/autorun"
