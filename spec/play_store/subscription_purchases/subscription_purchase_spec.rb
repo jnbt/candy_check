@@ -226,7 +226,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
       :price_currency_code,
     ].freeze
 
-    attr_accessor *FIELDS
+    attr_accessor(*FIELDS)
 
     def initialize(hash)
       FIELDS.each do |key|
