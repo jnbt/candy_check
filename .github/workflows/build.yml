@@ -6,10 +6,9 @@ jobs:
     strategy:
       matrix:
         ruby-version:
-          - "2.5"
           - "2.6"
           - "2.7"
-          - "jruby-9.2.21.0"
+          - "jruby-9.3.10.0"
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
