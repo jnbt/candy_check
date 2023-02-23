@@ -8,6 +8,7 @@ jobs:
         ruby-version:
           - "2.6"
           - "2.7"
+          - "3.0"
           - "jruby-9.3.10.0"
     steps:
       - uses: actions/checkout@v3
