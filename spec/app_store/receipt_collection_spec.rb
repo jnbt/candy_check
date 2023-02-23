@@ -28,7 +28,7 @@ describe CandyCheck::AppStore::ReceiptCollection do
 
     it 'has positive overdue days' do
       overdue = subject.overdue_days
-      _(overdue).must_be_instance_of Fixnum
+      _(overdue).must_be_instance_of Integer
       assert overdue > 0
     end
 
