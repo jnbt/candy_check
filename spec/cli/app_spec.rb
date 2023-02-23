@@ -13,14 +13,14 @@ describe CandyCheck::CLI::App do
   it 'supports the app_store command' do
     stub_command(CandyCheck::CLI::Commands::AppStore) do
       _(subject.app_store('receipt')).must_equal :stubbed
-      _(@arguments).must_equal ['receipt', {}]
+      _(@arguments).must_equal ['receipt']
     end
   end
 
   it 'supports the play_store command' do
     stub_command(CandyCheck::CLI::Commands::PlayStore) do
       _(subject.play_store('package', 'id', 'token')).must_equal :stubbed
-      _(@arguments).must_equal ['package', 'id', 'token', {}]
+      _(@arguments).must_equal ['package', 'id', 'token']
     end
   end
 
