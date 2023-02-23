@@ -2,7 +2,7 @@ module CandyCheck
   module AppStore
     # Represents a failing call against the verification server
     class VerificationFailure
-      # @return [Fixnum] the code of the failure
+      # @return [Integer] the code of the failure
       attr_reader :code
 
       # @return [String] the message of the failure
@@ -10,7 +10,7 @@ module CandyCheck
 
       # Initializes a new instance which bases on a JSON result
       # from Apple servers
-      # @param code [Fixnum]
+      # @param code [Integer]
       # @param message [String]
       def initialize(code, message)
         @code = code
@@ -20,7 +20,7 @@ module CandyCheck
       class << self
         # Gets a known failure or build an unknown failure
         # without description
-        # @param code [Fixnum]
+        # @param code [Integer]
         # @return [VerificationFailure]
         def fetch(code)
           known.fetch(code) do

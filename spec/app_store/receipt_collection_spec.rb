@@ -1,7 +1,24 @@
 require 'spec_helper'
 
 describe CandyCheck::AppStore::ReceiptCollection do
-  subject { CandyCheck::AppStore::ReceiptCollection.new(attributes) }
+  subject { CandyCheck::AppStore::ReceiptCollection.new(attributes, pending_renewal_infos) }
+
+  let(:pending_renewal_infos) do
+    [{
+      "auto_renew_product_id"         => "some_product",
+      "auto_renew_status"             => "1",
+      "expiration_intent"             => "0",
+      "grace_period_expires_date"     => '2015-01-09 11:40:46 Etc/GMT',
+      "grace_period_expires_date_ms"  => '1420717246868',
+      "grace_period_expires_date_pst" => '2015-01-09 03:40:46 America/Los_Angeles',
+      "is_in_billing_retry_period"    => "0",
+      "offer_code_ref_name"           => "some_offer_code_ref_name",
+      "original_transaction_id"       => "some_original_transaction_id",
+      "price_consent_status"          => "0",
+      "product_id"                    => "some_product",
+      "promotional_offer_id"          => "some_promotional_offer_id",
+    }]
+  end
 
   describe 'overdue subscription' do
     let(:attributes) do
@@ -37,10 +54,14 @@ describe CandyCheck::AppStore::ReceiptCollection do
       _(subject.expires_at).must_equal expected
     end
 
-    it 'is expired? at same pointin time' do
+    it 'is expired? at same point in time' do
       Timecop.freeze(Time.utc(2015, 4, 15, 12, 52, 40)) do
         _(subject.expired?).must_be_true
       end
+    end
+
+    it 'has an array of CandyCheck::AppStore::PendingRenewalInfo objects' do
+      _(subject.pending_renewal_infos.first).must_be_instance_of CandyCheck::AppStore::PendingRenewalInfo
     end
   end
 

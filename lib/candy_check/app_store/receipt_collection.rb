@@ -6,13 +6,19 @@ module CandyCheck
       # @return [Array<Receipt>]
       attr_reader :receipts
 
+      # Pending renewal info for each product ID
+      # @return [Array<PendingRenewalInfo>]
+      attr_reader :pending_renewal_infos
+
       # Initializes a new instance which bases on a JSON result
       # from Apple's verification server
-      # @param attributes [Array<Hash>] raw data from Apple's server
-      def initialize(attributes)
+      # @param attributes [Array<Hash>] raw receipt data from Apple's server
+      # @param pending_renewal_infos [Array<Hash>] raw pending renewal data from Apple's server
+      def initialize(attributes, pending_renewal_infos)
         @receipts = attributes.map {|r| Receipt.new(r) }.sort{ |a, b|
           a.purchase_date - b.purchase_date
         }
+        @pending_renewal_infos = pending_renewal_infos.map { |p| PendingRenewalInfo.new(p) }
       end
 
       # Check if the latest expiration date is passed
