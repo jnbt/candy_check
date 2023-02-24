@@ -15,7 +15,7 @@ module CandyCheck
       end
 
       # The code of the failure
-      # @return [Fixnum]
+      # @return [Integer]
       def code
         Integer(error.status_code)
       rescue
