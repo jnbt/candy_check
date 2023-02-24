@@ -30,13 +30,11 @@ describe CandyCheck::CLI::App do
 
   private
 
-  def stub_command(target)
+  def stub_command(target, &block)
     stub = proc do |*args|
       @arguments = args
       :stubbed
     end
-    target.stub :run, stub do
-      yield
-    end
+    target.stub :run, stub, &block
   end
 end

@@ -49,9 +49,8 @@ module CandyCheck
       def fetch_receipt_information(verifier_class, args)
         default_endpoint, opposite_endpoint = endpoints
         result = call_for(verifier_class, args.dup.unshift(default_endpoint))
-        if should_retry?(result)
-          return call_for(verifier_class, args.dup.unshift(opposite_endpoint))
-        end
+        return call_for(verifier_class, args.dup.unshift(opposite_endpoint)) if should_retry?(result)
+
         result
       end
 

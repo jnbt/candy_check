@@ -87,8 +87,8 @@ describe CandyCheck::AppStore::Verifier do
     it "uses production endpoint without retry on success" do
       with_mocked_verifier(receipt_collection) do
         _(subject.verify_subscription(
-          data, secret
-        )).must_be_same_as receipt_collection
+            data, secret
+          )).must_be_same_as receipt_collection
         assert_recorded([production_endpoint, data, secret, nil])
       end
     end
@@ -116,8 +116,8 @@ describe CandyCheck::AppStore::Verifier do
       product_ids = ["product_1"]
       with_mocked_verifier(receipt_collection) do
         _(subject.verify_subscription(
-          data, secret, product_ids
-        )).must_be_same_as receipt_collection
+            data, secret, product_ids
+          )).must_be_same_as receipt_collection
         assert_recorded([production_endpoint, data, secret, product_ids])
       end
     end
@@ -125,15 +125,13 @@ describe CandyCheck::AppStore::Verifier do
 
   private
 
-  def with_mocked_verifier(*results)
+  def with_mocked_verifier(*results, &block)
     @recorded ||= []
     stub = proc do |*args|
       @recorded << args
       DummyAppStoreVerification.new(*args).tap { |v| v.results = results }
     end
-    CandyCheck::AppStore::Verification.stub :new, stub do
-      yield
-    end
+    CandyCheck::AppStore::Verification.stub :new, stub, &block
   end
 
   def assert_recorded(*calls)

@@ -1,4 +1,3 @@
-
 require "candy_check"
 require "candy_check/cli"
 
@@ -43,7 +42,6 @@ class MiniTest::Spec
     alias :context :describe
   end
 end
-
 
 module MiniTest
   module Assertions
