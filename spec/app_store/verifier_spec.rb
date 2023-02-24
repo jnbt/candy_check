@@ -125,11 +125,21 @@ describe CandyCheck::AppStore::Verifier do
 
   private
 
+  let(:dummy_verification_class) do
+    Struct.new(:endpoint, :data, :secret, :product_ids) do
+      attr_accessor :results
+
+      def call!
+        results.shift
+      end
+    end
+  end
+
   def with_mocked_verifier(*results, &block)
     @recorded ||= []
     stub = proc do |*args|
       @recorded << args
-      DummyAppStoreVerification.new(*args).tap { |v| v.results = results }
+      dummy_verification_class.new(*args).tap { |v| v.results = results }
     end
     CandyCheck::AppStore::Verification.stub :new, stub, &block
   end
@@ -140,21 +150,5 @@ describe CandyCheck::AppStore::Verifier do
 
   def get_failure(code)
     CandyCheck::AppStore::VerificationFailure.fetch(code)
-  end
-
-  class DummyAppStoreVerification
-    attr_reader :endpoint, :data, :secret, :product_ids
-    attr_accessor :results
-
-    def initialize(endpoint, data, secret, product_ids = nil)
-      @endpoint = endpoint
-      @data = data
-      @secret = secret
-      @product_ids = product_ids
-    end
-
-    def call!
-      results.shift
-    end
   end
 end

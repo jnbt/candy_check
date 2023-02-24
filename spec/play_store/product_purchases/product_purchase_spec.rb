@@ -5,7 +5,7 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
 
   describe "valid and non-consumed product" do
     let(:fake_product_purchase) do
-      FakeProductPurchase.new(
+      OpenStruct.new(
         consumption_state: 0,
         developer_payload: "payload that gets stored and returned",
         kind: "androidpublisher#productPurchase",
@@ -51,7 +51,7 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
 
   describe "valid and consumed product" do
     let(:fake_product_purchase) do
-      FakeProductPurchase.new(
+      OpenStruct.new(
         consumption_state: 1,
         developer_payload: "payload that gets stored and returned",
         kind: "androidpublisher#productPurchase",
@@ -72,7 +72,7 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
 
   describe "non-valid product" do
     let(:fake_product_purchase) do
-      FakeProductPurchase.new(
+      OpenStruct.new(
         consumption_state: 0,
         developer_payload: "payload that gets stored and returned",
         kind: "androidpublisher#productPurchase",
@@ -84,27 +84,6 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
 
     it "is valid?" do
       _(subject.valid?).must_be_false
-    end
-  end
-
-  private
-
-  class FakeProductPurchase
-    FIELDS = %i(
-      consumption_state
-      developer_payload
-      kind
-      order_id
-      purchase_state
-      purchase_time_millis
-    ).freeze
-
-    attr_accessor(*FIELDS)
-
-    def initialize(hash)
-      FIELDS.each do |key|
-        public_send("#{key}=", hash[key])
-      end
     end
   end
 end

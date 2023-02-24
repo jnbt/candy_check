@@ -5,7 +5,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
 
   describe "expired and canceled subscription" do
     let(:fake_subscription_purchase) do
-      FakeSubscriptionPurchase.new(
+      OpenStruct.new(
         kind: "androidpublisher#subscriptionPurchase",
         start_time_millis: 1_459_540_113_244,
         expiry_time_millis: 1_462_132_088_610,
@@ -66,8 +66,9 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
 
   describe "unexpired and renewing subscription" do
     two_days_from_now = DateTime.now + 2
+
     let(:fake_subscription_purchase) do
-      FakeSubscriptionPurchase.new(
+      OpenStruct.new(
         kind: "androidpublisher#subscriptionPurchase",
         start_time_millis: 1_459_540_113_244,
         expiry_time_millis: (two_days_from_now.to_time.to_i * 1000),
@@ -89,7 +90,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
 
   describe "expired due to payment failure" do
     let(:fake_subscription_purchase) do
-      FakeSubscriptionPurchase.new(
+      OpenStruct.new(
         kind: "androidpublisher#subscriptionPurchase",
         start_time_millis: 1_459_540_113_244,
         expiry_time_millis: 1_462_132_088_610,
@@ -112,7 +113,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
   describe "subscription cancelation by user" do
     describe "when subscription is not canceled" do
       let(:fake_subscription_purchase) do
-        FakeSubscriptionPurchase.new(
+        OpenStruct.new(
           kind: "androidpublisher#subscriptionPurchase",
           start_time_millis: 1_459_540_113_244,
           expiry_time_millis: 1_462_132_088_610,
@@ -137,7 +138,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
 
     describe "when subscription is canceled" do
       let(:fake_subscription_purchase) do
-        FakeSubscriptionPurchase.new(
+        OpenStruct.new(
           kind: "androidpublisher#subscriptionPurchase",
           start_time_millis: 1_459_540_113_244,
           expiry_time_millis: 1_462_132_088_610,
@@ -166,7 +167,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
 
   describe "expired with pending payment" do
     let(:fake_subscription_purchase) do
-      FakeSubscriptionPurchase.new(
+      OpenStruct.new(
         kind: "androidpublisher#subscriptionPurchase",
         start_time_millis: 1_459_540_113_244,
         expiry_time_millis: 1_462_132_088_610,
@@ -188,7 +189,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
 
   describe "trial" do
     let(:fake_subscription_purchase) do
-      FakeSubscriptionPurchase.new(
+      OpenStruct.new(
         kind: "androidpublisher#subscriptionPurchase",
         start_time_millis: 1_459_540_113_244,
         expiry_time_millis: 1_462_132_088_610,
@@ -207,31 +208,6 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
 
     it "returns the price_currency_code" do
       _(subject.price_currency_code).must_equal "SOMECODE"
-    end
-  end
-
-  private
-
-  class FakeSubscriptionPurchase
-    FIELDS = %i(
-      kind
-      start_time_millis
-      expiry_time_millis
-      user_cancellation_time_millis
-      auto_renewing
-      developer_payload
-      cancel_reason
-      payment_state
-      price_amount_micros
-      price_currency_code
-    ).freeze
-
-    attr_accessor(*FIELDS)
-
-    def initialize(hash)
-      FIELDS.each do |key|
-        public_send("#{key}=", hash[key])
-      end
     end
   end
 end

@@ -43,9 +43,21 @@ describe CandyCheck::AppStore::Verification do
 
   private
 
+  let(:dummy_client_class) do
+    Struct.new(:response) do
+      attr_reader :receipt_data, :secret
+
+      def verify(receipt_data, secret)
+        @receipt_data = receipt_data
+        @secret = secret
+        response
+      end
+    end
+  end
+
   def with_mocked_response(response)
     recorded = []
-    dummy    = DummyClient.new(response)
+    dummy    = dummy_client_class.new(response)
     stub     = proc do |*args|
       recorded << args
       dummy

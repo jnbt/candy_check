@@ -10,10 +10,20 @@ describe CandyCheck::CLI::Commands::AppStore do
       environment: :sandbox,
     }
   end
+  let(:dummy_verifier_class) do
+    Struct.new(:config) do
+      attr_reader :arguments
+
+      def verify(*arguments)
+        @arguments = arguments
+        { result: :stubbed }
+      end
+    end
+  end
 
   before do
     stub = proc do |*args|
-      @verifier = DummyAppStoreVerifier.new(*args)
+      @verifier = dummy_verifier_class.new(*args)
     end
     CandyCheck::AppStore::Verifier.stub :new, stub do
       run_command!
@@ -40,17 +50,6 @@ describe CandyCheck::CLI::Commands::AppStore do
       _(@verifier.config.environment).must_equal :production
       _(@verifier.arguments).must_equal [receipt, "notasecret"]
       _(out.lines).must_equal ["Hash:", { result: :stubbed }]
-    end
-  end
-
-  private
-
-  DummyAppStoreVerifier = Struct.new(:config) do
-    attr_reader :arguments
-
-    def verify(*arguments)
-      @arguments = arguments
-      { result: :stubbed }
     end
   end
 end
