@@ -91,10 +91,10 @@ module CandyCheck
         read_datetime_from_string('expires_date')
       end
 
-      # rubocop:disable PredicateName
+      # rubocop:disable Naming/PredicateName
       def is_trial_period
-        # rubocop:enable PredicateName
         read_bool('is_trial_period')
+        # rubocop:enable Naming/PredicateName
       end
     end
   end
