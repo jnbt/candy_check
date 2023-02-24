@@ -39,7 +39,7 @@ ENV["DEBUG"] && Google::APIClient.logger.level = Logger::DEBUG
 
 class MiniTest::Spec
   class << self
-    alias :context :describe
+    alias context describe
   end
 end
 

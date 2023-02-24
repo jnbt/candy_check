@@ -11,7 +11,7 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
         kind: "androidpublisher#productPurchase",
         order_id: "ABC123",
         purchase_state: 0,
-        purchase_time_millis: 1421676237413,
+        purchase_time_millis: 1_421_676_237_413,
       )
     end
 
@@ -57,7 +57,7 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
         kind: "androidpublisher#productPurchase",
         order_id: "ABC123",
         purchase_state: 0,
-        purchase_time_millis: 1421676237413,
+        purchase_time_millis: 1_421_676_237_413,
       )
     end
 
@@ -78,7 +78,7 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
         kind: "androidpublisher#productPurchase",
         order_id: "ABC123",
         purchase_state: 1,
-        purchase_time_millis: 1421676237413,
+        purchase_time_millis: 1_421_676_237_413,
       )
     end
 
@@ -90,20 +90,20 @@ describe CandyCheck::PlayStore::ProductPurchases::ProductPurchase do
   private
 
   class FakeProductPurchase
-    FIELDS = [
-      :consumption_state,
-      :developer_payload,
-      :kind,
-      :order_id,
-      :purchase_state,
-      :purchase_time_millis,
-    ].freeze
+    FIELDS = %i(
+      consumption_state
+      developer_payload
+      kind
+      order_id
+      purchase_state
+      purchase_time_millis
+    ).freeze
 
     attr_accessor(*FIELDS)
 
     def initialize(hash)
       FIELDS.each do |key|
-        self.public_send("#{key}=", hash[key])
+        public_send("#{key}=", hash[key])
       end
     end
   end

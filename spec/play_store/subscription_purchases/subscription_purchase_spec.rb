@@ -7,8 +7,8 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
     let(:fake_subscription_purchase) do
       FakeSubscriptionPurchase.new(
         kind: "androidpublisher#subscriptionPurchase",
-        start_time_millis: 1459540113244,
-        expiry_time_millis: 1462132088610,
+        start_time_millis: 1_459_540_113_244,
+        expiry_time_millis: 1_462_132_088_610,
         auto_renewing: false,
         developer_payload: "payload that gets stored and returned",
         cancel_reason: 0,
@@ -69,7 +69,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
     let(:fake_subscription_purchase) do
       FakeSubscriptionPurchase.new(
         kind: "androidpublisher#subscriptionPurchase",
-        start_time_millis: 1459540113244,
+        start_time_millis: 1_459_540_113_244,
         expiry_time_millis: (two_days_from_now.to_time.to_i * 1000),
         auto_renewing: true,
         developer_payload: "payload that gets stored and returned",
@@ -91,8 +91,8 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
     let(:fake_subscription_purchase) do
       FakeSubscriptionPurchase.new(
         kind: "androidpublisher#subscriptionPurchase",
-        start_time_millis: 1459540113244,
-        expiry_time_millis: 1462132088610,
+        start_time_millis: 1_459_540_113_244,
+        expiry_time_millis: 1_462_132_088_610,
         auto_renewing: true,
         developer_payload: "payload that gets stored and returned",
         cancel_reason: 1,
@@ -114,8 +114,8 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
       let(:fake_subscription_purchase) do
         FakeSubscriptionPurchase.new(
           kind: "androidpublisher#subscriptionPurchase",
-          start_time_millis: 1459540113244,
-          expiry_time_millis: 1462132088610,
+          start_time_millis: 1_459_540_113_244,
+          expiry_time_millis: 1_462_132_088_610,
           auto_renewing: true,
           developer_payload: "payload that gets stored and returned",
           payment_state: 1,
@@ -139,9 +139,9 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
       let(:fake_subscription_purchase) do
         FakeSubscriptionPurchase.new(
           kind: "androidpublisher#subscriptionPurchase",
-          start_time_millis: 1459540113244,
-          expiry_time_millis: 1462132088610,
-          user_cancellation_time_millis: 1461872888000,
+          start_time_millis: 1_459_540_113_244,
+          expiry_time_millis: 1_462_132_088_610,
+          user_cancellation_time_millis: 1_461_872_888_000,
           auto_renewing: true,
           developer_payload: "payload that gets stored and returned",
           cancel_reason: 0,
@@ -168,8 +168,8 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
     let(:fake_subscription_purchase) do
       FakeSubscriptionPurchase.new(
         kind: "androidpublisher#subscriptionPurchase",
-        start_time_millis: 1459540113244,
-        expiry_time_millis: 1462132088610,
+        start_time_millis: 1_459_540_113_244,
+        expiry_time_millis: 1_462_132_088_610,
         auto_renewing: true,
         developer_payload: "payload that gets stored and returned",
         cancel_reason: 0,
@@ -190,8 +190,8 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
     let(:fake_subscription_purchase) do
       FakeSubscriptionPurchase.new(
         kind: "androidpublisher#subscriptionPurchase",
-        start_time_millis: 1459540113244,
-        expiry_time_millis: 1462132088610,
+        start_time_millis: 1_459_540_113_244,
+        expiry_time_millis: 1_462_132_088_610,
         auto_renewing: false,
         developer_payload: "payload that gets stored and returned",
         cancel_reason: 0,
@@ -213,24 +213,24 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase do
   private
 
   class FakeSubscriptionPurchase
-    FIELDS = [
-      :kind,
-      :start_time_millis,
-      :expiry_time_millis,
-      :user_cancellation_time_millis,
-      :auto_renewing,
-      :developer_payload,
-      :cancel_reason,
-      :payment_state,
-      :price_amount_micros,
-      :price_currency_code,
-    ].freeze
+    FIELDS = %i(
+      kind
+      start_time_millis
+      expiry_time_millis
+      user_cancellation_time_millis
+      auto_renewing
+      developer_payload
+      cancel_reason
+      payment_state
+      price_amount_micros
+      price_currency_code
+    ).freeze
 
     attr_accessor(*FIELDS)
 
     def initialize(hash)
       FIELDS.each do |key|
-        self.public_send("#{key}=", hash[key])
+        public_send("#{key}=", hash[key])
       end
     end
   end
