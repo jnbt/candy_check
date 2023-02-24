@@ -20,8 +20,8 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = Gem::Requirement.new(">= 2.6")
 
-  spec.add_dependency "google-apis-androidpublisher_v3", "~> 0.25.0"
-  spec.add_dependency "googleauth", "~> 1.2.0"
+  spec.add_dependency "google-apis-androidpublisher_v3", "~> 0.34.0"
+  spec.add_dependency "googleauth", "~> 1.3.0"
   spec.add_dependency "multi_json", "~> 1.15"
   spec.add_dependency "thor", "< 2.0"
 
