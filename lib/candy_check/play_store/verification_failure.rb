@@ -18,7 +18,7 @@ module CandyCheck
       # @return [Integer]
       def code
         Integer(error.status_code)
-      rescue
+      rescue StandardError
         -1
       end
 
