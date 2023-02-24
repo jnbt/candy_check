@@ -48,7 +48,7 @@ module CandyCheck
 
       def build_request_parameters(receipt_data, secret)
         {
-          "receipt-data" => receipt_data
+          "receipt-data" => receipt_data,
         }.tap do |h|
           h["password"] = secret if secret
         end

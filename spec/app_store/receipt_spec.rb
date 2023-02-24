@@ -25,7 +25,7 @@ describe CandyCheck::AppStore::Receipt do
       "bid" => "some.test.app",
       "original_purchase_date_ms" => "1420717246868",
       "expires_date" => "2016-06-09 13:59:40 Etc/GMT",
-      "is_trial_period" => "false"
+      "is_trial_period" => "false",
     }
   end
 

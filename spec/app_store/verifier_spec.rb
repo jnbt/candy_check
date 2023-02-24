@@ -45,7 +45,7 @@ describe CandyCheck::AppStore::Verifier do
         _(subject.verify(data, secret)).must_be_same_as receipt
         assert_recorded(
           [sandbox_endpoint, data, secret],
-          [production_endpoint, data, secret]
+          [production_endpoint, data, secret],
         )
       end
     end
@@ -75,7 +75,7 @@ describe CandyCheck::AppStore::Verifier do
         _(subject.verify(data, secret)).must_be_same_as receipt
         assert_recorded(
           [production_endpoint, data, secret],
-          [sandbox_endpoint, data, secret]
+          [sandbox_endpoint, data, secret],
         )
       end
     end
@@ -107,7 +107,7 @@ describe CandyCheck::AppStore::Verifier do
         _(subject.verify_subscription(data, secret)).must_be_same_as receipt
         assert_recorded(
           [production_endpoint, data, secret, nil],
-          [sandbox_endpoint, data, secret, nil]
+          [sandbox_endpoint, data, secret, nil],
         )
       end
     end

@@ -18,7 +18,7 @@ describe CandyCheck::CLI::Out do
     close
     _(out.readlines).must_equal [
       "some text\n",
-      "another line\n"
+      "another line\n",
     ]
   end
 
@@ -28,7 +28,7 @@ describe CandyCheck::CLI::Out do
     close
     _(out.readlines).must_equal [
       "{:dummy=>1}\n",
-      "[1, 2, 3]\n"
+      "[1, 2, 3]\n",
     ]
   end
 

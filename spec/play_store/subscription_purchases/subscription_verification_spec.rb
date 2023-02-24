@@ -53,7 +53,7 @@ describe CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionVerification 
   describe "invalid response kind" do
     let(:response) do
       {
-        "kind" => "something weird"
+        "kind" => "something weird",
       }
     end
 

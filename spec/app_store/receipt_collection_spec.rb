@@ -9,12 +9,12 @@ describe CandyCheck::AppStore::ReceiptCollection do
         "expires_date" => "2014-04-15 12:52:40 Etc/GMT",
         "expires_date_pst" => "2014-04-15 05:52:40 America/Los_Angeles",
         "purchase_date" => "2014-04-14 12:52:40 Etc/GMT",
-        "is_trial_period" => "false"
+        "is_trial_period" => "false",
       }, {
         "expires_date" => "2015-04-15 12:52:40 Etc/GMT",
         "expires_date_pst" => "2015-04-15 05:52:40 America/Los_Angeles",
         "purchase_date" => "2015-04-14 12:52:40 Etc/GMT",
-        "is_trial_period" => "false"
+        "is_trial_period" => "false",
       }]
     end
 
@@ -50,12 +50,12 @@ describe CandyCheck::AppStore::ReceiptCollection do
         "expires_date" => "2015-04-15 12:52:40 Etc/GMT",
         "expires_date_pst" => "2015-04-15 05:52:40 America/Los_Angeles",
         "purchase_date" => "2015-04-14 12:52:40 Etc/GMT",
-        "is_trial_period" => "false"
+        "is_trial_period" => "false",
       }, {
         "expires_date" => "2014-04-15 12:52:40 Etc/GMT",
         "expires_date_pst" => "2014-04-15 05:52:40 America/Los_Angeles",
         "purchase_date" => "2014-04-14 12:52:40 Etc/GMT",
-        "is_trial_period" => "false"
+        "is_trial_period" => "false",
       }]
     end
 
@@ -72,12 +72,12 @@ describe CandyCheck::AppStore::ReceiptCollection do
       [{
         "expires_date" => "2016-04-15 12:52:40 Etc/GMT",
         "purchase_date" => "2016-04-15 12:52:40 Etc/GMT",
-        "is_trial_period" => "true"
+        "is_trial_period" => "true",
       }, {
         "expires_date" =>
           two_days_from_now.strftime("%Y-%m-%d %H:%M:%S Etc/GMT"),
         "purchase_date" => "2016-04-15 12:52:40 Etc/GMT",
-        "is_trial_period" => "true"
+        "is_trial_period" => "true",
       }]
     end
 

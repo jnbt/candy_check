@@ -6,7 +6,7 @@ describe CandyCheck::AppStore::Config do
   describe "valid" do
     let(:attributes) do
       {
-        environment: :sandbox
+        environment: :sandbox,
       }
     end
 
@@ -18,7 +18,7 @@ describe CandyCheck::AppStore::Config do
       _(subject.production?).must_be_false
 
       other = CandyCheck::AppStore::Config.new(
-        environment: :production
+        environment: :production,
       )
       _(other.production?).must_be_true
     end

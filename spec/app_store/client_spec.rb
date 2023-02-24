@@ -20,8 +20,8 @@ describe CandyCheck::AppStore::Client do
     {
       "status" => 0,
       "receipt" => {
-        "item_id" => "521129812"
-      }
+        "item_id" => "521129812",
+      },
     }
   end
 
@@ -32,11 +32,11 @@ describe CandyCheck::AppStore::Client do
       stub_endpoint
         .with(
           body: {
-            "receipt-data" => receipt_data
-          }
+            "receipt-data" => receipt_data,
+          },
         )
         .to_return(
-          body: response
+          body: response,
         )
       result = subject.verify(receipt_data)
       _(result).must_equal expected
@@ -47,11 +47,11 @@ describe CandyCheck::AppStore::Client do
         .with(
           body: {
             "receipt-data" => receipt_data,
-            "password" => password
-          }
+            "password" => password,
+          },
         )
         .to_return(
-          body: response
+          body: response,
         )
       result = subject.verify(receipt_data, password)
       _(result).must_equal expected

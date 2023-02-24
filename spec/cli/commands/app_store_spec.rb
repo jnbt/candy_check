@@ -7,7 +7,7 @@ describe CandyCheck::CLI::Commands::AppStore do
   let(:receipt) { "data" }
   let(:options) do
     {
-      environment: :sandbox
+      environment: :sandbox,
     }
   end
 
@@ -32,7 +32,7 @@ describe CandyCheck::CLI::Commands::AppStore do
     let(:options) do
       {
         environment: :production,
-        secret: "notasecret"
+        secret: "notasecret",
       }
     end
 

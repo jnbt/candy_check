@@ -39,8 +39,8 @@ describe CandyCheck::AppStore::SubscriptionVerification do
       "status" => 0,
       "latest_receipt_info" => [
         { "item_id" => "some_id", "purchase_date" => "2016-04-15 12:52:40 Etc/GMT" },
-        { "item_id" => "some_other_id", "purchase_date" => "2016-04-15 12:52:40 Etc/GMT" }
-      ]
+        { "item_id" => "some_other_id", "purchase_date" => "2016-04-15 12:52:40 Etc/GMT" },
+      ],
     }
     with_mocked_response(response) do
       result = subject.call!
@@ -59,7 +59,7 @@ describe CandyCheck::AppStore::SubscriptionVerification do
         endpoint,
         data,
         secret,
-        product_ids
+        product_ids,
       )
     end
     let(:product_ids) { ["product_1"] }
@@ -71,8 +71,8 @@ describe CandyCheck::AppStore::SubscriptionVerification do
           { "item_id" => "some_id", "product_id" => "product_1", "purchase_date" => "2016-04-15 12:52:40 Etc/GMT" },
           { "item_id" => "some_other_id", "product_id" => "product_1",
             "purchase_date" => "2016-04-15 12:52:40 Etc/GMT" },
-          { "item_id" => "some_id", "product_id" => "product_2", "purchase_date" => "2016-04-15 12:52:40 Etc/GMT" }
-        ]
+          { "item_id" => "some_id", "product_id" => "product_2", "purchase_date" => "2016-04-15 12:52:40 Etc/GMT" },
+        ],
       }
       with_mocked_response(response) do
         result = subject.call!
