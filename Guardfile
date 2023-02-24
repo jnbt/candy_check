@@ -2,8 +2,10 @@
 # More info at https://github.com/guard/guard#readme
 
 ## Uncomment and set this to only include directories you want to watch
-directories %w(lib spec) \
-  .select { |d| Dir.exist?(d) ? d : UI.warning("Directory #{d} does not exist") }
+directories(
+  %w(lib spec) \
+    .select { |d| Dir.exist?(d) ? d : UI.warning("Directory #{d} does not exist") },
+)
 
 ## Note: if you are using the `directories` clause above and you are not
 ## watching the project directory ('.'), then you will want to move

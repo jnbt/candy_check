@@ -22,6 +22,7 @@ Style/PercentLiteralDelimiters:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+    - '*.gemspec'
 Security/MarshalLoad:
   Exclude:
     - 'lib/candy_check/play_store/discovery_repository.rb'
