@@ -15,6 +15,11 @@ module CandyCheck
                     enum: %w(production sandbox),
                     aliases: "-e",
                     desc: "The environment to use for verfication"
+      method_option :mode,
+                    default: "verify",
+                    enum: %w(verify verify_subscription),
+                    aliases: "-m",
+                    desc: "The verification mode to use"
       method_option :secret,
                     aliases: "-s",
                     type: :string,
