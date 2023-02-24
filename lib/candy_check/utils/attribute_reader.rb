@@ -1,4 +1,4 @@
-require 'date'
+require "date"
 
 module CandyCheck
   module Utils
@@ -23,7 +23,8 @@ module CandyCheck
       def read_bool(field)
         val = read(field).to_s
         return nil unless %w(false true).include?(val)
-        val == 'true'
+
+        val == "true"
       end
 
       def read_datetime_from_string(field)

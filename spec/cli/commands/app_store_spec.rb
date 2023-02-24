@@ -1,10 +1,10 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe CandyCheck::CLI::Commands::AppStore do
   include WithCommand
   subject { CandyCheck::CLI::Commands::AppStore }
   let(:arguments) { [receipt, options] }
-  let(:receipt) { 'data' }
+  let(:receipt) { "data" }
   let(:options) do
     {
       environment: :sandbox
@@ -20,26 +20,26 @@ describe CandyCheck::CLI::Commands::AppStore do
     end
   end
 
-  describe 'default' do
-    it 'uses the receipt and the options' do
+  describe "default" do
+    it "uses the receipt and the options" do
       _(@verifier.config.environment).must_equal :sandbox
       _(@verifier.arguments).must_equal [receipt, nil]
-      _(out.lines).must_equal ['Hash:', { result: :stubbed }]
+      _(out.lines).must_equal ["Hash:", { result: :stubbed }]
     end
   end
 
-  describe 'with secret' do
+  describe "with secret" do
     let(:options) do
       {
         environment: :production,
-        secret: 'notasecret'
+        secret: "notasecret"
       }
     end
 
-    it 'uses the secret for verification' do
+    it "uses the secret for verification" do
       _(@verifier.config.environment).must_equal :production
-      _(@verifier.arguments).must_equal [receipt, 'notasecret']
-      _(out.lines).must_equal ['Hash:', { result: :stubbed }]
+      _(@verifier.arguments).must_equal [receipt, "notasecret"]
+      _(out.lines).must_equal ["Hash:", { result: :stubbed }]
     end
   end
 

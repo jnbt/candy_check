@@ -1,15 +1,15 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe CandyCheck::AppStore::SubscriptionVerification do
   subject do
     CandyCheck::AppStore::SubscriptionVerification.new(endpoint, data, secret)
   end
-  let(:endpoint) { 'https://some.endpoint' }
-  let(:data)     { 'some_data'   }
-  let(:secret)   { 'some_secret' }
+  let(:endpoint) { "https://some.endpoint" }
+  let(:data)     { "some_data"   }
+  let(:secret)   { "some_secret" }
 
-  it 'returns a verification failure for status != 0' do
-    with_mocked_response('status' => 21_000) do |client, recorded|
+  it "returns a verification failure for status != 0" do
+    with_mocked_response("status" => 21_000) do |client, recorded|
       result = subject.call!
       _(client.receipt_data).must_equal data
       _(client.secret).must_equal secret
@@ -21,7 +21,7 @@ describe CandyCheck::AppStore::SubscriptionVerification do
     end
   end
 
-  it 'returns a verification failure when receipt is missing' do
+  it "returns a verification failure when receipt is missing" do
     with_mocked_response({}) do |client, recorded|
       result = subject.call!
       _(client.receipt_data).must_equal data
@@ -34,12 +34,12 @@ describe CandyCheck::AppStore::SubscriptionVerification do
     end
   end
 
-  it 'returns a collection of receipt when status is 0 and receipts exists' do
+  it "returns a collection of receipt when status is 0 and receipts exists" do
     response = {
-      'status' => 0,
-      'latest_receipt_info' => [
-        { 'item_id' => 'some_id', 'purchase_date' => '2016-04-15 12:52:40 Etc/GMT' },
-        { 'item_id' => 'some_other_id', 'purchase_date' => '2016-04-15 12:52:40 Etc/GMT' }
+      "status" => 0,
+      "latest_receipt_info" => [
+        { "item_id" => "some_id", "purchase_date" => "2016-04-15 12:52:40 Etc/GMT" },
+        { "item_id" => "some_other_id", "purchase_date" => "2016-04-15 12:52:40 Etc/GMT" }
       ]
     }
     with_mocked_response(response) do
@@ -49,11 +49,11 @@ describe CandyCheck::AppStore::SubscriptionVerification do
       _(result.receipts.size).must_equal(2)
       last = result.receipts.last
       _(last).must_be_instance_of CandyCheck::AppStore::Receipt
-      _(last.item_id).must_equal('some_other_id')
+      _(last.item_id).must_equal("some_other_id")
     end
   end
 
-  describe 'filtered product_ids' do
+  describe "filtered product_ids" do
     subject do
       CandyCheck::AppStore::SubscriptionVerification.new(
         endpoint,
@@ -62,15 +62,16 @@ describe CandyCheck::AppStore::SubscriptionVerification do
         product_ids
       )
     end
-    let(:product_ids) { ['product_1'] }
+    let(:product_ids) { ["product_1"] }
 
-    it 'returns only filtered reciepts when specifc product_ids are reqested' do
+    it "returns only filtered reciepts when specifc product_ids are reqested" do
       response = {
-        'status' => 0,
-        'latest_receipt_info' => [
-          { 'item_id' => 'some_id', 'product_id' => 'product_1', 'purchase_date' => '2016-04-15 12:52:40 Etc/GMT' },
-          { 'item_id' => 'some_other_id', 'product_id' => 'product_1', 'purchase_date' => '2016-04-15 12:52:40 Etc/GMT' },
-          { 'item_id' => 'some_id', 'product_id' => 'product_2', 'purchase_date' => '2016-04-15 12:52:40 Etc/GMT' }
+        "status" => 0,
+        "latest_receipt_info" => [
+          { "item_id" => "some_id", "product_id" => "product_1", "purchase_date" => "2016-04-15 12:52:40 Etc/GMT" },
+          { "item_id" => "some_other_id", "product_id" => "product_1",
+            "purchase_date" => "2016-04-15 12:52:40 Etc/GMT" },
+          { "item_id" => "some_id", "product_id" => "product_2", "purchase_date" => "2016-04-15 12:52:40 Etc/GMT" }
         ]
       }
       with_mocked_response(response) do
@@ -80,7 +81,7 @@ describe CandyCheck::AppStore::SubscriptionVerification do
         _(result.receipts.size).must_equal(2)
         last = result.receipts.last
         _(last).must_be_instance_of CandyCheck::AppStore::Receipt
-        _(last.item_id).must_equal('some_other_id')
+        _(last.item_id).must_equal("some_other_id")
       end
     end
   end

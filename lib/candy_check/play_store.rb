@@ -21,7 +21,7 @@ module CandyCheck
     def self.authorization(json_key_file)
       Google::Auth::ServiceAccountCredentials.make_creds(
         json_key_io: File.open(json_key_file),
-        scope: "https://www.googleapis.com/auth/androidpublisher",
+        scope: "https://www.googleapis.com/auth/androidpublisher"
       )
     end
   end

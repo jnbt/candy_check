@@ -1,5 +1,5 @@
-require 'multi_json'
-require 'net/http'
+require "multi_json"
+require "net/http"
 
 module CandyCheck
   module AppStore
@@ -7,7 +7,7 @@ module CandyCheck
     # servers (either sandbox or production).
     class Client
       # Mimetype for JSON objects
-      JSON_MIME_TYPE = 'application/json'.freeze
+      JSON_MIME_TYPE = "application/json".freeze
 
       # Initialize a new client bound to an endpoint
       # @param endpoint_url [String]
@@ -40,17 +40,17 @@ module CandyCheck
 
       def build_request(parameters)
         Net::HTTP::Post.new(@uri.request_uri).tap do |post|
-          post['Accept']       = JSON_MIME_TYPE
-          post['Content-Type'] = JSON_MIME_TYPE
+          post["Accept"]       = JSON_MIME_TYPE
+          post["Content-Type"] = JSON_MIME_TYPE
           post.body            = MultiJson.dump(parameters)
         end
       end
 
       def build_request_parameters(receipt_data, secret)
         {
-          'receipt-data' => receipt_data
+          "receipt-data" => receipt_data
         }.tap do |h|
-          h['password'] = secret if secret
+          h["password"] = secret if secret
         end
       end
     end

@@ -35,7 +35,7 @@ module CandyCheck
         Commands::PlayStore.run(package, product_id, token, **options)
       end
 
-      desc "version", 'Print the gem\'s version'
+      desc "version", "Print the gem's version"
 
       def version
         Commands::Version.run
