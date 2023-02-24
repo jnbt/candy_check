@@ -32,14 +32,16 @@ describe CandyCheck::PlayStore::Verifier do
   describe "subscription purchases" do
     it "verifies a subscription purchase" do
       VCR.use_cassette("play_store/subscription_purchases/valid_but_expired") do
-        result = subject.verify_subscription_purchase(package_name: package_name, subscription_id: subscription_id, token: token)
+        result = subject.verify_subscription_purchase(package_name: package_name, subscription_id: subscription_id,
+                                                      token: token)
         _(result).must_be_instance_of CandyCheck::PlayStore::SubscriptionPurchases::SubscriptionPurchase
       end
     end
 
     it "can return a subscription purchase verification failure" do
       VCR.use_cassette("play_store/subscription_purchases/permission_denied") do
-        result = subject.verify_subscription_purchase(package_name: package_name, subscription_id: subscription_id, token: token)
+        result = subject.verify_subscription_purchase(package_name: package_name, subscription_id: subscription_id,
+                                                      token: token)
         _(result).must_be_instance_of CandyCheck::PlayStore::VerificationFailure
       end
     end

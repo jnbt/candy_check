@@ -10,9 +10,9 @@ module CandyCheck
       # from Apple's verification server
       # @param attributes [Array<Hash>] raw data from Apple's server
       def initialize(attributes)
-        @receipts = attributes.map {|r| Receipt.new(r) }.sort{ |a, b|
+        @receipts = attributes.map { |r| Receipt.new(r) }.sort do |a, b|
           a.purchase_date - b.purchase_date
-        }
+        end
       end
 
       # Check if the latest expiration date is passed

@@ -26,7 +26,8 @@ module CandyCheck
           acknowledge!
 
           CandyCheck::PlayStore::ProductAcknowledgements::Response.new(
-            result: @response[:result], error_data: @response[:error_data])
+            result: @response[:result], error_data: @response[:error_data],
+          )
         end
 
         private

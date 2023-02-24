@@ -37,7 +37,7 @@ module CandyCheck
         private
 
         def valid?
-          @response[:result] && @response[:result].purchase_state && @response[:result].consumption_state
+          @response[:result]&.purchase_state && @response[:result]&.consumption_state
         end
 
         def verify!

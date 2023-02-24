@@ -1,5 +1,3 @@
-require 'pp'
-
 module CandyCheck
   module CLI
     # A wrapper to output text information to any kind of buffer
@@ -18,7 +16,7 @@ module CandyCheck
 
       # Prints to +out+
       # @param text [String]
-      def print(text = '')
+      def print(text = "")
         out.puts text
       end
 

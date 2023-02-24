@@ -5,15 +5,13 @@ module CandyCheck
       # @return [Symbol] the used environment
       attr_reader :environment
 
-      # Initializes a new configuration from a hash
-      # @param attributes [Hash]
-      # @example
-      #   Config.new(
-      #     environment: :production # or :sandbox
-      #   )
-      def initialize(attributes)
-        super
-      end
+      # @!method initialize(attributes)
+      #   Initializes a new configuration from a hash
+      #   @param attributes [Hash]
+      #   @example
+      #     Config.new(
+      #       environment: :production # or :sandbox
+      #     )
 
       # @return [Boolean] if it is production environment
       def production?

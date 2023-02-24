@@ -24,9 +24,9 @@ module CandyCheck
       def call!
         verify!
         if valid?
-          build_collection(@response['latest_receipt_info'])
+          build_collection(@response["latest_receipt_info"])
         else
-          VerificationFailure.fetch(@response['status'])
+          VerificationFailure.fetch(@response["status"])
         end
       end
 
@@ -35,15 +35,15 @@ module CandyCheck
       def build_collection(latest_receipt_info)
         unless @product_ids.nil?
           latest_receipt_info = latest_receipt_info.select do |info|
-            @product_ids.include?(info['product_id'])
+            @product_ids.include?(info["product_id"])
           end
         end
         ReceiptCollection.new(latest_receipt_info)
       end
 
       def valid?
-        status_is_ok = @response['status'] == STATUS_OK
-        @response && status_is_ok && @response['latest_receipt_info']
+        status_is_ok = @response["status"] == STATUS_OK
+        @response && status_is_ok && @response["latest_receipt_info"]
       end
     end
   end

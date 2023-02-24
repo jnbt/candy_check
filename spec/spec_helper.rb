@@ -1,4 +1,3 @@
-
 require "candy_check"
 require "candy_check/cli"
 
@@ -38,14 +37,13 @@ require_relative "support/with_command"
 
 ENV["DEBUG"] && Google::APIClient.logger.level = Logger::DEBUG
 
-class MiniTest::Spec
-  class << self
-    alias :context :describe
-  end
-end
-
-
 module MiniTest
+  class Spec
+    class << self
+      alias context describe
+    end
+  end
+
   module Assertions
     # The first parameter must be ```true```, not coercible to true.
     def assert_true(obj, msg = nil)

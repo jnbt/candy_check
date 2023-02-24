@@ -5,7 +5,8 @@ module CandyCheck
       class SubscriptionPurchase
         include Utils::AttributeReader
 
-        # @return [Google::Apis::AndroidpublisherV3::SubscriptionPurchase] the raw subscription purchase from google-api-client
+        # @return [Google::Apis::AndroidpublisherV3::SubscriptionPurchase] the raw subscription purchase
+        #   from google-api-client
         attr_reader :subscription_purchase
 
         # The payment of the subscription is pending (paymentState)
