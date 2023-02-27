@@ -2,7 +2,9 @@ require "spec_helper"
 
 describe CandyCheck::CLI::Commands::PlayStore do
   include WithCommand
-  subject { CandyCheck::CLI::Commands::PlayStore.new(package_name, product_id, token, "json_key_file" => json_key_file) }
+  subject do
+    CandyCheck::CLI::Commands::PlayStore.new(package_name, product_id, token, "json_key_file" => json_key_file)
+  end
   let(:package_name) { "my_package_name" }
   let(:product_id) { "my_product_id" }
   let(:token) { "my_token" }

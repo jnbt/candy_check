@@ -21,7 +21,7 @@ module CandyCheck
                     desc: "The shared secret for auto-renewable subscriptions"
 
       def app_store(receipt)
-        Commands::AppStore.run(receipt, options)
+        Commands::AppStore.run(receipt, **options)
       end
 
       desc "play_store PACKAGE PRODUCT_ID TOKEN", "Verify PlayStore purchase"
@@ -32,10 +32,10 @@ module CandyCheck
                     desc: "The json key file to use for API authentication"
 
       def play_store(package, product_id, token)
-        Commands::PlayStore.run(package, product_id, token, options)
+        Commands::PlayStore.run(package, product_id, token, **options)
       end
 
-      desc "version", 'Print the gem\'s version'
+      desc "version", "Print the gem's version"
 
       def version
         Commands::Version.run

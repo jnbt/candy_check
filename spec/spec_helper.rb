@@ -1,11 +1,23 @@
-require "coveralls"
-Coveralls.wear!
-
 require "candy_check"
 require "candy_check/cli"
 
 def in_continuous_integration_environment?
   ENV["CI"] || ENV["TRAVIS"] || ENV["CONTINUOUS_INTEGRATION"]
+end
+
+require "simplecov"
+
+SimpleCov.start do
+  if in_continuous_integration_environment?
+    require "simplecov-lcov"
+
+    SimpleCov::Formatter::LcovFormatter.config do |c|
+      c.report_with_single_file = true
+      c.single_report_path = "coverage/lcov.info"
+    end
+
+    formatter SimpleCov::Formatter::LcovFormatter
+  end
 end
 
 require "minitest/autorun"
@@ -25,14 +37,13 @@ require_relative "support/with_command"
 
 ENV["DEBUG"] && Google::APIClient.logger.level = Logger::DEBUG
 
-class MiniTest::Spec
-  class << self
-    alias :context :describe
-  end
-end
-
-
 module MiniTest
+  class Spec
+    class << self
+      alias context describe
+    end
+  end
+
   module Assertions
     # The first parameter must be ```true```, not coercible to true.
     def assert_true(obj, msg = nil)

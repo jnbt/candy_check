@@ -1,7 +1,7 @@
-require 'candy_check/cli/commands/base'
-require 'candy_check/cli/commands/app_store'
-require 'candy_check/cli/commands/play_store'
-require 'candy_check/cli/commands/version'
+require "candy_check/cli/commands/base"
+require "candy_check/cli/commands/app_store"
+require "candy_check/cli/commands/play_store"
+require "candy_check/cli/commands/version"
 
 module CandyCheck
   module CLI

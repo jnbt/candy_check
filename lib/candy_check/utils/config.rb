@@ -26,6 +26,7 @@ module CandyCheck
       # @raise [ArgumentError] if attribute is missing
       def validates_presence(name)
         return if send(name)
+
         raise ArgumentError, "Configuration field #{name} is missing"
       end
 
@@ -34,6 +35,7 @@ module CandyCheck
       # @param values [Array] of possible values
       def validates_inclusion(name, *values)
         return if values.include?(send(name))
+
         raise ArgumentError, "Configuration field #{name} should be "\
                             "one of: #{values.join(', ')}"
       end

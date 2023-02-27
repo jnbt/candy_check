@@ -27,7 +27,9 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Acknowledgement do
       end
     end
     it "when already acknowledged" do
+      # rubocop:disable Layout/LineLength
       error_body = "{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"The purchase is not in a valid state to perform the desired operation.\",\n    \"errors\": [\n      {\n        \"message\": \"The purchase is not in a valid state to perform the desired operation.\",\n        \"domain\": \"androidpublisher\",\n        \"reason\": \"invalidPurchaseState\",\n        \"location\": \"token\",\n        \"locationType\": \"parameter\"\n      }\n    ]\n  }\n}\n"
+      # rubocop:enable Layout/LineLength
 
       VCR.use_cassette("play_store/product_acknowledgements/already_acknowledged") do
         result = subject.call!
@@ -39,7 +41,9 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Acknowledgement do
       end
     end
     it "when it has been refunded" do
+      # rubocop:disable Layout/LineLength
       error_body = "{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"The product purchase is not owned by the user.\",\n    \"errors\": [\n      {\n        \"message\": \"The product purchase is not owned by the user.\",\n        \"domain\": \"androidpublisher\",\n        \"reason\": \"productNotOwnedByUser\"\n      }\n    ]\n  }\n}\n"
+      # rubocop:enable Layout/LineLength
 
       VCR.use_cassette("play_store/product_acknowledgements/refunded") do
         result = subject.call!

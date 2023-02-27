@@ -25,7 +25,7 @@ module CandyCheck
 
         def config
           CandyCheck::AppStore::Config.new(
-            environment: options[:environment].to_sym
+            environment: options[:environment].to_sym,
           )
         end
       end

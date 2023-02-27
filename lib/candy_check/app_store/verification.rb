@@ -29,16 +29,16 @@ module CandyCheck
       def call!
         verify!
         if valid?
-          Receipt.new(@response['receipt'])
+          Receipt.new(@response["receipt"])
         else
-          VerificationFailure.fetch(@response['status'])
+          VerificationFailure.fetch(@response["status"])
         end
       end
 
       private
 
       def valid?
-        @response && @response['status'] == STATUS_OK && @response['receipt']
+        @response && @response["status"] == STATUS_OK && @response["receipt"]
       end
 
       def verify!
