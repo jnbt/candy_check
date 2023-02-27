@@ -17,6 +17,8 @@ module CandyCheck
         PAYMENT_CANCELED = 0
         # The payment failed during processing (cancelReason)
         PAYMENT_FAILED = 1
+        # The subscription is on the trial period
+        PAYMENT_TRIAL = 2
 
         # Initializes a new instance which bases on a JSON result
         # from Google's servers
@@ -31,13 +33,10 @@ module CandyCheck
           overdue_days > 0
         end
 
-        # Check if in trial. This is actually not given by Google, but we assume
-        # that it is a trial going on if the paid amount is 0 and
-        # renewal is activated.
+        # Check if in trial
         # @return [bool]
         def trial?
-          price_is_zero = price_amount_micros == 0
-          price_is_zero && payment_received?
+          payment_state == PAYMENT_TRIAL
         end
 
         # see if payment is ok
