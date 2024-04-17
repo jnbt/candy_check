@@ -6,7 +6,7 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Response do
   end
 
   describe "#acknowledged?" do
-    context "when result present" do
+    describe "when result present" do
       let(:result) { "" }
       let(:error_data)  { nil }
 
@@ -17,7 +17,7 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Response do
       end
     end
 
-    context "when result is not present" do
+    describe "when result is not present" do
       let(:result) { nil }
       let(:error_data) { nil }
 
@@ -30,7 +30,7 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Response do
   end
 
   describe "#error" do
-    context "when error present" do
+    describe "when error present" do
       let(:result) { nil }
       let(:error_data) do
         Module.new do
@@ -53,7 +53,7 @@ describe CandyCheck::PlayStore::ProductAcknowledgements::Response do
       end
     end
 
-    context "when error is not present" do
+    describe "when error is not present" do
       let(:result) { "" }
       let(:error_data)  { nil }
 

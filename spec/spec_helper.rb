@@ -38,12 +38,6 @@ require_relative "support/with_command"
 ENV["DEBUG"] && Google::APIClient.logger.level = Logger::DEBUG
 
 module MiniTest
-  class Spec
-    class << self
-      alias context describe
-    end
-  end
-
   module Assertions
     # The first parameter must be ```true```, not coercible to true.
     def assert_true(obj, msg = nil)
