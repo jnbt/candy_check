@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "guard"
   spec.add_development_dependency "guard-minitest"
   spec.add_development_dependency "inch", "~> 0.7"
-  spec.add_development_dependency "minitest", "~> 5.10"
+  spec.add_development_dependency "minitest", "~> 5.22"
   spec.add_development_dependency "minitest-around", "~> 0.4"
   spec.add_development_dependency "minitest-focus"
   spec.add_development_dependency "pry"
